@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frank McGuire — Editorial Left (prototype)</title>
+<meta name="description" content="Portfolio prototype — Editorial Left direction. Non-authoritative research artifact." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<!-- ============ DIRECTION SWITCHER (prototype-only) ============ -->
+<div class="dir-switch" role="navigation" aria-label="Prototype direction">
+  <span class="ds-label">Direction</span>
+  <a href="technical-hud.html">Technical HUD</a>
+  <a href="index.html" class="active">Editorial Left</a>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" data-screen-label="Nav">
+  <a class="brand" href="#top">FRANK<b>·</b>McGUIRE</a>
+  <div class="nav-right">
+    <div class="navpill">
+      <a href="#top" class="active">Home</a>
+      <a href="#work">Work</a>
+      <a href="#modw">MOD-W</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-primary btn-sm nav-cta">Get in touch</a>
+    <button class="nav-toggle" aria-label="Open menu" id="navToggle">≡</button>
+  </div>
+</nav>
+
+<!-- ============ MOBILE MENU ============ -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" id="navClose" aria-label="Close menu">✕</button>
+  <a href="#top">Home</a>
+  <a href="#work">Work</a>
+  <a href="#modw">MOD-W</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+
+  <!-- ============ HERO — EDITORIAL LEFT ============ -->
+  <header class="hero-b" data-screen-label="Hero (Editorial Left)">
+    <div class="wrap">
+      <div class="hero-b-glow"></div>
+      <svg class="hero-b-ring" viewBox="0 0 620 620" aria-hidden="true">
+        <circle cx="310" cy="310" r="280" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-dasharray="1 9" />
+        <circle cx="310" cy="310" r="218" fill="none" stroke="rgba(99,205,220,0.16)" stroke-width="1" stroke-dasharray="1 13" />
+        <circle cx="310" cy="310" r="150" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="1 7" />
+      </svg>
+
+      <div class="col">
+        <span class="eyebrow reveal"><span class="dot"></span> AVAILABLE — FULL-TIME &amp; FREELANCE</span>
+        <h1 class="reveal">Frank<br />McGuire</h1>
+        <p class="lead reveal">Senior frontend engineer &amp; consultant building considered interfaces in Angular, Vue and React — and author of MOD-W.</p>
+        <div class="cta-row reveal">
+          <a href="#work" class="btn btn-primary">View Case Studies →</a>
+          <a href="#modw" class="btn btn-ghost">The MOD-W Method</a>
+        </div>
+      </div>
+
+      <div class="hero-b-strip reveal">
+        <div class="item"><span class="k">Full-time</span><span class="v open">OPEN</span></div>
+        <div class="item"><span class="k">Freelance</span><span class="v open">OPEN</span></div>
+        <div class="item"><span class="k">Location</span><span class="v">REMOTE / EU</span></div>
+        <div class="item"><span class="k">Stack</span><span class="v">ANGULAR · VUE · REACT</span></div>
+        <div class="item"><span class="k">MOD-W</span><span class="v">AUTHOR</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ VALUE PROP ============ -->
+  <section class="section" id="approach" data-screen-label="Value Proposition">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="ix">01 — HOW I ENGAGE</span>
+        <h2>Two ways to work together.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      <div class="values">
+        <div class="value reveal">
+          <span class="vnum">/ FULL-TIME</span>
+          <h3>Senior Frontend Engineer</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        </div>
+        <div class="value reveal">
+          <span class="vnum">/ FREELANCE</span>
+          <h3>Frontend Consultant</h3>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur.</p>
+        </div>
+        <div class="value reveal">
+          <span class="vnum">/ ADVISORY</span>
+          <h3>AI-Workflow Training</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASE STUDIES ============ -->
+  <section class="section" id="work" data-screen-label="Case Studies">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="ix">02 — SELECTED WORK</span>
+        <h2>Case studies &amp; projects.</h2>
+        <p>A selection of product, simulation, and open-source work — several built with MOD-W. Lorem ipsum dolor sit amet consectetur.</p>
+      </div>
+      <div class="cards">
+        <a href="#" class="card proprietary reveal">
+          <div class="card-top"><span class="card-ix">01</span><span class="card-type">SaaS</span></div>
+          <h3>MQTT-Align</h3>
+          <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+          <div class="card-tags"><span>ANGULAR</span><span>MQTT</span><span>REAL-TIME</span></div>
+          <span class="card-arrow">↗</span>
+        </a>
+        <a href="#" class="card reveal">
+          <div class="card-top"><span class="card-ix">02</span><span class="card-type">Simulation</span></div>
+          <h3>AGV Fleet Simulator</h3>
+          <p class="desc">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <div class="card-tags"><span>VUE</span><span>CANVAS</span><span>ROUTING</span></div>
+          <span class="card-arrow">↗</span>
+        </a>
+        <a href="#" class="card reveal">
+          <div class="card-top"><span class="card-ix">03</span><span class="card-type">Product</span></div>
+          <h3>Prismatic</h3>
+          <p class="desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.</p>
+          <div class="card-tags"><span>REACT</span><span>DESIGN-SYS</span></div>
+          <span class="card-arrow">↗</span>
+        </a>
+        <a href="#" class="card reveal">
+          <div class="card-top"><span class="card-ix">04</span><span class="card-type">Open Source</span></div>
+          <h3>Angular Design Patterns</h3>
+          <p class="desc">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</p>
+          <div class="card-tags"><span>ANGULAR</span><span>PATTERNS</span></div>
+          <span class="card-arrow">↗</span>
+        </a>
+        <a href="#" class="card reveal">
+          <div class="card-top"><span class="card-ix">05</span><span class="card-type">Open Source</span></div>
+          <h3>React Design Patterns</h3>
+          <p class="desc">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+          <div class="card-tags"><span>REACT</span><span>PATTERNS</span></div>
+          <span class="card-arrow">↗</span>
+        </a>
+        <a href="#" class="card reveal">
+          <div class="card-top"><span class="card-ix">06</span><span class="card-type">Tooling</span></div>
+          <h3>Trending Repos</h3>
+          <p class="desc">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur.</p>
+          <div class="card-tags"><span>TYPESCRIPT</span><span>API</span></div>
+          <span class="card-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MOD-W PILLAR ============ -->
+  <section class="section" id="modw" data-screen-label="MOD-W Pillar">
+    <div class="wrap">
+      <div class="modw chamfer reveal">
+        <div class="chamfer-in">
+          <div class="modw-grid">
+            <div>
+              <span class="ix mono-label" style="color:var(--accent)">03 — METHODOLOGY</span>
+              <p class="modw-lede" style="margin-top:var(--s4)">Moderated AI Development Workflow — <b>MOD-W</b>. A role-driven, document-centered method for AI-assisted software development. Viable coding, not vibe coding.</p>
+              <div class="modw-cta">
+                <a href="#" class="btn btn-primary">Read the methodology →</a>
+                <a href="#contact" class="btn btn-ghost">Training &amp; consulting</a>
+              </div>
+            </div>
+            <div class="modw-principles">
+              <div class="principle"><span class="pn">01</span><div><h4>Role separation</h4><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.</p></div></div>
+              <div class="principle"><span class="pn">02</span><div><h4>Cross-model validation</h4><p>Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.</p></div></div>
+              <div class="principle"><span class="pn">03</span><div><h4>Human moderation gate</h4><p>Duis aute irure dolor in reprehenderit in voluptate velit esse.</p></div></div>
+              <div class="principle" style="border-bottom:none"><span class="pn">04</span><div><h4>Small reviewable steps</h4><p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about" data-screen-label="About">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="section-head reveal" style="margin-bottom:0">
+          <span class="ix">04 — ABOUT</span>
+          <h2>A senior engineer who ships.</h2>
+        </div>
+        <div class="reveal">
+          <div class="about-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+          </div>
+          <div class="about-meta" style="margin-top:var(--s6)">
+            <div class="row"><span class="k">Experience</span><span class="val">10+ years frontend</span></div>
+            <div class="row"><span class="k">Frameworks</span><span class="val">Angular · Vue · React</span></div>
+            <div class="row"><span class="k">Focus</span><span class="val">Real-time UI · Design systems</span></div>
+            <div class="row"><span class="k">Based in</span><span class="val">Remote / EU</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact" data-screen-label="Contact">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="mono-label" style="color:var(--accent)">05 — CONTACT</span>
+        <h2 style="margin-top:var(--s4)">Let's build something.</h2>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Open to full-time roles and freelance contracts alike.</p>
+      </div>
+      <div class="contact-paths">
+        <div class="path reveal">
+          <span class="ptag eyebrow"><span class="dot"></span> FULL-TIME</span>
+          <h3>Hire me on your team</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          <a href="mailto:frank@frank-mcguire.com" class="btn btn-primary">Email about a role →</a>
+        </div>
+        <div class="path reveal">
+          <span class="ptag eyebrow"><span class="dot"></span> FREELANCE</span>
+          <h3>Start a project</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+          <a href="mailto:frank@frank-mcguire.com" class="btn btn-ghost">Discuss a contract →</a>
+        </div>
+      </div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/frank-mcguire-06b6ba1" target="_blank" rel="noopener">LINKEDIN ↗</a>
+        <a href="https://github.com/fpmcguire" target="_blank" rel="noopener">GITHUB ↗</a>
+        <a href="mailto:frank@frank-mcguire.com">FRANK@FRANK-MCGUIRE.COM</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="wrap footer-in">
+    <span class="mono-label">© 2026 FRANK McGUIRE</span>
+    <span class="mono-label">BUILT WITH MOD-W · ANGULAR v21</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
