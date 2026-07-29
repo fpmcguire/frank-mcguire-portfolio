@@ -1,5 +1,7 @@
 # Testing - Frank McGuire Portfolio
 
+**Status:** Approved by Moderator on 2026-07-29
+
 > Testing guidance for the Angular portfolio implementation in MOD-W.
 
 ---
@@ -67,6 +69,7 @@ Write integration tests for:
 - Contact CTAs use the approved public email.
 - Nav/mobile menu state changes when interacted with.
 - MOD-W principles render from the configured content.
+- MOD-W section renders content from the runtime JSON file.
 
 Example:
 
@@ -162,25 +165,52 @@ Current project conventions:
 
 ---
 
-## JSON Content Contract
+## Runtime JSON Content Contracts
 
-Case-study card count and content are driven by a project-owned JSON object or array.
+Case-study and MOD-W section content are driven by project-owned external JSON files that can be edited without recompiling the Angular app.
 
-Recommended source:
+Recommended sources:
 
 ```text
-src/app/content/case-studies.json
+public/content/case-studies.json
+public/content/modw.json
 ```
 
-Architecture expectations:
+Case-study architecture expectations:
 
 - The template must not hardcode the number of case-study cards.
 - Each case-study item must include a stable `id`.
 - Card rendering must use the JSON order unless a documented display-order field is introduced.
+- The app fetches the JSON at runtime from `/content/case-studies.json`.
+- The JSON file is copied as a static asset and can be updated independently of TypeScript recompilation.
+- The app must provide a non-blank loading state while the file is loading.
+- The app must provide a source-safe error state if the file is missing or malformed.
 - Tests should fail if required launch case studies are removed without updating the Product/Step artifacts.
 - Tests should verify that every JSON item renders a card with classification/status visible to users.
 
-Suggested required fields:
+MOD-W architecture expectations:
+
+- The app fetches MOD-W content at runtime from `/content/modw.json`.
+- The MOD-W section must not hardcode principle count or CTA labels in the template.
+- The JSON must preserve source-safe MOD-W terminology from `PRODUCT.md`.
+- The app must provide a non-blank loading state while MOD-W content is loading.
+- The app must provide a source-safe error state if the file is missing or malformed.
+- Tests should verify that every configured MOD-W principle renders.
+- Tests should verify that prohibited MOD-W claims are not rendered.
+
+Local UI development data:
+
+- `public/content/case-studies.json` and `public/content/modw.json` are the editable local content used by the running app.
+- These files also represent the deployable static content source.
+- They should contain source-safe, valid JSON only.
+
+Test fixture data:
+
+- Valid, empty, malformed, and failed-load cases should be represented in specs or test helpers.
+- Do not place intentionally broken fixture files under `public/content/`.
+- Do not add a fake API or mock server for v1 unless a later Step changes the architecture.
+
+Suggested case-study fields:
 
 ```typescript
 interface CaseStudy {
@@ -204,6 +234,25 @@ interface CaseStudy {
   technologies: string[];
   modwRelevance?: string;
   href?: string;
+}
+```
+
+Suggested MOD-W fields:
+
+```typescript
+interface ModwContent {
+  eyebrow: string;
+  title: string;
+  summary: string;
+  repositoryHref: string;
+  consultingHref: string;
+  principles: ModwPrinciple[];
+}
+
+interface ModwPrinciple {
+  id: string;
+  title: string;
+  summary: string;
 }
 ```
 

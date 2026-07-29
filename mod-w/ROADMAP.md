@@ -1,0 +1,127 @@
+# Roadmap - Frank McGuire Portfolio
+
+**Status:** Approved by Moderator on 2026-07-29  
+**Tech Lead:** Codex  
+**Architecture:** `mod-w/ARCHITECTURE.md`, approved by Moderator on 2026-07-29
+
+---
+
+## Roadmap Principles
+
+- Keep each Step small, coherent, and reviewable.
+- Preserve the compact SPA scope.
+- Follow the approved architecture and domain language.
+- Implement the Editorial Left design direction without copying prototype code verbatim.
+- Keep Case Studies and MOD-W content runtime-editable through JSON.
+- Replace generated Angular starter code as soon as production shell work begins.
+
+---
+
+## Step Sequence
+
+### STEP-01 - Production App Foundation and Runtime Content Contracts
+
+Create the Angular production foundation:
+
+- replace the generated starter page,
+- establish app shell and portfolio page,
+- add design tokens/base styles,
+- add runtime JSON files for Case Studies and MOD-W as local/deployable UI content fixtures,
+- add content models and loading services,
+- add initial tests for content loading, fixture variants, and shell rendering.
+
+Primary purpose: make the repo ready for production sections without implementing full visual fidelity.
+
+### STEP-02 - Navigation, Hero, and Engagement Paths
+
+Implement first-screen structure:
+
+- sticky nav with anchor links,
+- mobile menu,
+- hero section,
+- availability strip,
+- engagement path tiles.
+
+Primary purpose: satisfy first-screen clarity and equal full-time/freelance positioning.
+
+### STEP-03 - Case Studies Runtime Section
+
+Implement Case Studies from `/content/case-studies.json`:
+
+- JSON-driven card count,
+- classification/status display,
+- loading/empty/error states,
+- card links where approved.
+
+Primary purpose: establish project evidence and source-safe classification.
+
+### STEP-04 - MOD-W Runtime Section
+
+Implement MOD-W section from `/content/modw.json`:
+
+- runtime title, summary, CTAs, and principles,
+- approved MOD-W terminology,
+- prohibited-claim safeguards in tests.
+
+Primary purpose: make MOD-W a major pillar without hardcoded copy.
+
+### STEP-05 - About, Contact, and Footer
+
+Implement remaining static sections:
+
+- compact About narrative,
+- full-time and freelance Contact paths,
+- email, LinkedIn, GitHub links,
+- footer attribution.
+
+Primary purpose: complete the SPA content path and conversion points.
+
+### STEP-06 - Visual Fidelity, Responsive Layout, and Accessibility Pass
+
+Bring the implementation close to the approved Editorial Left design:
+
+- responsive desktop/tablet/mobile layout,
+- focus states,
+- reduced-motion behavior,
+- reveal-on-scroll progressive enhancement,
+- background/ring/chamfer polish.
+
+Primary purpose: align implementation with design intent and accessibility expectations.
+
+### STEP-07 - Launch Validation and Content Review
+
+Final validation Step:
+
+- replace any placeholder copy,
+- verify source-safe claims,
+- run build/test/E2E gates,
+- perform manual visual and accessibility review,
+- prepare for Tech Lead review, QA, Product Owner validation, and Moderator launch decision.
+
+Primary purpose: prove the site is ready for release under MOD-W gates.
+
+---
+
+## Deferred Scope
+
+Do not include these in first implementation:
+
+- CV/resume page.
+- downloadable CV/resume link.
+- contact form or backend.
+- CMS/admin interface.
+- blog.
+- multi-page routes.
+- standalone Services page.
+- analytics dashboard.
+- multilingual content.
+
+---
+
+## Current Active Step
+
+`STEP-01.md` is the first implementation Step.
+
+---
+
+MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow
