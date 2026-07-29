@@ -2,8 +2,16 @@
   "eyebrow": "03 — Methodology",
   "title": "Moderated AI Development Workflow (MOD-W)",
   "summary": "MOD-W is a human-in-the-loop methodology for AI-assisted software development. It separates product, technical, implementation, and QA responsibilities across documented, Moderator-approved Steps.",
-  "repositoryHref": "https://github.com/fpmcguire/moderated-ai-development-workflow",
-  "consultingHref": "#contact",
+  "problem": "AI-assisted development can produce opaque code dumps, lost context, weak validation, and blurred responsibility when no one owns the process end to end. MOD-W exists to keep a human Moderator in control of scope, review, and acceptance at every step.",
+  "coreIdea": "Work moves through role separation, small documented Steps, review gates, and cross-validation before a human Moderator approves it — viable coding, not vibe coding.",
+  "repositoryCta": {
+    "label": "View the MOD-W repository",
+    "href": "https://github.com/fpmcguire/moderated-ai-development-workflow"
+  },
+  "consultingCta": {
+    "label": "Discuss MOD-W consulting or training",
+    "href": "#contact"
+  },
   "principles": [
     {
       "id": "role-separation",
@@ -24,6 +32,45 @@
       "id": "review-and-validation",
       "title": "Review and validation",
       "summary": "Implementation goes through Tech Lead review and QA validation before acceptance."
+    }
+  ],
+  "roles": [
+    {
+      "id": "moderator",
+      "label": "Moderator",
+      "responsibility": "Holds final authority over scope, approval, and direction."
+    },
+    {
+      "id": "product-owner",
+      "label": "Product Owner",
+      "responsibility": "Owns product intent and acceptance validation."
+    },
+    {
+      "id": "tech-lead",
+      "label": "Tech Lead",
+      "responsibility": "Owns architecture, roadmap, and Step-level technical review."
+    },
+    {
+      "id": "development-team",
+      "label": "Development Team",
+      "responsibility": "Implements approved Steps with minimal, scoped changes."
+    },
+    {
+      "id": "qa-tester",
+      "label": "QA / Tester",
+      "responsibility": "Validates completed Steps against their acceptance checks."
+    }
+  ],
+  "projectEvidence": [
+    {
+      "id": "mqtt-align",
+      "label": "Cavalieri Align / MQTT-Align",
+      "summary": "Built through MOD-W Steps, including an MVP vertical slice delivered in 3 weeks."
+    },
+    {
+      "id": "portfolio",
+      "label": "This portfolio",
+      "summary": "Implemented through MOD-W Steps, each reviewed by a Tech Lead and validated by QA before Moderator approval."
     }
   ]
 }

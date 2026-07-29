@@ -162,9 +162,18 @@ Current project conventions:
 | Case-study empty state | `work-cards-empty` |
 | Case-study error state | `work-cards-error` |
 | MOD-W section | `modw-section` |
+| MOD-W section heading | `modw-section-heading` |
+| MOD-W section summary | `modw-section-summary` |
+| MOD-W problem statement | `modw-problem` |
+| MOD-W core idea | `modw-core-idea` |
 | MOD-W principle | `modw-principle-{id}` |
+| MOD-W role | `modw-role-{id}` |
+| MOD-W project evidence | `modw-project-evidence-{id}` |
 | MOD-W repository CTA | `modw-repository-cta` |
-| MOD-W contact CTA | `modw-contact-cta` |
+| MOD-W consulting CTA | `modw-consulting-cta` |
+| MOD-W loading state | `modw-loading` |
+| MOD-W empty state | `modw-empty` |
+| MOD-W error state | `modw-error` |
 | About section | `about-section` |
 | Contact section | `contact-section` |
 | Full-time contact path | `contact-path-full-time` |
@@ -175,6 +184,8 @@ Current project conventions:
 | Footer | `footer` |
 
 **Resolved (STEP-03):** earlier Steps carried a "could fix later" gap between a documented generic `work-card` selector and the item-specific `work-card-{id}` values actually rendered — only the latter existed. STEP-03 closes this by providing both, on two different elements of the same card: `CaseStudyCardComponent`'s host element carries `data-testid="work-card-{id}"` (via an Angular `host` binding driven by the required `caseStudy` input), and the component's internal `<article>` carries the literal `data-testid="work-card"`. Query `work-card` for "one element per rendered card" (e.g. `querySelectorAll('[data-testid="work-card"]')`); query `work-card-{id}` for a specific card or to assert grid order (the grid's direct children are the card hosts).
+
+**Retired (STEP-04):** `modw-contact-cta` is removed in favor of `modw-consulting-cta`, per `STEP-04.md` §9's explicit allowance ("`modw-contact-cta` may remain as a compatibility alias if existing tests depend on it, but new STEP-04 tests should prefer `modw-consulting-cta`") — all MOD-W tests were rewritten in this Step, so nothing depends on the old id.
 
 ---
 
@@ -354,15 +365,18 @@ _Updated at the close of each Step._
 | `src/app/app.spec.ts` | App creates and renders the production portfolio shell (starter content gone) | Integration |
 | `src/app/content/case-studies-content.service.spec.ts` | Ready/empty/error states for `/content/case-studies.json` loading | Integration |
 | `src/app/content/modw-content.service.spec.ts` | Ready/empty/error states for `/content/modw.json` loading | Integration |
-| `src/app/portfolio/portfolio-page.component.spec.ts` | MOD-W principle and CTA rendering, nav/hero/engagement/case-studies-section composition, `work`/`modw` anchor ids, single `h1` | Integration |
+| `src/app/content/modw-content.model.spec.ts` | `isModwContent` accepts valid/empty-array shapes, rejects missing/malformed fields (problem, coreIdea, CTAs, roles, projectEvidence) | Unit |
+| `src/app/content/modw-content.production.spec.ts` | Production `public/content/modw.json` is a valid `ModwContent` shape and contains no prohibited MOD-W claims | Unit |
+| `src/app/portfolio/portfolio-page.component.spec.ts` | Nav/hero/engagement/case-studies-section/modw-section composition, `work`/`modw` anchor ids, single `h1` | Integration |
 | `src/app/portfolio/nav/nav.component.spec.ts` | Required nav labels and hrefs, contact CTA, mobile menu open/close, menu closes on link click | Integration |
 | `src/app/portfolio/hero-section/hero-section.component.spec.ts` | First-screen identity/positioning terms, single `h1`, CTA hrefs, availability strip content | Integration |
 | `src/app/portfolio/engagement-section/engagement-section.component.spec.ts` | Full-time/freelance/advisory tiles render, full-time and freelance share equal visual weight | Integration |
 | `src/app/portfolio/case-studies-section/case-studies-section.component.spec.ts` | JSON-driven card count with no hardcoded number, mandatory launch ids present, JSON order preserved, loading/empty/error copy | Integration |
 | `src/app/portfolio/case-study-card/case-study-card.component.spec.ts` | Host `work-card-{id}` testid, all fields render, human-readable classification/status labels, evidence bullets, technology chips, MOD-W relevance and link shown/omitted correctly | Integration |
-| `e2e/portfolio.spec.ts` | Production shell renders, all mandatory launch Case Study titles visible, card field rendering, MOD-W runtime content loads, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
+| `src/app/portfolio/modw-section/modw-section.component.spec.ts` | Heading/summary/problem/core-idea render, principles/roles/project-evidence render with no hardcoded counts, repository/consulting CTAs from JSON, loading/empty/error copy | Integration |
+| `e2e/portfolio.spec.ts` | Production shell renders, all mandatory launch Case Study titles visible, card field rendering, MOD-W runtime content loads (incl. roles/evidence), MOD-W CTAs visible, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
 
-STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`. STEP-03 extracted Case Studies rendering into dedicated `case-studies-section`/`case-study-card` components and specs, trimming the now-duplicated case-study detail assertions out of `portfolio-page.component.spec.ts`.
+STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`. STEP-03 extracted Case Studies rendering into dedicated `case-studies-section`/`case-study-card` components and specs, trimming the now-duplicated case-study detail assertions out of `portfolio-page.component.spec.ts`. STEP-04 extracted MOD-W rendering into a dedicated `modw-section` component and spec (same trim pattern), expanded the `ModwContent` contract, and added a production-content safety spec.
 
 ---
 

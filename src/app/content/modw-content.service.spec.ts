@@ -9,9 +9,16 @@ const VALID_MODW_CONTENT: ModwContent = {
   eyebrow: '03 — Methodology',
   title: 'Moderated AI Development Workflow (MOD-W)',
   summary: 'Source-safe summary text.',
-  repositoryHref: 'https://github.com/fpmcguire/moderated-ai-development-workflow',
-  consultingHref: '#contact',
+  problem: 'Source-safe problem statement.',
+  coreIdea: 'Source-safe core idea.',
+  repositoryCta: {
+    label: 'View the MOD-W repository',
+    href: 'https://github.com/fpmcguire/moderated-ai-development-workflow',
+  },
+  consultingCta: { label: 'Discuss MOD-W consulting or training', href: '#contact' },
   principles: [{ id: 'role-separation', title: 'Role separation', summary: 'Summary.' }],
+  roles: [{ id: 'moderator', label: 'Moderator', responsibility: 'Responsibility.' }],
+  projectEvidence: [{ id: 'mqtt-align', label: 'MQTT-Align', summary: 'Summary.' }],
 };
 
 describe('ModwContentService', () => {

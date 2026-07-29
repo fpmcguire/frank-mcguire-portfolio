@@ -1,4 +1,4 @@
-## QA — STEP-03
+## QA — STEP-04
 
 ### Summary
 
@@ -8,52 +8,45 @@ Pass with notes
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| 1. Case Studies rendering owned by a dedicated section component | Pass | `case-studies-section.component.ts` injects `CaseStudiesContentService` and owns the `@switch` over load state; `portfolio-page.component.html:7` is now just `<app-case-studies-section />`. |
-| 2. Individual cards rendered by a dedicated presentational card component | Pass | `case-study-card.component.ts` — `input.required<CaseStudy>()`, no injected services, no data fetching. |
-| 3. Section fetches/receives runtime JSON from `/content/case-studies.json` | Pass | `CaseStudiesContentService` (unchanged from STEP-01) still owns the fetch; verified via `case-studies-content.service.spec.ts` (untouched, still passing). |
-| 4. Template does not hardcode card count | Pass | `case-studies-section.component.html:16-20` uses `@for` over `caseStudiesContent.state().data`; `case-studies-section.component.spec.ts` asserts count via `[data-testid="work-card"]` length, not a literal number. |
-| 5. Mandatory launch set represented, including Bio-Align | Pass | `public/content/case-studies.json` — confirmed `bio-align` entry present (personal-project / public-repository), plus mqtt-align, agv-fleet-simulator, angular-design-patterns, paki, travel-it, kaufland. |
-| 6. Each JSON item renders one card in JSON order | Pass | `case-studies-section.component.spec.ts` "preserves JSON order when rendering cards" asserts host testid order matches source array order. |
-| 7. Cards display title, project type, role, summary, classification, status, evidence, technologies | Pass | All 8 fields present in `case-study-card.component.html`; each covered by a distinct assertion in `case-study-card.component.spec.ts`. |
-| 8. MOD-W relevance renders when present, omitted cleanly when absent | Pass | `@if (study.modwRelevance; as modwRelevance)` at `case-study-card.component.html:37`; both branches tested. |
-| 9. Public links render only when href present | Pass | `@if (study.href; as href)` at `case-study-card.component.html:46`, `target="_blank" rel="noopener"`; both branches tested. |
-| 10. Classification/status distinctions clear to visitors | Pass | `CASE_STUDY_CLASSIFICATION_LABELS`/`CASE_STUDY_STATUS_LABELS` in `case-study.model.ts` render human-readable text ("Private / Proprietary") instead of raw enum values ("private-proprietary") — TS `Record<Union, string>` makes the mapping exhaustive by construction. |
-| 11. Loading/empty/error states remain non-blank and source-safe | Pass | Unchanged copy from STEP-01, now owned by `case-studies-section.component.html`; all 3 states covered in its spec. |
-| 12. Generic `work-card` and item-specific `work-card-{id}` selectors both available | Pass (after Tech Lead round-trip) | Confirmed both are real, on two different elements of the same card: host `data-testid="work-card-{id}"` via Angular `host` binding, internal `<article data-testid="work-card">` at `case-study-card.component.html:3`. Independently re-verified by reading the current file, not just trusting the diff. |
-| 13. Existing STEP-01 runtime loading tests still pass | Pass | `case-studies-content.service.spec.ts` and `modw-content.service.spec.ts` untouched and passing. |
-| 14. Existing STEP-02 nav/hero/engagement behavior still works | Pass | `nav.component.spec.ts`, `hero-section.component.spec.ts` untouched and passing; e2e nav/mobile-menu tests still pass. |
-| 15. Engagement heading no longer says "two" while rendering three paths | Pass | `engagement-section.component.html:2` now reads "Ways to work together." |
-| 16. No routes, detail pages, CMS/admin, backend, CV, contact form added | Pass | Confirmed no new routes; `#about`/`#contact` remain empty anchor placeholders, unchanged from STEP-02. |
-| 17. Tests cover count, mandatory presence, classification/status, evidence, links, load states, preserved nav/hero | Pass | 43 unit/integration tests across 9 files + 21 e2e tests. |
-| 18. `npm run build` passes | Pass | Reran independently. |
-| 19. Relevant unit/integration tests pass | Pass | Reran independently: 43/43. |
-| 20. Relevant E2E tests pass | Pass | Reran independently: 21/21 across chromium/firefox/webkit, no flake this run. |
+| 1. MOD-W rendering owned by a dedicated section component | Pass | `modw-section.component.ts` injects `ModwContentService`; `portfolio-page.component.html` is now just `<app-modw-section />`. |
+| 2. Section fetches/receives runtime JSON from `/content/modw.json` | Pass | `ModwContentService` (unchanged since STEP-01) still owns the fetch; `modw-content.service.spec.ts` fixture updated to the new shape, all 4 load-state tests pass. |
+| 3. Template does not hardcode principle/role/evidence counts or CTA labels/hrefs | Pass | `modw-section.component.html:22-47` uses `@for` over `content.principles/roles/projectEvidence`; CTAs at lines 49-64 bind `content.repositoryCta`/`consultingCta`. |
+| 4. JSON contract validated before typed content exposed | Pass | `isModwContent` in `modw-content.model.ts:70-87` validates every new field including nested `ModwCta`/`ModwRole`/`ModwProjectEvidence`; `modw-content.model.spec.ts` covers 10 valid/invalid shape cases. |
+| 5. Section renders title, summary, problem, core idea, principles, roles, project evidence, repository CTA, consulting CTA | Pass | All 9 present in `modw-section.component.html`, each with its own testid. |
+| 6-8. Principle/role/evidence count and order driven by JSON | Pass | All three use `@for ... track .id` with no literal counts; `modw-section.component.spec.ts` asserts per-item testids and container child counts. |
+| 9. Repository CTA opens in new tab with `rel="noopener"` | Pass | `modw-section.component.html:50-57` — `target="_blank" rel="noopener"`; verified in unit spec and e2e (`href` matches, `target="_blank"` attribute present). |
+| 10. Consulting CTA points to `#contact` | Pass | `public/content/modw.json` `consultingCta.href` = `"#contact"`. |
+| 11. Loading/empty/error states non-blank and source-safe | Pass | Unchanged copy pattern from STEP-01, now owned by `modw-section.component.html`; all 3 states covered in its spec. |
+| 12. Approved terminology used | Pass | `public/content/modw.json` uses "human-in-the-loop," "AI-assisted development," "methodology"/"workflow," and "viable coding, not vibe coding" as a supplement, not the sole explanation — confirmed by direct read of the production JSON, not just the diff. |
+| 13. No prohibited claims | Pass | `modw-content.production.spec.ts` loads the real `public/content/modw.json` via `node:fs` and asserts none of 7 banned phrases appear anywhere in the JSON text — independently re-read this file to confirm it targets the actual production file, not a fixture copy. |
+| 14-16. STEP-01/02/03 behavior preserved | Pass | Service specs, nav/hero/engagement specs, case-studies-section/case-study-card specs all untouched and passing (49 of the 63 total unit tests belong to unchanged prior-Step files). |
+| 17. No out-of-scope features added | Pass | No routes, CMS, backend, CV, or Contact/About content added; `#about`/`#contact` still empty placeholders. |
+| 18. Test coverage matches requirements | Pass | 10 new modw-section tests + 10 model-validation tests + 2 production-content tests = 22 new tests, plus e2e coverage for roles/evidence/CTAs. |
+| 19-21. Build/tests/e2e pass | Pass | All reran independently below. |
 
 ### Regressions or risks
 
-None found. All STEP-01/STEP-02 tests pass unmodified in behavior (only the case-study detail assertions were relocated out of `portfolio-page.component.spec.ts` into the new dedicated specs, per this Step's explicit extraction goal — not a coverage loss, confirmed by reading both old and new spec files).
-
-One process note, not a code regression: the first implementation pass shipped with only `work-card-{id}` and edited `mod-w/TESTING.md` to redefine the generic-selector requirement away instead of implementing it — correctly caught by Tech Lead review and fixed in the round-trip. Independently reconfirmed the fix is real (not just re-trusting the stated summary): read `case-study-card.component.html` directly and confirmed both `work-card` (literal, on `<article>`) and `work-card-{id}` (host binding) exist as separate attributes on separate elements.
+None found. All STEP-01/02/03 tests pass unmodified. One environment note: a chained `npm run build && npm test && npm run lint` run segfaulted during Node's process teardown in the Dev Team's own build gate, but only *after* printing a clean 63/63 pass — an immediate standalone rerun (twice, independently, in this QA pass) was clean with no crash both times. Treating this as tooling/environment noise, not a code defect, consistent with the Firefox/WebKit connection-flake pattern already logged in prior Steps' QA notes.
 
 ### Manual checks required
 
-- Visual review of the new card design against `DESIGN-SPEC.md` §3.7 (flat card, restrained borders) — structurally present, pixel fidelity not visually verified.
-- Confirm Bio-Align's placeholder copy ("A personal project exploring frontend architecture and interface patterns for data-driven applications") is acceptable, or supply real source-safe copy — flagged again below.
-- Responsive grid check (3/2/1 columns) at actual breakpoints — CSS is in place (`case-studies-section.component.scss`) but not visually confirmed at 980px/640px.
+- Visual review of the MOD-W panel (flat bordered box, not the chamfer treatment — a documented, permitted scope decision) against `DESIGN-SPEC.md` §3.9.
+- Responsive check of the 2-column principles/roles/project-evidence grid collapsing to 1 column at 640px (`modw-section.component.scss`) — CSS is in place, not visually confirmed.
+- Read-through of the new MOD-W copy (problem statement, core idea, role descriptions) for tone against `PRODUCT.md` §8.3 ("confident but not inflated... practical, not manifesto-heavy") — automated tests check for prohibited phrases, not overall tone.
 
 ### Known limitations
 
-1. **Bio-Align and Prismatic copy is conservative, generic placeholder text**, not sourced from real project details (no verified information was available). Flagged consistently since STEP-01 for AGV/Prismatic; now also applies to Bio-Align. Moderator should supply or approve final copy before public launch.
-2. Cards omit the decorative numeric index (e.g. "01"/"02") seen in the prototype — not required by `STEP-03.md` §7 and explicitly within "visual polish beyond the production case-study card and grid needs of this Step" (out of scope).
-3. `#about`/`#contact` remain empty anchor placeholders (STEP-02 carryover, unchanged this Step) — expected until STEP-07/STEP-08.
-4. Local Playwright e2e has shown intermittent Firefox/WebKit `NS_ERROR_CONNECTION_REFUSED` flakes in prior Steps' QA passes; this run (21/21) had none, but it's an environmental pattern worth continuing to watch, not something this Step's code can fix.
+1. **Carried over from Tech Lead review, confirmed on independent read:** `modw-section.component.spec.ts` lines 75, 86, and 97 use CSS class selectors (`.principles > li`, `.roles > li`, `.project-evidence > li`) for the three count assertions, instead of testid-prefix selectors. Each test also asserts item-specific `data-testid`s, so this doesn't mask any gap the way the STEP-03 `work-card` issue did — it's a minor selector-convention inconsistency, not a coverage hole. Per QA rules, not fixing this myself (implementation files are Development Team's to edit); flagging for the optional future cleanup Tech Lead already suggested.
+2. `modw-contact-cta` was retired in favor of `modw-consulting-cta` (explicitly permitted by `STEP-04.md` §9). No external consumers exist yet, so this is a clean break, not a risk.
+3. `#about`/`#contact` remain empty anchor placeholders (unchanged since STEP-02) — expected until STEP-07/STEP-08.
+4. `tsconfig.spec.json` gained `"node"` in its `types` array (test-only file, not `tsconfig.app.json`) to support the production-content safety spec reading the real JSON via `node:fs`. Verified this is scoped to test compilation only and does not affect the production bundle (production build output unchanged in size/behavior).
 
 ### Verification
 
 - `npm run build` — pass (rerun independently for this QA pass).
-- `npm test` — pass, 43/43 tests across 9 files (rerun independently for this QA pass).
-- `npm run test:e2e` — pass, 21/21 across chromium/firefox/webkit (rerun independently for this QA pass, no flake).
+- `npm test` — pass, 63/63 tests across 12 files (rerun independently for this QA pass, twice, no segfault on either run).
+- `npm run test:e2e` — pass, 24/24 across chromium/firefox/webkit (rerun independently for this QA pass, no flake).
 
 ### Recommended next action
 
-Proceed to Product Owner / Moderator acceptance validation for STEP-03. No blocking issues found. Suggest the Moderator review/approve the Bio-Align and Prismatic placeholder copy before public launch.
+Proceed to Product Owner / Moderator acceptance validation for STEP-04. No blocking issues found.

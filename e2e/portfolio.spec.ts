@@ -48,11 +48,31 @@ test('each case-study card shows classification, status, evidence, and technolog
   await expect(card.getByTestId('work-card-mqtt-align-modw-relevance')).toBeVisible();
 });
 
-test('loads MOD-W content from runtime JSON', async ({ page }) => {
+test('loads MOD-W content from runtime JSON, including roles and project evidence', async ({
+  page,
+}) => {
   await page.goto('/');
 
   await expect(page.getByTestId('modw-section')).toContainText('MOD-W');
   await expect(page.getByTestId('modw-principle-role-separation')).toBeVisible();
+  await expect(page.getByTestId('modw-role-moderator')).toBeVisible();
+  await expect(page.getByTestId('modw-project-evidence-mqtt-align')).toBeVisible();
+});
+
+test('MOD-W repository and consulting CTAs are visible with correct hrefs', async ({ page }) => {
+  await page.goto('/');
+
+  const repositoryCta = page.getByTestId('modw-repository-cta');
+  await expect(repositoryCta).toBeVisible();
+  await expect(repositoryCta).toHaveAttribute(
+    'href',
+    'https://github.com/fpmcguire/moderated-ai-development-workflow',
+  );
+  await expect(repositoryCta).toHaveAttribute('target', '_blank');
+
+  const consultingCta = page.getByTestId('modw-consulting-cta');
+  await expect(consultingCta).toBeVisible();
+  await expect(consultingCta).toHaveAttribute('href', '#contact');
 });
 
 test('communicates first-screen clarity: identity, positioning, stack, and availability', async ({

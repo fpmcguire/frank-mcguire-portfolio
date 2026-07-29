@@ -1,0 +1,134 @@
+:host {
+  display: block;
+  padding: var(--s9) var(--s6);
+  border-top: 1px solid var(--border-soft);
+}
+
+.panel {
+  padding: var(--s6);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin: 0;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.875rem, 4vw, 2.875rem);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  margin: var(--s3) 0 var(--s4);
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 40rem;
+  margin: 0 0 var(--s5);
+}
+
+.problem,
+.core-idea {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  max-width: 40rem;
+  margin: 0 0 var(--s4);
+}
+
+.problem {
+  color: var(--muted);
+}
+
+.core-idea {
+  color: var(--text);
+}
+
+.principles,
+.roles,
+.project-evidence {
+  list-style: none;
+  margin: var(--s6) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s4);
+}
+
+.principles li,
+.roles li,
+.project-evidence li {
+  padding-bottom: var(--s4);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.principles h3,
+.roles .label,
+.project-evidence .label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.roles .label,
+.project-evidence .label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.principles p,
+.roles p,
+.project-evidence p {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.cta-row {
+  display: flex;
+  gap: var(--s3);
+  margin-top: var(--s6);
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: var(--s3) var(--s5);
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #04110f;
+  font-weight: 700;
+}
+
+.btn-ghost {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .principles,
+  .roles,
+  .project-evidence {
+    grid-template-columns: 1fr;
+  }
+}

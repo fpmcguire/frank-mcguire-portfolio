@@ -6,44 +6,7 @@
 
   <app-case-studies-section />
 
-  <section data-testid="modw-section" id="modw">
-    @switch (modwContent.state().status) {
-      @case ('loading') {
-        <p data-testid="modw-loading">Loading MOD-W…</p>
-      }
-      @case ('error') {
-        <p data-testid="modw-error">{{ modwContent.state().error }}</p>
-      }
-      @case ('empty') {
-        <p data-testid="modw-empty">MOD-W details are coming soon.</p>
-      }
-      @case ('ready') {
-        <p class="eyebrow">{{ modwContent.state().data?.eyebrow }}</p>
-        <h2 id="modw-heading">{{ modwContent.state().data?.title }}</h2>
-        <p>{{ modwContent.state().data?.summary }}</p>
-
-        <ul>
-          @for (principle of modwContent.state().data?.principles; track principle.id) {
-            <li [attr.data-testid]="'modw-principle-' + principle.id">
-              <h3>{{ principle.title }}</h3>
-              <p>{{ principle.summary }}</p>
-            </li>
-          }
-        </ul>
-
-        <a
-          data-testid="modw-repository-cta"
-          [href]="modwContent.state().data?.repositoryHref"
-          target="_blank"
-          rel="noopener"
-          >View the MOD-W repository</a
-        >
-        <a data-testid="modw-contact-cta" [href]="modwContent.state().data?.consultingHref"
-          >Discuss MOD-W consulting or training</a
-        >
-      }
-    }
-  </section>
+  <app-modw-section />
 
   <div id="about"></div>
   <div id="contact"></div>

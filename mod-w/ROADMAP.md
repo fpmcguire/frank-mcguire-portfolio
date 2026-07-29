@@ -124,7 +124,9 @@ Do not include these in first implementation:
 
 `STEP-02.md` is complete and tagged `mod-w-step-02`.
 
-`STEP-03.md` is complete and ready to tag `mod-w-step-03`.
+`STEP-03.md` is complete and tagged `mod-w-step-03`.
+
+`STEP-04.md` is complete and tagged `mod-w-step-04`.
 
 ---
 

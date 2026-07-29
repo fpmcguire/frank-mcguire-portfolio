@@ -26,21 +26,23 @@ const READY_CASE_STUDIES: ContentLoadState<CaseStudy[]> = {
   error: null,
 };
 
-const MODW_CONTENT: ModwContent = {
-  eyebrow: '03 — Methodology',
-  title: 'Moderated AI Development Workflow (MOD-W)',
-  summary: 'Summary.',
-  repositoryHref: 'https://github.com/fpmcguire/moderated-ai-development-workflow',
-  consultingHref: '#contact',
-  principles: [
-    { id: 'role-separation', title: 'Role separation', summary: 'Summary.' },
-    { id: 'human-moderation', title: 'Human moderation', summary: 'Summary.' },
-  ],
-};
-
 const READY_MODW: ContentLoadState<ModwContent> = {
   status: 'ready',
-  data: MODW_CONTENT,
+  data: {
+    eyebrow: '03 — Methodology',
+    title: 'Moderated AI Development Workflow (MOD-W)',
+    summary: 'Summary.',
+    problem: 'Problem statement.',
+    coreIdea: 'Core idea.',
+    repositoryCta: {
+      label: 'View the MOD-W repository',
+      href: 'https://github.com/fpmcguire/moderated-ai-development-workflow',
+    },
+    consultingCta: { label: 'Discuss MOD-W consulting or training', href: '#contact' },
+    principles: [{ id: 'role-separation', title: 'Role separation', summary: 'Summary.' }],
+    roles: [{ id: 'moderator', label: 'Moderator', responsibility: 'Responsibility.' }],
+    projectEvidence: [{ id: 'mqtt-align', label: 'MQTT-Align', summary: 'Summary.' }],
+  },
   error: null,
 };
 
@@ -59,32 +61,14 @@ function createFixture() {
 }
 
 describe('PortfolioPageComponent', () => {
-  it('renders every configured MOD-W principle from the runtime content', () => {
-    const el = createFixture();
-
-    for (const principle of MODW_CONTENT.principles) {
-      expect(el.querySelector(`[data-testid="modw-principle-${principle.id}"]`)).toBeTruthy();
-    }
-  });
-
-  it('renders the MOD-W repository and consulting CTAs from the runtime content', () => {
-    const el = createFixture();
-
-    expect(el.querySelector('[data-testid="modw-repository-cta"]')?.getAttribute('href')).toBe(
-      MODW_CONTENT.repositoryHref,
-    );
-    expect(el.querySelector('[data-testid="modw-contact-cta"]')?.getAttribute('href')).toBe(
-      MODW_CONTENT.consultingHref,
-    );
-  });
-
-  it('renders nav, hero, engagement, and case-studies sections in composition', () => {
+  it('renders nav, hero, engagement, case-studies, and modw sections in composition', () => {
     const el = createFixture();
 
     expect(el.querySelector('[data-testid="nav-primary"]')).toBeTruthy();
     expect(el.querySelector('[data-testid="hero-section"]')).toBeTruthy();
     expect(el.querySelector('[data-testid="engagement-section"]')).toBeTruthy();
     expect(el.querySelector('[data-testid="work-section"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="modw-section"]')).toBeTruthy();
   });
 
   it('exposes the canonical work and modw anchor ids for nav targets', () => {

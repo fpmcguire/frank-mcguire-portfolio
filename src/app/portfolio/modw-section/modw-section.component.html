@@ -1,0 +1,69 @@
+<section data-testid="modw-section" id="modw" aria-labelledby="modw-section-heading">
+  @switch (modwContent.state().status) {
+    @case ('loading') {
+      <p data-testid="modw-loading">Loading MOD-W…</p>
+    }
+    @case ('error') {
+      <p data-testid="modw-error">{{ modwContent.state().error }}</p>
+    }
+    @case ('empty') {
+      <p data-testid="modw-empty">MOD-W details are coming soon.</p>
+    }
+    @case ('ready') {
+      @if (modwContent.state().data; as content) {
+        <div class="panel">
+          <p class="eyebrow">{{ content.eyebrow }}</p>
+          <h2 id="modw-section-heading" data-testid="modw-section-heading">{{ content.title }}</h2>
+          <p data-testid="modw-section-summary" class="lead">{{ content.summary }}</p>
+
+          <p data-testid="modw-problem" class="problem">{{ content.problem }}</p>
+          <p data-testid="modw-core-idea" class="core-idea">{{ content.coreIdea }}</p>
+
+          <ul class="principles">
+            @for (principle of content.principles; track principle.id) {
+              <li [attr.data-testid]="'modw-principle-' + principle.id">
+                <h3>{{ principle.title }}</h3>
+                <p>{{ principle.summary }}</p>
+              </li>
+            }
+          </ul>
+
+          <ul class="roles">
+            @for (role of content.roles; track role.id) {
+              <li [attr.data-testid]="'modw-role-' + role.id">
+                <span class="label">{{ role.label }}</span>
+                <p>{{ role.responsibility }}</p>
+              </li>
+            }
+          </ul>
+
+          <ul class="project-evidence">
+            @for (evidence of content.projectEvidence; track evidence.id) {
+              <li [attr.data-testid]="'modw-project-evidence-' + evidence.id">
+                <span class="label">{{ evidence.label }}</span>
+                <p>{{ evidence.summary }}</p>
+              </li>
+            }
+          </ul>
+
+          <div class="cta-row">
+            <a
+              data-testid="modw-repository-cta"
+              [href]="content.repositoryCta.href"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-primary"
+              >{{ content.repositoryCta.label }}</a
+            >
+            <a
+              data-testid="modw-consulting-cta"
+              [href]="content.consultingCta.href"
+              class="btn btn-ghost"
+              >{{ content.consultingCta.label }}</a
+            >
+          </div>
+        </div>
+      }
+    }
+  }
+</section>
