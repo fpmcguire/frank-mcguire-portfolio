@@ -1,0 +1,29 @@
+{
+  "eyebrow": "03 — Methodology",
+  "title": "Moderated AI Development Workflow (MOD-W)",
+  "summary": "MOD-W is a human-in-the-loop methodology for AI-assisted software development. It separates product, technical, implementation, and QA responsibilities across documented, Moderator-approved Steps.",
+  "repositoryHref": "https://github.com/fpmcguire/moderated-ai-development-workflow",
+  "consultingHref": "#contact",
+  "principles": [
+    {
+      "id": "role-separation",
+      "title": "Role separation",
+      "summary": "Product, Tech Lead, Development Team, and QA responsibilities stay distinct throughout the workflow."
+    },
+    {
+      "id": "document-centered-steps",
+      "title": "Document-centered steps",
+      "summary": "Work is defined and reviewed through explicit documents and small, approved Steps."
+    },
+    {
+      "id": "human-moderation",
+      "title": "Human moderation",
+      "summary": "A human Moderator holds final authority over scope, approval, and direction."
+    },
+    {
+      "id": "review-and-validation",
+      "title": "Review and validation",
+      "summary": "Implementation goes through Tech Lead review and QA validation before acceptance."
+    }
+  ]
+}

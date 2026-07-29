@@ -338,10 +338,13 @@ _Updated at the close of each Step._
 
 | File | Tests | Type |
 | --- | --- | --- |
-| `src/app/app.spec.ts` | Generated Angular starter tests | Unit/integration placeholder |
-| `e2e/example.spec.ts` | Generated starter-page E2E | E2E placeholder |
+| `src/app/app.spec.ts` | App creates and renders the production portfolio shell (starter content gone) | Integration |
+| `src/app/content/case-studies-content.service.spec.ts` | Ready/empty/error states for `/content/case-studies.json` loading | Integration |
+| `src/app/content/modw-content.service.spec.ts` | Ready/empty/error states for `/content/modw.json` loading | Integration |
+| `src/app/portfolio/portfolio-page.component.spec.ts` | Case-study card rendering, classification/status visibility, empty/error copy, MOD-W principle and CTA rendering | Integration |
+| `e2e/portfolio.spec.ts` | Production shell renders, Case Studies and MOD-W runtime content load at `/` | E2E |
 
-Both current tests target the Angular starter page and must be replaced when the first production portfolio Step is implemented.
+STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above.
 
 ---
 

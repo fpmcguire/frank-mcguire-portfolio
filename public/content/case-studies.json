@@ -1,0 +1,83 @@
+[
+  {
+    "id": "mqtt-align",
+    "title": "Cavalieri Align / MQTT-Align",
+    "projectType": "SaaS platform",
+    "classification": "independent-product",
+    "status": "private-proprietary",
+    "role": "Founder / Frontend Engineer",
+    "summary": "An independent SaaS product for real-time MQTT-based alignment and monitoring, built and shipped through the MOD-W workflow.",
+    "evidence": [
+      "MVP vertical slice delivered in 3 weeks.",
+      "Architecture walk-through available on request."
+    ],
+    "technologies": ["Angular", "TypeScript", "MQTT"],
+    "modwRelevance": "Built through MOD-W steps."
+  },
+  {
+    "id": "agv-fleet-simulator",
+    "title": "AGV Fleet Management Simulator",
+    "projectType": "Simulation dashboard",
+    "classification": "personal-project",
+    "status": "public-repository",
+    "role": "Frontend Engineer",
+    "summary": "A frontend simulator for visualizing and coordinating automated guided vehicle (AGV) fleets in a logistics-style environment.",
+    "evidence": ["Independent project demonstrating real-time dashboarding in Angular."],
+    "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "prismatic",
+    "title": "Prismatic",
+    "projectType": "Web application",
+    "classification": "personal-project",
+    "status": "public-repository",
+    "role": "Frontend Engineer",
+    "summary": "A personal project exploring modern frontend architecture patterns and UI composition techniques.",
+    "evidence": ["Independent project used to trial frontend architecture approaches."],
+    "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "angular-design-patterns",
+    "title": "Angular Design Patterns",
+    "projectType": "Open-source reference project",
+    "classification": "open-source",
+    "status": "public-repository",
+    "role": "Author",
+    "summary": "An open-source collection of Angular design patterns and reusable component approaches for production applications.",
+    "evidence": ["Public repository demonstrating Angular architecture patterns."],
+    "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "paki",
+    "title": "PAKi",
+    "projectType": "Logistics platform",
+    "classification": "professional-experience",
+    "status": "employment-summary",
+    "role": "Senior Frontend Engineer",
+    "summary": "Professional frontend work on a logistics platform, contributing to production features used in day-to-day operations.",
+    "evidence": ["Professional experience summary; architecture walk-through available on request."],
+    "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "travel-it",
+    "title": "travel-IT",
+    "projectType": "Travel booking modernization",
+    "classification": "professional-experience",
+    "status": "employment-summary",
+    "role": "Senior Frontend Engineer",
+    "summary": "Professional frontend work modernizing a travel booking system toward a more maintainable, modern frontend architecture.",
+    "evidence": ["Professional experience summary; architecture walk-through available on request."],
+    "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "kaufland",
+    "title": "Kaufland",
+    "projectType": "E-commerce platform",
+    "classification": "professional-experience",
+    "status": "employment-summary",
+    "role": "Senior Frontend Engineer",
+    "summary": "Professional frontend work on a large-scale e-commerce platform, supporting production business workflows.",
+    "evidence": ["Professional experience summary; architecture walk-through available on request."],
+    "technologies": ["Angular", "TypeScript"]
+  }
+]

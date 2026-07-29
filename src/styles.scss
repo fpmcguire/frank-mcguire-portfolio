@@ -1,1 +1,92 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles: design tokens, reset, and base page treatment. */
+
+:root {
+  /* Color */
+  --bg: #08080a;
+  --bg-2: #050506;
+  --panel: #000000;
+  --panel-2: #0b0b0d;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-soft: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.3);
+  --text: #f4f4f5;
+  --muted: #8c8c93;
+  --faint: #54545a;
+  --accent: #63cddc;
+  --accent-rgb: 99, 205, 220;
+  --accent-dim: rgba(99, 205, 220, 0.16);
+  --warn: #f5b14c;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Spacing (8px base unit) */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+  --s8: 4rem;
+  --s9: 6rem;
+  --s10: 8rem;
+
+  /* Layout */
+  --content-max-width: 1200px;
+  --radius: 14px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
