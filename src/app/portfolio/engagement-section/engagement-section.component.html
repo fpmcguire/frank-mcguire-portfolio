@@ -4,9 +4,9 @@
   <div class="tiles">
     @for (path of engagementPaths; track path.id) {
       <div [attr.data-testid]="'engagement-path-' + path.id" class="tile">
-        <span class="eyebrow">{{ path.eyebrow }}</span>
-        <h3>{{ path.title }}</h3>
-        <p>{{ path.description }}</p>
+        <span class="eyebrow">{{ path.eyebrow | nonBreakingTerms }}</span>
+        <h3>{{ path.title | nonBreakingTerms }}</h3>
+        <p>{{ path.description | nonBreakingTerms }}</p>
       </div>
     }
   </div>

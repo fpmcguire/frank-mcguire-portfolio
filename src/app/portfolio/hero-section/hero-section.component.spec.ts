@@ -3,6 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { HERO_CONTENT } from '../../content/static-profile.content';
 import { HeroSectionComponent } from './hero-section.component';
 
+const renderText = (value: string): string => value.replaceAll('MOD-W', 'MOD\u2011W');
+
 function createFixture() {
   TestBed.configureTestingModule({ imports: [HeroSectionComponent] });
   const fixture = TestBed.createComponent(HeroSectionComponent);
@@ -51,8 +53,16 @@ describe('HeroSectionComponent', () => {
 
     expect(strip).toBeTruthy();
     for (const item of HERO_CONTENT.availability) {
-      expect(strip?.textContent).toContain(item.label);
-      expect(strip?.textContent).toContain(item.value);
+      expect(strip?.textContent).toContain(renderText(item.label));
+      expect(strip?.textContent).toContain(renderText(item.value));
     }
+  });
+
+  it('renders MOD-W with a non-breaking hyphen', () => {
+    const fixture = createFixture();
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(text).toContain('MOD\u2011W');
+    expect(text).not.toContain('MOD-W');
   });
 });

@@ -3,6 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { NAV_LINKS } from '../../content/nav.model';
 import { NavComponent } from './nav.component';
 
+const renderText = (value: string): string => value.replaceAll('MOD-W', 'MOD\u2011W');
+
 function createFixture() {
   TestBed.configureTestingModule({ imports: [NavComponent] });
   const fixture = TestBed.createComponent(NavComponent);
@@ -17,9 +19,17 @@ describe('NavComponent', () => {
 
     for (const link of NAV_LINKS) {
       const anchor = el.querySelector(`[data-testid="nav-link-${link.id}"]`);
-      expect(anchor?.textContent).toContain(link.label);
+      expect(anchor?.textContent).toContain(renderText(link.label));
       expect(anchor?.getAttribute('href')).toBe(link.href);
     }
+  });
+
+  it('renders MOD-W with a non-breaking hyphen', () => {
+    const fixture = createFixture();
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(el.textContent).toContain('MOD\u2011W');
+    expect(el.textContent).not.toContain('MOD-W');
   });
 
   it('renders a persistent contact CTA pointing to #contact', () => {

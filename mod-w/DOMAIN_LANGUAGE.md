@@ -166,4 +166,15 @@ Canonical principle fields:
 
 ---
 
+## 8. Typography Rules
+
+`DOMAIN_LANGUAGE.md` is the source of truth for visible terminology rules.
+
+- Store the term as `MOD-W` in source content, JSON, tests, and artifacts unless the value is explicitly asserting rendered browser text.
+- Render visible `MOD-W` text with a non-breaking hyphen (`U+2011`) so the term never wraps at the hyphen.
+- Apply the non-breaking rendering rule to static templates, runtime JSON content, loading/error/empty states, CTAs, nav labels, and card copy.
+- Implement the rendering rule in code through a shared presentation utility, not by manually replacing every content string.
+
+---
+
 MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow

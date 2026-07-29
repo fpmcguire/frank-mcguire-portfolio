@@ -5,9 +5,11 @@ import {
   CASE_STUDY_STATUS_LABELS,
   CaseStudy,
 } from '../../content/case-study.model';
+import { NonBreakingTermsPipe } from '../../content/non-breaking-terms.pipe';
 
 @Component({
   selector: 'app-case-study-card',
+  imports: [NonBreakingTermsPipe],
   templateUrl: './case-study-card.component.html',
   styleUrl: './case-study-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

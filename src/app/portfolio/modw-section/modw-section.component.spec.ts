@@ -6,6 +6,8 @@ import { ModwContent } from '../../content/modw-content.model';
 import { ModwContentService } from '../../content/modw-content.service';
 import { ModwSectionComponent } from './modw-section.component';
 
+const renderText = (value: string): string => value.replaceAll('MOD-W', 'MOD\u2011W');
+
 const MODW_CONTENT: ModwContent = {
   eyebrow: '03 — Methodology',
   title: 'Moderated AI Development Workflow (MOD-W)',
@@ -53,7 +55,7 @@ describe('ModwSectionComponent', () => {
     const el = createFixture(READY_STATE);
 
     expect(el.querySelector('[data-testid="modw-section-heading"]')?.textContent).toContain(
-      MODW_CONTENT.title,
+      renderText(MODW_CONTENT.title),
     );
     expect(el.querySelector('[data-testid="modw-section-summary"]')?.textContent).toContain(
       MODW_CONTENT.summary,
@@ -103,7 +105,7 @@ describe('ModwSectionComponent', () => {
     const el = createFixture(READY_STATE);
     const cta = el.querySelector('[data-testid="modw-repository-cta"]');
 
-    expect(cta?.textContent).toContain(MODW_CONTENT.repositoryCta.label);
+    expect(cta?.textContent).toContain(renderText(MODW_CONTENT.repositoryCta.label));
     expect(cta?.getAttribute('href')).toBe(MODW_CONTENT.repositoryCta.href);
     expect(cta?.getAttribute('target')).toBe('_blank');
     expect(cta?.getAttribute('rel')).toBe('noopener');
@@ -113,7 +115,7 @@ describe('ModwSectionComponent', () => {
     const el = createFixture(READY_STATE);
     const cta = el.querySelector('[data-testid="modw-consulting-cta"]');
 
-    expect(cta?.textContent).toContain(MODW_CONTENT.consultingCta.label);
+    expect(cta?.textContent).toContain(renderText(MODW_CONTENT.consultingCta.label));
     expect(cta?.getAttribute('href')).toBe(MODW_CONTENT.consultingCta.href);
   });
 
@@ -141,7 +143,14 @@ describe('ModwSectionComponent', () => {
     });
 
     expect(el.querySelector('[data-testid="modw-error"]')?.textContent).toContain(
-      'MOD-W content could not be loaded right now.',
+      'MOD\u2011W content could not be loaded right now.',
     );
+  });
+
+  it('renders MOD-W with a non-breaking hyphen', () => {
+    const el = createFixture(READY_STATE);
+
+    expect(el.textContent).toContain('MOD\u2011W');
+    expect(el.textContent).not.toContain('MOD-W');
   });
 });

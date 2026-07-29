@@ -3,11 +3,11 @@
 <article data-testid="work-card" class="card">
   <div class="card-top">
     <span [attr.data-testid]="'work-card-' + study.id + '-project-type'" class="project-type">{{
-      study.projectType
+      study.projectType | nonBreakingTerms
     }}</span>
   </div>
 
-  <h3>{{ study.title }}</h3>
+  <h3>{{ study.title | nonBreakingTerms }}</h3>
 
   <div class="badges">
     <span [attr.data-testid]="'work-card-' + study.id + '-classification'" class="badge">{{
@@ -18,19 +18,21 @@
     }}</span>
   </div>
 
-  <p class="summary">{{ study.summary }}</p>
+  <p class="summary">{{ study.summary | nonBreakingTerms }}</p>
 
-  <p [attr.data-testid]="'work-card-' + study.id + '-role'" class="role">{{ study.role }}</p>
+  <p [attr.data-testid]="'work-card-' + study.id + '-role'" class="role">{{
+    study.role | nonBreakingTerms
+  }}</p>
 
   <ul [attr.data-testid]="'work-card-' + study.id + '-evidence'" class="evidence">
     @for (point of study.evidence; track point) {
-      <li>{{ point }}</li>
+      <li>{{ point | nonBreakingTerms }}</li>
     }
   </ul>
 
   <div [attr.data-testid]="'work-card-' + study.id + '-technologies'" class="technologies">
     @for (tech of study.technologies; track tech) {
-      <span class="chip">{{ tech }}</span>
+      <span class="chip">{{ tech | nonBreakingTerms }}</span>
     }
   </div>
 
@@ -39,7 +41,7 @@
       [attr.data-testid]="'work-card-' + study.id + '-modw-relevance'"
       class="modw-relevance"
     >
-      {{ modwRelevance }}
+      {{ modwRelevance | nonBreakingTerms }}
     </p>
   }
 

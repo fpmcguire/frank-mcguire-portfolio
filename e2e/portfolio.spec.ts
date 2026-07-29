@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+const NON_BREAKING_MODW = 'MOD\u2011W';
+
 test('renders the production portfolio shell instead of the Angular starter page', async ({
   page,
 }) => {
@@ -53,7 +55,7 @@ test('loads MOD-W content from runtime JSON, including roles and project evidenc
 }) => {
   await page.goto('/');
 
-  await expect(page.getByTestId('modw-section')).toContainText('MOD-W');
+  await expect(page.getByTestId('modw-section')).toContainText(NON_BREAKING_MODW);
   await expect(page.getByTestId('modw-principle-role-separation')).toBeVisible();
   await expect(page.getByTestId('modw-role-moderator')).toBeVisible();
   await expect(page.getByTestId('modw-project-evidence-mqtt-align')).toBeVisible();

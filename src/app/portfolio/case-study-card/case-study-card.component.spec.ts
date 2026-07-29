@@ -3,6 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { CaseStudy } from '../../content/case-study.model';
 import { CaseStudyCardComponent } from './case-study-card.component';
 
+const renderText = (value: string | undefined): string =>
+  value?.replaceAll('MOD-W', 'MOD\u2011W') ?? '';
+
 const BASE_CASE_STUDY: CaseStudy = {
   id: 'mqtt-align',
   title: 'Cavalieri Align / MQTT-Align',
@@ -93,7 +96,15 @@ describe('CaseStudyCardComponent', () => {
 
     expect(
       el.querySelector('[data-testid="work-card-mqtt-align-modw-relevance"]')?.textContent,
-    ).toContain(BASE_CASE_STUDY.modwRelevance);
+    ).toContain(renderText(BASE_CASE_STUDY.modwRelevance));
+  });
+
+  it('renders MOD-W with a non-breaking hyphen', () => {
+    const fixture = createFixture(BASE_CASE_STUDY);
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(text).toContain('MOD\u2011W');
+    expect(text).not.toContain('MOD-W');
   });
 
   it('omits MOD-W relevance when absent', () => {

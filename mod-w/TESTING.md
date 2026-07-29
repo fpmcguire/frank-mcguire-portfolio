@@ -217,10 +217,12 @@ MOD-W architecture expectations:
 - The app fetches MOD-W content at runtime from `/content/modw.json`.
 - The MOD-W section must not hardcode principle count or CTA labels in the template.
 - The JSON must preserve source-safe MOD-W terminology from `PRODUCT.md`.
+- Visible MOD-W typography rules are maintained in `DOMAIN_LANGUAGE.md`.
 - The app must provide a non-blank loading state while MOD-W content is loading.
 - The app must provide a source-safe error state if the file is missing or malformed.
 - Tests should verify that every configured MOD-W principle renders.
 - Tests should verify that prohibited MOD-W claims are not rendered.
+- Tests should verify that visible MOD-W text follows the `DOMAIN_LANGUAGE.md` non-breaking hyphen (`U+2011`) rule.
 
 Local UI development data:
 
@@ -367,13 +369,14 @@ _Updated at the close of each Step._
 | `src/app/content/modw-content.service.spec.ts` | Ready/empty/error states for `/content/modw.json` loading | Integration |
 | `src/app/content/modw-content.model.spec.ts` | `isModwContent` accepts valid/empty-array shapes, rejects missing/malformed fields (problem, coreIdea, CTAs, roles, projectEvidence) | Unit |
 | `src/app/content/modw-content.production.spec.ts` | Production `public/content/modw.json` is a valid `ModwContent` shape and contains no prohibited MOD-W claims | Unit |
+| `src/app/content/non-breaking-terms.pipe.spec.ts` | Visible copy normalizes `MOD-W` to a non-breaking hyphen form and handles empty values | Unit |
 | `src/app/portfolio/portfolio-page.component.spec.ts` | Nav/hero/engagement/case-studies-section/modw-section composition, `work`/`modw` anchor ids, single `h1` | Integration |
 | `src/app/portfolio/nav/nav.component.spec.ts` | Required nav labels and hrefs, contact CTA, mobile menu open/close, menu closes on link click | Integration |
 | `src/app/portfolio/hero-section/hero-section.component.spec.ts` | First-screen identity/positioning terms, single `h1`, CTA hrefs, availability strip content | Integration |
 | `src/app/portfolio/engagement-section/engagement-section.component.spec.ts` | Full-time/freelance/advisory tiles render, full-time and freelance share equal visual weight | Integration |
 | `src/app/portfolio/case-studies-section/case-studies-section.component.spec.ts` | JSON-driven card count with no hardcoded number, mandatory launch ids present, JSON order preserved, loading/empty/error copy | Integration |
-| `src/app/portfolio/case-study-card/case-study-card.component.spec.ts` | Host `work-card-{id}` testid, all fields render, human-readable classification/status labels, evidence bullets, technology chips, MOD-W relevance and link shown/omitted correctly | Integration |
-| `src/app/portfolio/modw-section/modw-section.component.spec.ts` | Heading/summary/problem/core-idea render, principles/roles/project-evidence render with no hardcoded counts, repository/consulting CTAs from JSON, loading/empty/error copy | Integration |
+| `src/app/portfolio/case-study-card/case-study-card.component.spec.ts` | Host `work-card-{id}` testid, all fields render, human-readable classification/status labels, evidence bullets, technology chips, MOD-W relevance and link shown/omitted correctly, rendered MOD-W hyphen is non-breaking | Integration |
+| `src/app/portfolio/modw-section/modw-section.component.spec.ts` | Heading/summary/problem/core-idea render, principles/roles/project-evidence render with no hardcoded counts, repository/consulting CTAs from JSON, loading/empty/error copy, rendered MOD-W hyphen is non-breaking | Integration |
 | `e2e/portfolio.spec.ts` | Production shell renders, all mandatory launch Case Study titles visible, card field rendering, MOD-W runtime content loads (incl. roles/evidence), MOD-W CTAs visible, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
 
 STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`. STEP-03 extracted Case Studies rendering into dedicated `case-studies-section`/`case-study-card` components and specs, trimming the now-duplicated case-study detail assertions out of `portfolio-page.component.spec.ts`. STEP-04 extracted MOD-W rendering into a dedicated `modw-section` component and spec (same trim pattern), expanded the `ModwContent` contract, and added a production-content safety spec.

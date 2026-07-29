@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 import { NAV_LINKS } from '../../content/nav.model';
+import { NonBreakingTermsPipe } from '../../content/non-breaking-terms.pipe';
 
 @Component({
   selector: 'app-nav',
+  imports: [NonBreakingTermsPipe],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,29 +1,37 @@
 <section data-testid="modw-section" id="modw" aria-labelledby="modw-section-heading">
   @switch (modwContent.state().status) {
     @case ('loading') {
-      <p data-testid="modw-loading">Loading MOD-W…</p>
+      <p data-testid="modw-loading">Loading {{ 'MOD-W' | nonBreakingTerms }}…</p>
     }
     @case ('error') {
-      <p data-testid="modw-error">{{ modwContent.state().error }}</p>
+      <p data-testid="modw-error">{{ modwContent.state().error | nonBreakingTerms }}</p>
     }
     @case ('empty') {
-      <p data-testid="modw-empty">MOD-W details are coming soon.</p>
+      <p data-testid="modw-empty">{{ 'MOD-W' | nonBreakingTerms }} details are coming soon.</p>
     }
     @case ('ready') {
       @if (modwContent.state().data; as content) {
         <div class="panel">
-          <p class="eyebrow">{{ content.eyebrow }}</p>
-          <h2 id="modw-section-heading" data-testid="modw-section-heading">{{ content.title }}</h2>
-          <p data-testid="modw-section-summary" class="lead">{{ content.summary }}</p>
+          <p class="eyebrow">{{ content.eyebrow | nonBreakingTerms }}</p>
+          <h2 id="modw-section-heading" data-testid="modw-section-heading">
+            {{ content.title | nonBreakingTerms }}
+          </h2>
+          <p data-testid="modw-section-summary" class="lead">
+            {{ content.summary | nonBreakingTerms }}
+          </p>
 
-          <p data-testid="modw-problem" class="problem">{{ content.problem }}</p>
-          <p data-testid="modw-core-idea" class="core-idea">{{ content.coreIdea }}</p>
+          <p data-testid="modw-problem" class="problem">
+            {{ content.problem | nonBreakingTerms }}
+          </p>
+          <p data-testid="modw-core-idea" class="core-idea">
+            {{ content.coreIdea | nonBreakingTerms }}
+          </p>
 
           <ul class="principles">
             @for (principle of content.principles; track principle.id) {
               <li [attr.data-testid]="'modw-principle-' + principle.id">
-                <h3>{{ principle.title }}</h3>
-                <p>{{ principle.summary }}</p>
+                <h3>{{ principle.title | nonBreakingTerms }}</h3>
+                <p>{{ principle.summary | nonBreakingTerms }}</p>
               </li>
             }
           </ul>
@@ -31,8 +39,8 @@
           <ul class="roles">
             @for (role of content.roles; track role.id) {
               <li [attr.data-testid]="'modw-role-' + role.id">
-                <span class="label">{{ role.label }}</span>
-                <p>{{ role.responsibility }}</p>
+                <span class="label">{{ role.label | nonBreakingTerms }}</span>
+                <p>{{ role.responsibility | nonBreakingTerms }}</p>
               </li>
             }
           </ul>
@@ -40,8 +48,8 @@
           <ul class="project-evidence">
             @for (evidence of content.projectEvidence; track evidence.id) {
               <li [attr.data-testid]="'modw-project-evidence-' + evidence.id">
-                <span class="label">{{ evidence.label }}</span>
-                <p>{{ evidence.summary }}</p>
+                <span class="label">{{ evidence.label | nonBreakingTerms }}</span>
+                <p>{{ evidence.summary | nonBreakingTerms }}</p>
               </li>
             }
           </ul>
@@ -53,13 +61,13 @@
               target="_blank"
               rel="noopener"
               class="btn btn-primary"
-              >{{ content.repositoryCta.label }}</a
+              >{{ content.repositoryCta.label | nonBreakingTerms }}</a
             >
             <a
               data-testid="modw-consulting-cta"
               [href]="content.consultingCta.href"
               class="btn btn-ghost"
-              >{{ content.consultingCta.label }}</a
+              >{{ content.consultingCta.label | nonBreakingTerms }}</a
             >
           </div>
         </div>

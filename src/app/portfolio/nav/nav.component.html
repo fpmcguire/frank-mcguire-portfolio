@@ -3,7 +3,9 @@
 
   <div class="nav-links">
     @for (link of navLinks; track link.id) {
-      <a [href]="link.href" [attr.data-testid]="'nav-link-' + link.id">{{ link.label }}</a>
+      <a [href]="link.href" [attr.data-testid]="'nav-link-' + link.id">{{
+        link.label | nonBreakingTerms
+      }}</a>
     }
   </div>
 
@@ -33,7 +35,7 @@
       &#10005;
     </button>
     @for (link of navLinks; track link.id) {
-      <a [href]="link.href" (click)="closeMobileMenu()">{{ link.label }}</a>
+      <a [href]="link.href" (click)="closeMobileMenu()">{{ link.label | nonBreakingTerms }}</a>
     }
   </div>
 }
