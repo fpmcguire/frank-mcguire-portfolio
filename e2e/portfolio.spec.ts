@@ -9,12 +9,43 @@ test('renders the production portfolio shell instead of the Angular starter page
   await expect(page.getByText('Congratulations! Your app is running.')).toHaveCount(0);
 });
 
-test('loads Case Studies content from runtime JSON', async ({ page }) => {
+test('loads Case Studies content from runtime JSON with all mandatory launch titles visible', async ({
+  page,
+}) => {
   await page.goto('/');
 
   const grid = page.getByTestId('work-card-grid');
   await expect(grid).toBeVisible();
-  await expect(page.getByTestId('work-card-mqtt-align')).toBeVisible();
+
+  const mandatoryLaunchIds = [
+    'mqtt-align',
+    'agv-fleet-simulator',
+    'bio-align',
+    'angular-design-patterns',
+    'paki',
+    'travel-it',
+    'kaufland',
+  ];
+  for (const id of mandatoryLaunchIds) {
+    await expect(page.getByTestId(`work-card-${id}`)).toBeVisible();
+  }
+});
+
+test('each case-study card shows classification, status, evidence, and technologies', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  const card = page.getByTestId('work-card-mqtt-align');
+  await expect(card.getByTestId('work-card-mqtt-align-classification')).toContainText(
+    'Independent Product',
+  );
+  await expect(card.getByTestId('work-card-mqtt-align-status')).toContainText(
+    'Private / Proprietary',
+  );
+  await expect(card.getByTestId('work-card-mqtt-align-evidence')).toBeVisible();
+  await expect(card.getByTestId('work-card-mqtt-align-technologies')).toBeVisible();
+  await expect(card.getByTestId('work-card-mqtt-align-modw-relevance')).toBeVisible();
 });
 
 test('loads MOD-W content from runtime JSON', async ({ page }) => {

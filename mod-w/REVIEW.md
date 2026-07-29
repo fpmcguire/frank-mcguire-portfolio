@@ -1,4 +1,4 @@
-## Tech Lead Review - STEP-02
+## Tech Lead Review - STEP-03
 
 ### Verdict
 
@@ -12,50 +12,48 @@ None.
 
 #### Could fix later
 
-1. `src/app/portfolio/portfolio-page.component.html:23` still uses only item-specific case-study card test ids such as `work-card-mqtt-align`, while `mod-w/TESTING.md:149` still defines the generic `work-card` selector. This was already identified as a STEP-01 carryover and remains appropriate to clean up in STEP-03 when the production Case Study cards are implemented.
-
-2. The first local `npm run test:e2e` run passed Chromium but Firefox and WebKit could not connect to the dev server. A rerun passed all browsers. Treat this as a local Playwright/dev-server flake to monitor, not a STEP-02 implementation blocker.
+None.
 
 ### Scope check
 
-The implementation stays within STEP-02. It adds production navigation, anchor-based SPA navigation, a signal-backed mobile menu, hero content, an availability strip, and equal-weight engagement path tiles.
+The second pass resolves the prior selector-contract finding. `CaseStudyCardComponent` now exposes both the item-specific host selector `work-card-{id}` and the generic internal card selector `work-card`, and tests assert both contracts.
 
-No CV/resume page, CV download link, contact form, backend, CMS, or multi-page routes were introduced. `src/app/app.routes.ts` remains an empty route array, and the visible navigation uses anchor links.
+The implementation stays within STEP-03. It extracts Case Studies into a dedicated section component, adds a presentational card component, keeps content runtime-driven from `/content/case-studies.json`, adds Bio-Align to the mandatory launch set, preserves no-route SPA behavior, and fixes the STEP-02 engagement heading mismatch.
 
-STEP-01 runtime Case Studies and MOD-W JSON loading behavior is preserved.
+No case-study detail routes, expanders, filtering, CMS/admin UI, backend, CV/resume page, CV download link, or contact form were introduced.
 
 ### Acceptance check mapping
 
-- STEP-02 AC1: met - `src/app/portfolio/portfolio-page.component.html:1` renders the production nav component.
-- STEP-02 AC2: met - `src/app/content/nav.model.ts:10` defines hash-anchor links.
-- STEP-02 AC3: met - `src/app/portfolio/nav/nav.component.ts:13` uses a signal for mobile menu state, with open/close controls in `src/app/portfolio/nav/nav.component.html:14` and `src/app/portfolio/nav/nav.component.html:29`.
-- STEP-02 AC4: met - `src/app/content/static-profile.content.ts:23` and `src/app/content/static-profile.content.ts:24` render Frank McGuire and Senior Frontend Engineer / Frontend Consultant positioning.
-- STEP-02 AC5: met - hero/availability copy includes Angular, TypeScript, Germany/EU, full-time, and freelance signals in `src/app/content/static-profile.content.ts:22` through `src/app/content/static-profile.content.ts:32`.
-- STEP-02 AC6: met - availability strip renders the required full-time, freelance, location, stack, and MOD-W authorship signals.
-- STEP-02 AC7: met - engagement paths include full-time, freelance, and advisory paths in `src/app/content/engagement-paths.content.ts:5` through `src/app/content/engagement-paths.content.ts:22`.
-- STEP-02 AC8: met - implementation uses standalone component imports, signals, typed content, `as const`, `satisfies`, and modern template flow.
-- STEP-02 AC9: met - Case Studies and MOD-W runtime sections remain wired through the existing content services.
-- STEP-02 AC10: met - out-of-scope features were not added.
-- STEP-02 AC11: met - tests cover nav rendering, mobile menu behavior, hero content, engagement path rendering, and preserved runtime content behavior.
-- STEP-02 AC12: met - `npm run build` passes.
-- STEP-02 AC13: met - `npm test` passes.
-- STEP-02 AC14: met - `npm run test:e2e` passed on rerun; first run had a local dev-server availability flake documented above.
-
-### Design and architecture check
-
-The work follows the approved compact SPA architecture and the Editorial Left direction at the appropriate fidelity for STEP-02. The implementation uses typed static content/config for nav, hero, availability, and engagement paths, while keeping Case Studies and MOD-W as runtime JSON.
-
-No formal Design IDs are present in `DESIGN-SPEC.md`.
+- STEP-03 AC1: met - Case Studies rendering is owned by `CaseStudiesSectionComponent`.
+- STEP-03 AC2: met - Individual cards are rendered by `CaseStudyCardComponent`.
+- STEP-03 AC3: met - The section receives runtime content through `CaseStudiesContentService`.
+- STEP-03 AC4: met - Card count is rendered from service data with `@for`.
+- STEP-03 AC5: met - Mandatory launch set includes Bio-Align.
+- STEP-03 AC6: met - Tests assert JSON order.
+- STEP-03 AC7: met - Cards render title, project type, role, summary, classification, status, evidence, and technologies.
+- STEP-03 AC8: met - MOD-W relevance renders only when present.
+- STEP-03 AC9: met - Optional links render only when `href` is present.
+- STEP-03 AC10: met - Human-readable classification/status labels are visible.
+- STEP-03 AC11: met - Loading, empty, and error states are preserved.
+- STEP-03 AC12: met - generic `work-card` and item-specific `work-card-{id}` selectors are both available.
+- STEP-03 AC13: met - Existing runtime loading tests pass.
+- STEP-03 AC14: met - Existing nav, hero, and engagement tests pass.
+- STEP-03 AC15: met - Engagement heading now says "Ways to work together."
+- STEP-03 AC16: met - No hidden out-of-scope features were added.
+- STEP-03 AC17: met - Tests cover card count from data, required launch card presence, classification/status visibility, evidence rendering, optional link behavior, loading/empty/error states, and preserved nav/hero behavior.
+- STEP-03 AC18: met - `npm run build` passes.
+- STEP-03 AC19: met - `npm test` passes.
+- STEP-03 AC20: met - `npm run test:e2e` passes.
 
 ### Verification
 
 - `npm run build` - pass.
-- `npm test` - pass, 31 tests across 7 files.
-- `npm run test:e2e` - first run failed in Firefox/WebKit with `NS_ERROR_CONNECTION_REFUSED` / `Could not connect to server` after Chromium passed 6/6; rerun passed, 18/18 tests.
+- `npm test` - pass, 43 tests across 9 files.
+- `npm run test:e2e` - pass, 21 tests across Chromium, Firefox, and WebKit.
 
 ### Recommended next action
 
-Proceed to QA / Tester validation for STEP-02.
+Proceed to QA / Tester validation for STEP-03.
 
 ---
 

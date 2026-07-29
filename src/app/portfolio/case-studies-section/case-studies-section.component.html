@@ -1,0 +1,27 @@
+<section data-testid="work-section" id="work" aria-labelledby="work-section-heading">
+  <p class="eyebrow">02 — Selected Work</p>
+  <h2 id="work-section-heading" data-testid="work-section-heading">Case Studies</h2>
+  <p data-testid="work-section-lead" class="lead">
+    Selected projects and professional experience evidencing frontend architecture, delivery,
+    testing, and product judgment — several built with MOD-W.
+  </p>
+
+  @switch (caseStudiesContent.state().status) {
+    @case ('loading') {
+      <p data-testid="work-cards-loading">Loading case studies…</p>
+    }
+    @case ('error') {
+      <p data-testid="work-cards-error">{{ caseStudiesContent.state().error }}</p>
+    }
+    @case ('empty') {
+      <p data-testid="work-cards-empty">Case studies are coming soon.</p>
+    }
+    @case ('ready') {
+      <div data-testid="work-card-grid" class="grid">
+        @for (caseStudy of caseStudiesContent.state().data; track caseStudy.id) {
+          <app-case-study-card [caseStudy]="caseStudy" />
+        }
+      </div>
+    }
+  }
+</section>

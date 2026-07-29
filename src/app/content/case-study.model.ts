@@ -19,6 +19,21 @@ export const CASE_STUDY_STATUSES = [
 
 export type CaseStudyStatus = (typeof CASE_STUDY_STATUSES)[number];
 
+export const CASE_STUDY_CLASSIFICATION_LABELS: Record<CaseStudyClassification, string> = {
+  'independent-product': 'Independent Product',
+  'personal-project': 'Personal Project',
+  'open-source': 'Open Source',
+  'professional-experience': 'Professional Experience',
+  proprietary: 'Proprietary',
+};
+
+export const CASE_STUDY_STATUS_LABELS: Record<CaseStudyStatus, string> = {
+  'public-demo': 'Public Demo',
+  'public-repository': 'Public Repository',
+  'private-proprietary': 'Private / Proprietary',
+  'employment-summary': 'Employment Summary',
+};
+
 export interface CaseStudy {
   readonly id: string;
   readonly title: string;

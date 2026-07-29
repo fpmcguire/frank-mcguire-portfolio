@@ -1,0 +1,57 @@
+@let study = caseStudy();
+
+<article data-testid="work-card" class="card">
+  <div class="card-top">
+    <span [attr.data-testid]="'work-card-' + study.id + '-project-type'" class="project-type">{{
+      study.projectType
+    }}</span>
+  </div>
+
+  <h3>{{ study.title }}</h3>
+
+  <div class="badges">
+    <span [attr.data-testid]="'work-card-' + study.id + '-classification'" class="badge">{{
+      classificationLabel()
+    }}</span>
+    <span [attr.data-testid]="'work-card-' + study.id + '-status'" class="badge">{{
+      statusLabel()
+    }}</span>
+  </div>
+
+  <p class="summary">{{ study.summary }}</p>
+
+  <p [attr.data-testid]="'work-card-' + study.id + '-role'" class="role">{{ study.role }}</p>
+
+  <ul [attr.data-testid]="'work-card-' + study.id + '-evidence'" class="evidence">
+    @for (point of study.evidence; track point) {
+      <li>{{ point }}</li>
+    }
+  </ul>
+
+  <div [attr.data-testid]="'work-card-' + study.id + '-technologies'" class="technologies">
+    @for (tech of study.technologies; track tech) {
+      <span class="chip">{{ tech }}</span>
+    }
+  </div>
+
+  @if (study.modwRelevance; as modwRelevance) {
+    <p
+      [attr.data-testid]="'work-card-' + study.id + '-modw-relevance'"
+      class="modw-relevance"
+    >
+      {{ modwRelevance }}
+    </p>
+  }
+
+  @if (study.href; as href) {
+    <a
+      [attr.data-testid]="'work-card-' + study.id + '-link'"
+      [href]="href"
+      target="_blank"
+      rel="noopener"
+      class="link"
+    >
+      View project ↗
+    </a>
+  }
+</article>

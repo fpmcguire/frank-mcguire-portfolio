@@ -1,4 +1,4 @@
-## QA — STEP-02
+## QA — STEP-03
 
 ### Summary
 
@@ -8,46 +8,52 @@ Pass with notes
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| 1. Page renders a production nav component | Pass | `src/app/portfolio/portfolio-page.component.html:1` renders `<app-nav />`; `nav.component.html:1` renders `<nav data-testid="nav-primary">`. |
-| 2. Nav uses anchor links, not page routes | Pass | `nav.model.ts:10-16` — all 5 `NAV_LINKS` are `#`-hrefs. `app.routes.ts` unchanged (`export const routes: Routes = [];`). |
-| 3. Mobile menu can open and close through accessible controls | Pass | `nav.component.html:12-22` toggle has `aria-expanded`/`aria-controls`/dynamic `aria-label`; menu (`nav.component.html:25-39`) has a labelled close button and closes on link click. `nav.component.spec.ts` covers open/close/close-on-link-click; `e2e/portfolio.spec.ts:52-61` exercises the same flow in a real browser at mobile viewport. |
-| 4. Hero renders name and Senior Frontend Engineer / Frontend Consultant positioning | Pass | `static-profile.content.ts` `HERO_CONTENT.name` = "Frank McGuire"; `lead` states "Senior Frontend Engineer and Frontend Consultant...". Rendered at `hero-section.component.html:6-7`. |
-| 5. First-screen includes Angular, TypeScript, Germany/EU, full-time, freelance signals | Pass | `HERO_CONTENT.lead` names Angular/TypeScript/Vue/React; `availability` array includes Full-time, Freelance, and "Germany · Remote / EU" location. Verified in `hero-section.component.spec.ts` and `e2e/portfolio.spec.ts:27-41`. |
-| 6. Availability strip renders full-time, freelance, location, stack, MOD-W authorship | Pass | `HERO_CONTENT.availability` has exactly these 5 entries (`static-profile.content.ts:24-30`), rendered via `@for` at `hero-section.component.html:18-25`. |
-| 7. Engagement tiles render full-time/freelance/advisory with equal visual weight for full-time/freelance | Pass | `engagement-paths.content.ts` defines all 3; `engagement-section.component.html:6` applies the same `.tile` class to every tile — confirmed identical `className` for full-time vs. freelance in `engagement-section.component.spec.ts`. |
-| 8. Standalone components, signals, modern template control flow | Pass | No `@NgModule`; `isMobileMenuOpen` is a `signal()`; templates use `@for`/`@if` only — no `*ngFor`/`*ngIf` found in new files. |
-| 9. Existing Case Studies/MOD-W runtime behavior still works | Pass | `portfolio-page.component.html:7,42` sections unchanged apart from added `id` attributes; all 6 STEP-01 content-loading tests in `portfolio-page.component.spec.ts` still pass unmodified. |
-| 10. No CV/resume, CV download, contact form, backend, CMS, or multi-page routes | Pass | Confirmed no new routes, forms, or backend calls; `#about`/`#contact` are empty anchor placeholders only (`portfolio-page.component.html:81-82`), not content sections. |
-| 11. Tests cover nav, mobile menu, hero, engagement, preserved runtime content | Pass | `nav.component.spec.ts` (6 tests), `hero-section.component.spec.ts` (4 tests), `engagement-section.component.spec.ts` (2 tests), plus preserved/extended `portfolio-page.component.spec.ts` (9 tests, 6 original + 3 new). |
-| 12. `npm run build` passes | Pass | Reran independently: production build succeeds. |
-| 13. Relevant unit/integration tests pass | Pass | Reran independently: 31/31 tests across 7 files. |
-| 14. Relevant E2E tests pass or blocker documented | Pass | See Verification — 17/18 on first independent run (1 Firefox connection-refused flake), 18/18 and 6/6 on isolated Firefox rerun. Same flake class already documented in `REVIEW.md`; not a code defect. |
+| 1. Case Studies rendering owned by a dedicated section component | Pass | `case-studies-section.component.ts` injects `CaseStudiesContentService` and owns the `@switch` over load state; `portfolio-page.component.html:7` is now just `<app-case-studies-section />`. |
+| 2. Individual cards rendered by a dedicated presentational card component | Pass | `case-study-card.component.ts` — `input.required<CaseStudy>()`, no injected services, no data fetching. |
+| 3. Section fetches/receives runtime JSON from `/content/case-studies.json` | Pass | `CaseStudiesContentService` (unchanged from STEP-01) still owns the fetch; verified via `case-studies-content.service.spec.ts` (untouched, still passing). |
+| 4. Template does not hardcode card count | Pass | `case-studies-section.component.html:16-20` uses `@for` over `caseStudiesContent.state().data`; `case-studies-section.component.spec.ts` asserts count via `[data-testid="work-card"]` length, not a literal number. |
+| 5. Mandatory launch set represented, including Bio-Align | Pass | `public/content/case-studies.json` — confirmed `bio-align` entry present (personal-project / public-repository), plus mqtt-align, agv-fleet-simulator, angular-design-patterns, paki, travel-it, kaufland. |
+| 6. Each JSON item renders one card in JSON order | Pass | `case-studies-section.component.spec.ts` "preserves JSON order when rendering cards" asserts host testid order matches source array order. |
+| 7. Cards display title, project type, role, summary, classification, status, evidence, technologies | Pass | All 8 fields present in `case-study-card.component.html`; each covered by a distinct assertion in `case-study-card.component.spec.ts`. |
+| 8. MOD-W relevance renders when present, omitted cleanly when absent | Pass | `@if (study.modwRelevance; as modwRelevance)` at `case-study-card.component.html:37`; both branches tested. |
+| 9. Public links render only when href present | Pass | `@if (study.href; as href)` at `case-study-card.component.html:46`, `target="_blank" rel="noopener"`; both branches tested. |
+| 10. Classification/status distinctions clear to visitors | Pass | `CASE_STUDY_CLASSIFICATION_LABELS`/`CASE_STUDY_STATUS_LABELS` in `case-study.model.ts` render human-readable text ("Private / Proprietary") instead of raw enum values ("private-proprietary") — TS `Record<Union, string>` makes the mapping exhaustive by construction. |
+| 11. Loading/empty/error states remain non-blank and source-safe | Pass | Unchanged copy from STEP-01, now owned by `case-studies-section.component.html`; all 3 states covered in its spec. |
+| 12. Generic `work-card` and item-specific `work-card-{id}` selectors both available | Pass (after Tech Lead round-trip) | Confirmed both are real, on two different elements of the same card: host `data-testid="work-card-{id}"` via Angular `host` binding, internal `<article data-testid="work-card">` at `case-study-card.component.html:3`. Independently re-verified by reading the current file, not just trusting the diff. |
+| 13. Existing STEP-01 runtime loading tests still pass | Pass | `case-studies-content.service.spec.ts` and `modw-content.service.spec.ts` untouched and passing. |
+| 14. Existing STEP-02 nav/hero/engagement behavior still works | Pass | `nav.component.spec.ts`, `hero-section.component.spec.ts` untouched and passing; e2e nav/mobile-menu tests still pass. |
+| 15. Engagement heading no longer says "two" while rendering three paths | Pass | `engagement-section.component.html:2` now reads "Ways to work together." |
+| 16. No routes, detail pages, CMS/admin, backend, CV, contact form added | Pass | Confirmed no new routes; `#about`/`#contact` remain empty anchor placeholders, unchanged from STEP-02. |
+| 17. Tests cover count, mandatory presence, classification/status, evidence, links, load states, preserved nav/hero | Pass | 43 unit/integration tests across 9 files + 21 e2e tests. |
+| 18. `npm run build` passes | Pass | Reran independently. |
+| 19. Relevant unit/integration tests pass | Pass | Reran independently: 43/43. |
+| 20. Relevant E2E tests pass | Pass | Reran independently: 21/21 across chromium/firefox/webkit, no flake this run. |
 
 ### Regressions or risks
 
-None found in application behavior. All 6 pre-existing STEP-01 tests in `portfolio-page.component.spec.ts` pass unmodified, and the STEP-01 e2e assertions (starter gone, Case Studies load, MOD-W loads) still pass. The only "failure" observed was the known local Playwright/dev-server connection flake on Firefox (see Verification), not a functional regression.
+None found. All STEP-01/STEP-02 tests pass unmodified in behavior (only the case-study detail assertions were relocated out of `portfolio-page.component.spec.ts` into the new dedicated specs, per this Step's explicit extraction goal — not a coverage loss, confirmed by reading both old and new spec files).
+
+One process note, not a code regression: the first implementation pass shipped with only `work-card-{id}` and edited `mod-w/TESTING.md` to redefine the generic-selector requirement away instead of implementing it — correctly caught by Tech Lead review and fixed in the round-trip. Independently reconfirmed the fix is real (not just re-trusting the stated summary): read `case-study-card.component.html` directly and confirmed both `work-card` (literal, on `<article>`) and `work-card-{id}` (host binding) exist as separate attributes on separate elements.
 
 ### Manual checks required
 
-- Visual review against the Editorial Left prototype (`mod-w/prototype/index.html`) — component structure and testids are recreated per spec, but pixel-level fidelity is explicitly out of scope for STEP-02 and hasn't been visually compared.
-- Keyboard-only pass through nav → mobile toggle → mobile menu → close, and tab order into the hero CTAs — automated tests click by testid/role but don't verify tab order.
-- Screen reader spot-check of the hero eyebrow/availability strip and nav mobile toggle's dynamic `aria-label`/`aria-expanded`.
-- Confirm the availability strip's "Open" wording for Full-time/Freelance is acceptable copy — `PRODUCT.md` §9.2 leaves "Available immediately" wording pending Moderator confirmation; this Step avoids that exact phrase and uses generic "Open," but the Moderator should confirm this reads as intended.
+- Visual review of the new card design against `DESIGN-SPEC.md` §3.7 (flat card, restrained borders) — structurally present, pixel fidelity not visually verified.
+- Confirm Bio-Align's placeholder copy ("A personal project exploring frontend architecture and interface patterns for data-driven applications") is acceptable, or supply real source-safe copy — flagged again below.
+- Responsive grid check (3/2/1 columns) at actual breakpoints — CSS is in place (`case-studies-section.component.scss`) but not visually confirmed at 980px/640px.
 
 ### Known limitations
 
-1. Carried over from `REVIEW.md`/STEP-01: `work-card` generic vs. `work-card-{id}` specific selector convention gap in `mod-w/TESTING.md` — deferred to STEP-03 with the production Case Study cards.
-2. Scroll-spy (active nav-link highlighting on scroll) is not implemented — explicitly deferrable per `STEP-02.md` §2, not a defect. `ARCHITECTURE.md` §5 recommends `activeSection` via `IntersectionObserver`; worth revisiting in a later Step.
-3. `#about` and `#contact` are empty, unlabeled anchor targets (`portfolio-page.component.html:81-82`) — nav links to them scroll to an empty spot until STEP-07/STEP-08 add real content, per `STEP-02.md` §5's explicit instruction to add minimal anchor targets only.
-4. The mobile menu does not repeat the "Get in touch" contact CTA (only the 5 nav links) — not required by `STEP-02.md`, just noting the asymmetry with desktop nav for future polish.
-5. Local Playwright e2e runs intermittently hit `NS_ERROR_CONNECTION_REFUSED` on Firefox/WebKit against the `ng serve` dev server (one occurrence in this QA pass, two in the Tech Lead's review). Every occurrence has cleared on immediate rerun. Environmental/dev-server-timing flake, not an application defect — flagging in case it's worth stabilizing the `webServer` readiness check in `playwright.config.ts` in a later Step.
+1. **Bio-Align and Prismatic copy is conservative, generic placeholder text**, not sourced from real project details (no verified information was available). Flagged consistently since STEP-01 for AGV/Prismatic; now also applies to Bio-Align. Moderator should supply or approve final copy before public launch.
+2. Cards omit the decorative numeric index (e.g. "01"/"02") seen in the prototype — not required by `STEP-03.md` §7 and explicitly within "visual polish beyond the production case-study card and grid needs of this Step" (out of scope).
+3. `#about`/`#contact` remain empty anchor placeholders (STEP-02 carryover, unchanged this Step) — expected until STEP-07/STEP-08.
+4. Local Playwright e2e has shown intermittent Firefox/WebKit `NS_ERROR_CONNECTION_REFUSED` flakes in prior Steps' QA passes; this run (21/21) had none, but it's an environmental pattern worth continuing to watch, not something this Step's code can fix.
 
 ### Verification
 
 - `npm run build` — pass (rerun independently for this QA pass).
-- `npm test` — pass, 31/31 tests across 7 files (rerun independently for this QA pass).
-- `npm run test:e2e` — 17/18 on first independent full run (1 Firefox `NS_ERROR_CONNECTION_REFUSED` on the anchor-nav test); isolated Firefox-only rerun passed 6/6. Consistent with the same flake class the Tech Lead documented in `REVIEW.md` (their first run: 6/6 chromium, Firefox/WebKit connection-refused; rerun: 18/18). No test failed twice.
+- `npm test` — pass, 43/43 tests across 9 files (rerun independently for this QA pass).
+- `npm run test:e2e` — pass, 21/21 across chromium/firefox/webkit (rerun independently for this QA pass, no flake).
 
 ### Recommended next action
 
-Proceed to Product Owner / Moderator acceptance validation for STEP-02. No blocking issues found. Suggest the Moderator confirm the availability-strip "Open" wording per the manual-check note above.
+Proceed to Product Owner / Moderator acceptance validation for STEP-03. No blocking issues found. Suggest the Moderator review/approve the Bio-Align and Prismatic placeholder copy before public launch.

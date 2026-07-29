@@ -145,11 +145,22 @@ Current project conventions:
 | Engagement section | `engagement-section` |
 | Engagement path | `engagement-path-{id}` |
 | Case studies section | `work-section` |
+| Case studies heading | `work-section-heading` |
+| Case studies lead | `work-section-lead` |
 | Case-study grid | `work-card-grid` |
-| Case-study card | `work-card` |
-| Case-study card by id | `work-card-{id}` |
+| Case-study card (generic, every card) | `work-card` |
+| Case-study card by id (host element) | `work-card-{id}` |
+| Case-study project type | `work-card-{id}-project-type` |
 | Case-study classification | `work-card-{id}-classification` |
 | Case-study status | `work-card-{id}-status` |
+| Case-study role | `work-card-{id}-role` |
+| Case-study evidence | `work-card-{id}-evidence` |
+| Case-study technologies | `work-card-{id}-technologies` |
+| Case-study MOD-W relevance | `work-card-{id}-modw-relevance` |
+| Case-study link | `work-card-{id}-link` |
+| Case-study loading state | `work-cards-loading` |
+| Case-study empty state | `work-cards-empty` |
+| Case-study error state | `work-cards-error` |
 | MOD-W section | `modw-section` |
 | MOD-W principle | `modw-principle-{id}` |
 | MOD-W repository CTA | `modw-repository-cta` |
@@ -162,6 +173,8 @@ Current project conventions:
 | LinkedIn link | `contact-linkedin-link` |
 | GitHub link | `contact-github-link` |
 | Footer | `footer` |
+
+**Resolved (STEP-03):** earlier Steps carried a "could fix later" gap between a documented generic `work-card` selector and the item-specific `work-card-{id}` values actually rendered — only the latter existed. STEP-03 closes this by providing both, on two different elements of the same card: `CaseStudyCardComponent`'s host element carries `data-testid="work-card-{id}"` (via an Angular `host` binding driven by the required `caseStudy` input), and the component's internal `<article>` carries the literal `data-testid="work-card"`. Query `work-card` for "one element per rendered card" (e.g. `querySelectorAll('[data-testid="work-card"]')`); query `work-card-{id}` for a specific card or to assert grid order (the grid's direct children are the card hosts).
 
 ---
 
@@ -341,13 +354,15 @@ _Updated at the close of each Step._
 | `src/app/app.spec.ts` | App creates and renders the production portfolio shell (starter content gone) | Integration |
 | `src/app/content/case-studies-content.service.spec.ts` | Ready/empty/error states for `/content/case-studies.json` loading | Integration |
 | `src/app/content/modw-content.service.spec.ts` | Ready/empty/error states for `/content/modw.json` loading | Integration |
-| `src/app/portfolio/portfolio-page.component.spec.ts` | Case-study card rendering, classification/status visibility, empty/error copy, MOD-W principle and CTA rendering, nav/hero/engagement presence, `work`/`modw` anchor ids, single `h1` | Integration |
+| `src/app/portfolio/portfolio-page.component.spec.ts` | MOD-W principle and CTA rendering, nav/hero/engagement/case-studies-section composition, `work`/`modw` anchor ids, single `h1` | Integration |
 | `src/app/portfolio/nav/nav.component.spec.ts` | Required nav labels and hrefs, contact CTA, mobile menu open/close, menu closes on link click | Integration |
 | `src/app/portfolio/hero-section/hero-section.component.spec.ts` | First-screen identity/positioning terms, single `h1`, CTA hrefs, availability strip content | Integration |
 | `src/app/portfolio/engagement-section/engagement-section.component.spec.ts` | Full-time/freelance/advisory tiles render, full-time and freelance share equal visual weight | Integration |
-| `e2e/portfolio.spec.ts` | Production shell renders, Case Studies and MOD-W runtime content load, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
+| `src/app/portfolio/case-studies-section/case-studies-section.component.spec.ts` | JSON-driven card count with no hardcoded number, mandatory launch ids present, JSON order preserved, loading/empty/error copy | Integration |
+| `src/app/portfolio/case-study-card/case-study-card.component.spec.ts` | Host `work-card-{id}` testid, all fields render, human-readable classification/status labels, evidence bullets, technology chips, MOD-W relevance and link shown/omitted correctly | Integration |
+| `e2e/portfolio.spec.ts` | Production shell renders, all mandatory launch Case Study titles visible, card field rendering, MOD-W runtime content loads, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
 
-STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`.
+STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`. STEP-03 extracted Case Studies rendering into dedicated `case-studies-section`/`case-study-card` components and specs, trimming the now-duplicated case-study detail assertions out of `portfolio-page.component.spec.ts`.
 
 ---
 

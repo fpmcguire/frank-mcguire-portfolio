@@ -4,40 +4,7 @@
   <app-hero-section />
   <app-engagement-section />
 
-  <section data-testid="work-section" id="work" aria-labelledby="work-heading">
-    <h2 id="work-heading">Case Studies</h2>
-
-    @switch (caseStudiesContent.state().status) {
-      @case ('loading') {
-        <p data-testid="work-cards-loading">Loading case studies…</p>
-      }
-      @case ('error') {
-        <p data-testid="work-cards-error">{{ caseStudiesContent.state().error }}</p>
-      }
-      @case ('empty') {
-        <p data-testid="work-cards-empty">Case studies are coming soon.</p>
-      }
-      @case ('ready') {
-        <ul data-testid="work-card-grid">
-          @for (caseStudy of caseStudiesContent.state().data; track caseStudy.id) {
-            <li [attr.data-testid]="'work-card-' + caseStudy.id">
-              <h3>{{ caseStudy.title }}</h3>
-              <p>{{ caseStudy.summary }}</p>
-              <span [attr.data-testid]="'work-card-' + caseStudy.id + '-classification'">{{
-                caseStudy.classification
-              }}</span>
-              <span [attr.data-testid]="'work-card-' + caseStudy.id + '-status'">{{
-                caseStudy.status
-              }}</span>
-              @if (caseStudy.href) {
-                <a [href]="caseStudy.href" target="_blank" rel="noopener">View project</a>
-              }
-            </li>
-          }
-        </ul>
-      }
-    }
-  </section>
+  <app-case-studies-section />
 
   <section data-testid="modw-section" id="modw">
     @switch (modwContent.state().status) {

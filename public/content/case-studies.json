@@ -26,14 +26,14 @@
     "technologies": ["Angular", "TypeScript"]
   },
   {
-    "id": "prismatic",
-    "title": "Prismatic",
+    "id": "bio-align",
+    "title": "Bio-Align",
     "projectType": "Web application",
     "classification": "personal-project",
     "status": "public-repository",
     "role": "Frontend Engineer",
-    "summary": "A personal project exploring modern frontend architecture patterns and UI composition techniques.",
-    "evidence": ["Independent project used to trial frontend architecture approaches."],
+    "summary": "A personal project exploring frontend architecture and interface patterns for data-driven applications.",
+    "evidence": ["Independent project used to trial frontend architecture and UI patterns."],
     "technologies": ["Angular", "TypeScript"]
   },
   {
@@ -45,6 +45,17 @@
     "role": "Author",
     "summary": "An open-source collection of Angular design patterns and reusable component approaches for production applications.",
     "evidence": ["Public repository demonstrating Angular architecture patterns."],
+    "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "prismatic",
+    "title": "Prismatic",
+    "projectType": "Web application",
+    "classification": "personal-project",
+    "status": "public-repository",
+    "role": "Frontend Engineer",
+    "summary": "A personal project exploring modern frontend architecture patterns and UI composition techniques.",
+    "evidence": ["Independent project used to trial frontend architecture approaches."],
     "technologies": ["Angular", "TypeScript"]
   },
   {
