@@ -1,0 +1,39 @@
+<nav data-testid="nav-primary">
+  <a class="brand" href="#top">Frank McGuire</a>
+
+  <div class="nav-links">
+    @for (link of navLinks; track link.id) {
+      <a [href]="link.href" [attr.data-testid]="'nav-link-' + link.id">{{ link.label }}</a>
+    }
+  </div>
+
+  <a data-testid="nav-contact-cta" href="#contact" class="btn btn-primary">Get in touch</a>
+
+  <button
+    type="button"
+    data-testid="nav-mobile-toggle"
+    class="nav-toggle"
+    [attr.aria-expanded]="isMobileMenuOpen()"
+    aria-controls="nav-mobile-menu"
+    [attr.aria-label]="isMobileMenuOpen() ? 'Close menu' : 'Open menu'"
+    (click)="toggleMobileMenu()"
+  >
+    &#9776;
+  </button>
+</nav>
+
+@if (isMobileMenuOpen()) {
+  <div id="nav-mobile-menu" data-testid="nav-mobile-menu" class="mobile-menu">
+    <button
+      type="button"
+      data-testid="nav-mobile-close"
+      aria-label="Close menu"
+      (click)="closeMobileMenu()"
+    >
+      &#10005;
+    </button>
+    @for (link of navLinks; track link.id) {
+      <a [href]="link.href" (click)="closeMobileMenu()">{{ link.label }}</a>
+    }
+  </div>
+}

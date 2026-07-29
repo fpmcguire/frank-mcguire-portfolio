@@ -127,4 +127,26 @@ describe('PortfolioPageComponent', () => {
       MODW_CONTENT.consultingHref,
     );
   });
+
+  it('renders the nav, hero, and engagement sections above the runtime content sections', () => {
+    const el = createFixture({ status: 'ready', data: CASE_STUDIES, error: null }, READY_MODW);
+
+    expect(el.querySelector('[data-testid="nav-primary"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="hero-section"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="engagement-section"]')).toBeTruthy();
+  });
+
+  it('exposes the canonical work and modw anchor ids for nav targets', () => {
+    const el = createFixture({ status: 'ready', data: CASE_STUDIES, error: null }, READY_MODW);
+
+    expect(el.querySelector('#work')).toBeTruthy();
+    expect(el.querySelector('#modw')).toBeTruthy();
+    expect(el.querySelector('main#top')).toBeTruthy();
+  });
+
+  it('renders exactly one h1 across the whole shell', () => {
+    const el = createFixture({ status: 'ready', data: CASE_STUDIES, error: null }, READY_MODW);
+
+    expect(el.querySelectorAll('h1')).toHaveLength(1);
+  });
 });

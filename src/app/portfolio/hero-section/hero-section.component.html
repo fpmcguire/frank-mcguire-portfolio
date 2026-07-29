@@ -1,0 +1,26 @@
+<header data-testid="hero-section">
+  <p class="eyebrow">
+    <span class="dot" aria-hidden="true"></span>
+    {{ content.eyebrow }}
+  </p>
+  <h1>{{ content.name }}</h1>
+  <p class="lead">{{ content.lead }}</p>
+
+  <div class="cta-row">
+    <a data-testid="hero-work-cta" [href]="content.primaryCta.href" class="btn btn-primary">{{
+      content.primaryCta.label
+    }}</a>
+    <a data-testid="hero-modw-cta" [href]="content.secondaryCta.href" class="btn btn-ghost">{{
+      content.secondaryCta.label
+    }}</a>
+  </div>
+
+  <div data-testid="hero-availability-strip" class="availability-strip">
+    @for (item of content.availability; track item.label) {
+      <div class="item">
+        <span class="k">{{ item.label }}</span>
+        <span class="v" [class.open]="item.isOpen">{{ item.value }}</span>
+      </div>
+    }
+  </div>
+</header>

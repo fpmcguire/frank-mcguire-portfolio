@@ -1,4 +1,4 @@
-## QA — STEP-01
+## QA — STEP-02
 
 ### Summary
 
@@ -8,44 +8,46 @@ Pass with notes
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| 1. Angular starter content no longer renders | Pass | `src/app/app.html:1-3` hosts only the skip link, `<app-portfolio-page />`, and `<router-outlet />`. `src/app/app.spec.ts` asserts `Congratulations! Your app is running.` is absent; `e2e/portfolio.spec.ts:3-10` asserts the same at `/`. |
-| 2. Production portfolio shell renders at `/` | Pass | `src/app/portfolio/portfolio-page.component.html:1` renders `<main data-testid="portfolio-page">`; confirmed by `app.spec.ts` and `e2e/portfolio.spec.ts`. |
-| 3. Runtime JSON files exist under `public/content/` | Pass | `public/content/case-studies.json` (7 entries) and `public/content/modw.json` (4 principles) both present and valid JSON. |
-| 4. Case-study content loaded from `/content/case-studies.json` | Pass | `src/app/content/case-studies-content.service.ts` fetches `/content/case-studies.json` via `HttpClient` in the constructor and exposes a `state` signal. |
-| 5. MOD-W content loaded from `/content/modw.json` | Pass | `src/app/content/modw-content.service.ts` fetches `/content/modw.json` the same way. |
-| 6. Loading, empty, and error states exist for runtime content | Pass | `ContentLoadState<T>` (`content-load-state.model.ts`) is a 4-state discriminated union; `portfolio-page.component.html` branches on `status` via `@switch` for both sections with distinct `data-testid`s (`work-cards-loading/-empty/-error`, `modw-loading/-empty/-error`). |
-| 7. Standalone components, signals, modern template control flow | Pass | No `@NgModule`; `PortfolioPageComponent`/`App` are standalone; `state` is a `signal()`; template uses `@switch`, `@case`, `@for`, `@if` exclusively — no `*ngIf`/`*ngFor` found in the changed files. |
-| 8. No CV page, CV download, contact form, backend, CMS, or multi-page routes | Pass | `src/app/app.routes.ts` is unchanged (`export const routes: Routes = [];`). No new routes, forms, or backend calls beyond the two static JSON fetches. |
-| 9. Tests cover successful loading and fixture variants (valid/empty/malformed/failed) | Pass | `case-studies-content.service.spec.ts` and `modw-content.service.spec.ts` each cover ready/empty/malformed/failed-request cases (4 tests each). `portfolio-page.component.spec.ts` covers ready/empty/error rendering plus principle and CTA rendering. |
-| 10. `npm run build` passes | Pass | Reran independently: production build succeeds, no errors. |
-| 11. Relevant unit/integration tests pass | Pass | Reran independently: 16/16 tests pass across 4 spec files. |
-| 12. E2E starter test replaced and no longer asserts starter content | Pass | `e2e/example.spec.ts` deleted; `e2e/portfolio.spec.ts` added. Not rerun independently in this QA pass — see Verification note below. |
+| 1. Page renders a production nav component | Pass | `src/app/portfolio/portfolio-page.component.html:1` renders `<app-nav />`; `nav.component.html:1` renders `<nav data-testid="nav-primary">`. |
+| 2. Nav uses anchor links, not page routes | Pass | `nav.model.ts:10-16` — all 5 `NAV_LINKS` are `#`-hrefs. `app.routes.ts` unchanged (`export const routes: Routes = [];`). |
+| 3. Mobile menu can open and close through accessible controls | Pass | `nav.component.html:12-22` toggle has `aria-expanded`/`aria-controls`/dynamic `aria-label`; menu (`nav.component.html:25-39`) has a labelled close button and closes on link click. `nav.component.spec.ts` covers open/close/close-on-link-click; `e2e/portfolio.spec.ts:52-61` exercises the same flow in a real browser at mobile viewport. |
+| 4. Hero renders name and Senior Frontend Engineer / Frontend Consultant positioning | Pass | `static-profile.content.ts` `HERO_CONTENT.name` = "Frank McGuire"; `lead` states "Senior Frontend Engineer and Frontend Consultant...". Rendered at `hero-section.component.html:6-7`. |
+| 5. First-screen includes Angular, TypeScript, Germany/EU, full-time, freelance signals | Pass | `HERO_CONTENT.lead` names Angular/TypeScript/Vue/React; `availability` array includes Full-time, Freelance, and "Germany · Remote / EU" location. Verified in `hero-section.component.spec.ts` and `e2e/portfolio.spec.ts:27-41`. |
+| 6. Availability strip renders full-time, freelance, location, stack, MOD-W authorship | Pass | `HERO_CONTENT.availability` has exactly these 5 entries (`static-profile.content.ts:24-30`), rendered via `@for` at `hero-section.component.html:18-25`. |
+| 7. Engagement tiles render full-time/freelance/advisory with equal visual weight for full-time/freelance | Pass | `engagement-paths.content.ts` defines all 3; `engagement-section.component.html:6` applies the same `.tile` class to every tile — confirmed identical `className` for full-time vs. freelance in `engagement-section.component.spec.ts`. |
+| 8. Standalone components, signals, modern template control flow | Pass | No `@NgModule`; `isMobileMenuOpen` is a `signal()`; templates use `@for`/`@if` only — no `*ngFor`/`*ngIf` found in new files. |
+| 9. Existing Case Studies/MOD-W runtime behavior still works | Pass | `portfolio-page.component.html:7,42` sections unchanged apart from added `id` attributes; all 6 STEP-01 content-loading tests in `portfolio-page.component.spec.ts` still pass unmodified. |
+| 10. No CV/resume, CV download, contact form, backend, CMS, or multi-page routes | Pass | Confirmed no new routes, forms, or backend calls; `#about`/`#contact` are empty anchor placeholders only (`portfolio-page.component.html:81-82`), not content sections. |
+| 11. Tests cover nav, mobile menu, hero, engagement, preserved runtime content | Pass | `nav.component.spec.ts` (6 tests), `hero-section.component.spec.ts` (4 tests), `engagement-section.component.spec.ts` (2 tests), plus preserved/extended `portfolio-page.component.spec.ts` (9 tests, 6 original + 3 new). |
+| 12. `npm run build` passes | Pass | Reran independently: production build succeeds. |
+| 13. Relevant unit/integration tests pass | Pass | Reran independently: 31/31 tests across 7 files. |
+| 14. Relevant E2E tests pass or blocker documented | Pass | See Verification — 17/18 on first independent run (1 Firefox connection-refused flake), 18/18 and 6/6 on isolated Firefox rerun. Same flake class already documented in `REVIEW.md`; not a code defect. |
 
 ### Regressions or risks
 
-None identified. This is the first production Step; there is no prior production behavior to regress. No changes were made outside `STEP-01.md`'s listed file areas.
+None found in application behavior. All 6 pre-existing STEP-01 tests in `portfolio-page.component.spec.ts` pass unmodified, and the STEP-01 e2e assertions (starter gone, Case Studies load, MOD-W loads) still pass. The only "failure" observed was the known local Playwright/dev-server connection flake on Firefox (see Verification), not a functional regression.
 
 ### Manual checks required
 
-- Full `npm run test:e2e` rerun (3 browsers) — already passed 9/9 in both the Dev Team build gate and the Tech Lead review (`REVIEW.md`); not rerun a third time in this QA pass to avoid a ~6 minute duplicate run. Recommend a final confirmation run before merge if the Moderator wants independent QA execution rather than citation.
-- Mobile/responsive visual review — no viewport-specific behavior exists yet (single unstyled shell), so nothing to check visually until a later Step adds layout.
-- Keyboard navigation and screen-reader pass — skip link, headings, and landmarks exist, but there is no interactive nav/menu yet to exercise.
-- `prefers-reduced-motion` behavior — reset rule is in place (`src/styles.scss`) but there is no animation yet to verify against.
+- Visual review against the Editorial Left prototype (`mod-w/prototype/index.html`) — component structure and testids are recreated per spec, but pixel-level fidelity is explicitly out of scope for STEP-02 and hasn't been visually compared.
+- Keyboard-only pass through nav → mobile toggle → mobile menu → close, and tab order into the hero CTAs — automated tests click by testid/role but don't verify tab order.
+- Screen reader spot-check of the hero eyebrow/availability strip and nav mobile toggle's dynamic `aria-label`/`aria-expanded`.
+- Confirm the availability strip's "Open" wording for Full-time/Freelance is acceptable copy — `PRODUCT.md` §9.2 leaves "Available immediately" wording pending Moderator confirmation; this Step avoids that exact phrase and uses generic "Open," but the Moderator should confirm this reads as intended.
 
 ### Known limitations
 
-1. Carried over from `REVIEW.md`: case-study cards use only item-specific `data-testid`s (`work-card-{id}`) with no shared generic `work-card` selector, while `mod-w/TESTING.md` documents both patterns. Not a defect for STEP-01; flagged for STEP-03 when the production card component is built.
-2. The MOD-W section's `<h2 id="modw-heading">` only renders in the `ready` case (`portfolio-page.component.html:52`) — while loading/empty/error, the section has no heading element. No user-facing defect (there's no content to head), but worth a look when the section gets its final markup.
-3. `modw-contact-cta` links to `#contact` (`public/content/modw.json`), which does not resolve to anything yet since the Contact section doesn't exist until a later Step. Expected given STEP-01 scope, not a defect — flagging so it isn't mistaken for a broken link later.
-4. `CaseStudy.evidence` and `CaseStudy.technologies` are validated and loaded but not yet rendered in the minimal card markup (only title, summary, classification, and status show). Consistent with STEP-01's "not final card design" scope, but a later Step needs to surface these fields to fully satisfy `PRODUCT.md`'s case-study evidence requirements.
-5. `mod-w/TESTING.md` specifies Angular Testing Library as the primary integration-test tool; it isn't installed, so tests use `TestBed` + `data-testid` queries instead. Functionally equivalent coverage — flagged by Dev Team, carried here for visibility.
+1. Carried over from `REVIEW.md`/STEP-01: `work-card` generic vs. `work-card-{id}` specific selector convention gap in `mod-w/TESTING.md` — deferred to STEP-03 with the production Case Study cards.
+2. Scroll-spy (active nav-link highlighting on scroll) is not implemented — explicitly deferrable per `STEP-02.md` §2, not a defect. `ARCHITECTURE.md` §5 recommends `activeSection` via `IntersectionObserver`; worth revisiting in a later Step.
+3. `#about` and `#contact` are empty, unlabeled anchor targets (`portfolio-page.component.html:81-82`) — nav links to them scroll to an empty spot until STEP-07/STEP-08 add real content, per `STEP-02.md` §5's explicit instruction to add minimal anchor targets only.
+4. The mobile menu does not repeat the "Get in touch" contact CTA (only the 5 nav links) — not required by `STEP-02.md`, just noting the asymmetry with desktop nav for future polish.
+5. Local Playwright e2e runs intermittently hit `NS_ERROR_CONNECTION_REFUSED` on Firefox/WebKit against the `ng serve` dev server (one occurrence in this QA pass, two in the Tech Lead's review). Every occurrence has cleared on immediate rerun. Environmental/dev-server-timing flake, not an application defect — flagging in case it's worth stabilizing the `webServer` readiness check in `playwright.config.ts` in a later Step.
 
 ### Verification
 
 - `npm run build` — pass (rerun independently for this QA pass).
-- `npm test` — pass, 16/16 tests across 4 files (rerun independently for this QA pass).
-- `npm run test:e2e` — not rerun independently; citing two prior clean runs (Dev Team build gate: 9/9; Tech Lead review: 9/9 on rerun after one flaky Firefox connection failure on first attempt).
+- `npm test` — pass, 31/31 tests across 7 files (rerun independently for this QA pass).
+- `npm run test:e2e` — 17/18 on first independent full run (1 Firefox `NS_ERROR_CONNECTION_REFUSED` on the anchor-nav test); isolated Firefox-only rerun passed 6/6. Consistent with the same flake class the Tech Lead documented in `REVIEW.md` (their first run: 6/6 chromium, Firefox/WebKit connection-refused; rerun: 18/18). No test failed twice.
 
 ### Recommended next action
 
-Proceed to Product Owner / Moderator acceptance validation for STEP-01. No blocking issues found.
+Proceed to Product Owner / Moderator acceptance validation for STEP-02. No blocking issues found. Suggest the Moderator confirm the availability-strip "Open" wording per the manual-check note above.

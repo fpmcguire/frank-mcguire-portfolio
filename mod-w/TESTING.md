@@ -341,10 +341,13 @@ _Updated at the close of each Step._
 | `src/app/app.spec.ts` | App creates and renders the production portfolio shell (starter content gone) | Integration |
 | `src/app/content/case-studies-content.service.spec.ts` | Ready/empty/error states for `/content/case-studies.json` loading | Integration |
 | `src/app/content/modw-content.service.spec.ts` | Ready/empty/error states for `/content/modw.json` loading | Integration |
-| `src/app/portfolio/portfolio-page.component.spec.ts` | Case-study card rendering, classification/status visibility, empty/error copy, MOD-W principle and CTA rendering | Integration |
-| `e2e/portfolio.spec.ts` | Production shell renders, Case Studies and MOD-W runtime content load at `/` | E2E |
+| `src/app/portfolio/portfolio-page.component.spec.ts` | Case-study card rendering, classification/status visibility, empty/error copy, MOD-W principle and CTA rendering, nav/hero/engagement presence, `work`/`modw` anchor ids, single `h1` | Integration |
+| `src/app/portfolio/nav/nav.component.spec.ts` | Required nav labels and hrefs, contact CTA, mobile menu open/close, menu closes on link click | Integration |
+| `src/app/portfolio/hero-section/hero-section.component.spec.ts` | First-screen identity/positioning terms, single `h1`, CTA hrefs, availability strip content | Integration |
+| `src/app/portfolio/engagement-section/engagement-section.component.spec.ts` | Full-time/freelance/advisory tiles render, full-time and freelance share equal visual weight | Integration |
+| `e2e/portfolio.spec.ts` | Production shell renders, Case Studies and MOD-W runtime content load, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
 
-STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above.
+STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`.
 
 ---
 

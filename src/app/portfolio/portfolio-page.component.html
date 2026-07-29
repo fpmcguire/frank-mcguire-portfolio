@@ -1,7 +1,10 @@
-<main id="main-content" data-testid="portfolio-page">
-  <h1>Frank McGuire</h1>
+<app-nav />
 
-  <section data-testid="work-section" aria-labelledby="work-heading">
+<main id="top" data-testid="portfolio-page">
+  <app-hero-section />
+  <app-engagement-section />
+
+  <section data-testid="work-section" id="work" aria-labelledby="work-heading">
     <h2 id="work-heading">Case Studies</h2>
 
     @switch (caseStudiesContent.state().status) {
@@ -36,7 +39,7 @@
     }
   </section>
 
-  <section data-testid="modw-section">
+  <section data-testid="modw-section" id="modw">
     @switch (modwContent.state().status) {
       @case ('loading') {
         <p data-testid="modw-loading">Loading MOD-W…</p>
@@ -74,4 +77,7 @@
       }
     }
   </section>
+
+  <div id="about"></div>
+  <div id="contact"></div>
 </main>

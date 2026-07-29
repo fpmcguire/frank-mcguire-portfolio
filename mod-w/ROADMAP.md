@@ -120,7 +120,9 @@ Do not include these in first implementation:
 
 ## Current Active Step
 
-`STEP-01.md` is the first implementation Step.
+`STEP-01.md` is complete and tagged `mod-w-step-01`.
+
+`STEP-02.md` is approved by Moderator on 2026-07-29 and assigned to Claude Code Development Team for implementation.
 
 ---
 
