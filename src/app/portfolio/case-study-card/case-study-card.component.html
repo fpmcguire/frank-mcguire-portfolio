@@ -45,15 +45,43 @@
     </p>
   }
 
-  @if (study.href; as href) {
-    <a
-      [attr.data-testid]="'work-card-' + study.id + '-link'"
-      [href]="href"
-      target="_blank"
-      rel="noopener"
-      class="link"
-    >
-      View project ↗
-    </a>
+  @if (study.productUrl || study.repositoryUrl || study.href) {
+    <div class="links">
+      @if (study.productUrl; as productUrl) {
+        <a
+          [attr.data-testid]="'work-card-' + study.id + '-product-link'"
+          [href]="productUrl"
+          target="_blank"
+          rel="noopener"
+          class="link"
+        >
+          View product -&gt;
+        </a>
+      }
+
+      @if (study.repositoryUrl; as repositoryUrl) {
+        <a
+          [attr.data-testid]="'work-card-' + study.id + '-repository-link'"
+          [href]="repositoryUrl"
+          target="_blank"
+          rel="noopener"
+          class="link"
+        >
+          GitHub repo -&gt;
+        </a>
+      }
+
+      @if (!study.productUrl && !study.repositoryUrl && study.href; as href) {
+        <a
+          [attr.data-testid]="'work-card-' + study.id + '-link'"
+          [href]="href"
+          target="_blank"
+          rel="noopener"
+          class="link"
+        >
+          View project -&gt;
+        </a>
+      }
+    </div>
   }
 </article>

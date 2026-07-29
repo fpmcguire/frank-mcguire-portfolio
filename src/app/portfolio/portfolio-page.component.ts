@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { AboutSectionComponent } from './about-section/about-section.component';
 import { CaseStudiesSectionComponent } from './case-studies-section/case-studies-section.component';
+import { ContactSectionComponent } from './contact-section/contact-section.component';
 import { EngagementSectionComponent } from './engagement-section/engagement-section.component';
+import { FooterComponent } from './footer/footer.component';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { ModwSectionComponent } from './modw-section/modw-section.component';
 import { NavComponent } from './nav/nav.component';
@@ -14,6 +17,9 @@ import { NavComponent } from './nav/nav.component';
     EngagementSectionComponent,
     CaseStudiesSectionComponent,
     ModwSectionComponent,
+    AboutSectionComponent,
+    ContactSectionComponent,
+    FooterComponent,
   ],
   templateUrl: './portfolio-page.component.html',
   styleUrl: './portfolio-page.component.scss',

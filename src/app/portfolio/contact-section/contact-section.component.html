@@ -1,0 +1,35 @@
+<section data-testid="contact-section" id="contact" aria-labelledby="contact-section-heading">
+  <p class="eyebrow">{{ content.eyebrow }}</p>
+  <h2 id="contact-section-heading" data-testid="contact-section-heading">{{ content.title }}</h2>
+  <p class="summary">{{ content.summary }}</p>
+
+  <div class="paths">
+    @for (path of content.paths; track path.id) {
+      <div [attr.data-testid]="'contact-path-' + path.id" class="path">
+        <span class="eyebrow">{{ path.eyebrow }}</span>
+        <h3>{{ path.title }}</h3>
+        <p>{{ path.description }}</p>
+        <a
+          [attr.data-testid]="'contact-' + path.id + '-cta'"
+          [href]="mailtoHref(path)"
+          class="btn btn-primary"
+          >{{ path.ctaLabel }}</a
+        >
+      </div>
+    }
+  </div>
+
+  <div class="profile-links">
+    @for (link of content.profileLinks; track link.id) {
+      <a
+        [attr.data-testid]="'contact-' + link.id + '-link'"
+        [href]="link.href"
+        [attr.target]="link.external ? '_blank' : null"
+        [attr.rel]="link.external ? 'noopener' : null"
+        >{{ link.label }}</a
+      >
+    }
+  </div>
+
+  <p data-testid="contact-guidance" class="guidance">{{ content.guidance }}</p>
+</section>

@@ -277,7 +277,7 @@ Required content:
 - Statement that MOD-W is not an automation framework or autonomous agent framework.
 - Explanation of the problem MOD-W solves: opaque AI code dumps, lost context, weak validation, blurred responsibility.
 - Explanation of the core idea: role separation, documents, review gates, cross-validation, human Moderator approval.
-- Short role model: Moderator, Product Owner, Tech Lead, Development Team, QA / Tester.
+- Short role model: Moderator, Product Owner, Designer + Prototyper, Tech Lead, Development Team, QA / Tester.
 - Practical evidence: projects built with MOD-W.
 - Link to GitHub repository.
 - CTA for MOD-W consulting, training, or adoption discussion.

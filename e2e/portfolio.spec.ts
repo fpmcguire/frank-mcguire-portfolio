@@ -50,6 +50,22 @@ test('each case-study card shows classification, status, evidence, and technolog
   await expect(card.getByTestId('work-card-mqtt-align-modw-relevance')).toBeVisible();
 });
 
+test('case-study product and repository links open in a new browser tab', async ({ page }) => {
+  await page.goto('/');
+
+  const bioAlignCard = page.getByTestId('work-card-bio-align');
+
+  const productLink = bioAlignCard.getByTestId('work-card-bio-align-product-link');
+  await expect(productLink).toHaveAttribute('href', 'https://frank-mcguire.com/bio-align/');
+  await expect(productLink).toHaveAttribute('target', '_blank');
+  await expect(productLink).toHaveAttribute('rel', 'noopener');
+
+  const repositoryLink = bioAlignCard.getByTestId('work-card-bio-align-repository-link');
+  await expect(repositoryLink).toHaveAttribute('href', 'https://github.com/fpmcguire/bio-align');
+  await expect(repositoryLink).toHaveAttribute('target', '_blank');
+  await expect(repositoryLink).toHaveAttribute('rel', 'noopener');
+});
+
 test('loads MOD-W content from runtime JSON, including roles and project evidence', async ({
   page,
 }) => {
@@ -58,6 +74,7 @@ test('loads MOD-W content from runtime JSON, including roles and project evidenc
   await expect(page.getByTestId('modw-section')).toContainText(NON_BREAKING_MODW);
   await expect(page.getByTestId('modw-principle-role-separation')).toBeVisible();
   await expect(page.getByTestId('modw-role-moderator')).toBeVisible();
+  await expect(page.getByTestId('modw-role-designer-prototyper')).toBeVisible();
   await expect(page.getByTestId('modw-project-evidence-mqtt-align')).toBeVisible();
 });
 
@@ -93,13 +110,46 @@ test('communicates first-screen clarity: identity, positioning, stack, and avail
   await expect(strip).toContainText('Germany');
 });
 
-test('anchor nav reaches Case Studies and MOD-W sections', async ({ page }) => {
+test('anchor nav reaches Case Studies, MOD-W, About, and Contact sections', async ({ page }) => {
   await page.goto('/');
 
   await page.getByTestId('nav-link-work').click();
   await expect(page).toHaveURL(/#work$/);
   await page.getByTestId('nav-link-modw').click();
   await expect(page).toHaveURL(/#modw$/);
+  await page.getByTestId('nav-link-about').click();
+  await expect(page).toHaveURL(/#about$/);
+  await expect(page.getByTestId('about-section')).toBeVisible();
+  await page.getByTestId('nav-link-contact').click();
+  await expect(page).toHaveURL(/#contact$/);
+  await expect(page.getByTestId('contact-section')).toBeVisible();
+});
+
+test('Contact section exposes both contact paths, email, LinkedIn, and GitHub', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  const contact = page.getByTestId('contact-section');
+  await expect(contact.getByTestId('contact-path-full-time')).toBeVisible();
+  await expect(contact.getByTestId('contact-path-freelance')).toBeVisible();
+
+  const emailLink = contact.getByTestId('contact-email-link');
+  await expect(emailLink).toHaveAttribute('href', 'mailto:fpmcguire@gmail.com');
+
+  const linkedinLink = contact.getByTestId('contact-linkedin-link');
+  await expect(linkedinLink).toHaveAttribute('target', '_blank');
+  await expect(linkedinLink).toHaveAttribute('rel', 'noopener');
+
+  const githubLink = contact.getByTestId('contact-github-link');
+  await expect(githubLink).toHaveAttribute('target', '_blank');
+  await expect(githubLink).toHaveAttribute('rel', 'noopener');
+});
+
+test('Footer renders with the MOD-W attribution', async ({ page }) => {
+  await page.goto('/');
+
+  await expect(page.getByTestId('footer')).toContainText(NON_BREAKING_MODW);
 });
 
 test('mobile menu opens, exposes nav links, and closes after selecting one', async ({ page }) => {

@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  border-top: 1px solid var(--border-soft);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s4);
+  padding: var(--s7) var(--s6);
+}
+
+.copyright,
+.attribution {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+}

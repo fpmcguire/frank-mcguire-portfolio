@@ -125,12 +125,60 @@ describe('CaseStudyCardComponent', () => {
     expect(link?.getAttribute('rel')).toBe('noopener');
   });
 
+  it('renders product and repository links with target=_blank and rel=noopener when present', () => {
+    const fixture = createFixture({
+      ...BASE_CASE_STUDY,
+      productUrl: 'https://example.com/product',
+      repositoryUrl: 'https://github.com/example/repo',
+    });
+    const el = fixture.nativeElement as HTMLElement;
+
+    const productLink = el.querySelector('[data-testid="work-card-mqtt-align-product-link"]');
+    const repositoryLink = el.querySelector(
+      '[data-testid="work-card-mqtt-align-repository-link"]',
+    );
+
+    expect(productLink?.textContent).toContain('View product');
+    expect(productLink?.getAttribute('href')).toBe('https://example.com/product');
+    expect(productLink?.getAttribute('target')).toBe('_blank');
+    expect(productLink?.getAttribute('rel')).toBe('noopener');
+
+    expect(repositoryLink?.textContent).toContain('GitHub repo');
+    expect(repositoryLink?.getAttribute('href')).toBe('https://github.com/example/repo');
+    expect(repositoryLink?.getAttribute('target')).toBe('_blank');
+    expect(repositoryLink?.getAttribute('rel')).toBe('noopener');
+  });
+
+  it('prefers specific product and repository links over the legacy generic href', () => {
+    const fixture = createFixture({
+      ...BASE_CASE_STUDY,
+      href: 'https://example.com/legacy',
+      productUrl: 'https://example.com/product',
+      repositoryUrl: 'https://github.com/example/repo',
+    });
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(el.querySelector('[data-testid="work-card-mqtt-align-product-link"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="work-card-mqtt-align-repository-link"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="work-card-mqtt-align-link"]')).toBeNull();
+  });
+
   it('does not render a link when href is absent', () => {
     const fixture = createFixture(BASE_CASE_STUDY);
 
     expect(
       (fixture.nativeElement as HTMLElement).querySelector(
         '[data-testid="work-card-mqtt-align-link"]',
+      ),
+    ).toBeNull();
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector(
+        '[data-testid="work-card-mqtt-align-product-link"]',
+      ),
+    ).toBeNull();
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector(
+        '[data-testid="work-card-mqtt-align-repository-link"]',
       ),
     ).toBeNull();
   });

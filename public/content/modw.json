@@ -1,7 +1,7 @@
 {
   "eyebrow": "03 — Methodology",
   "title": "Moderated AI Development Workflow (MOD-W)",
-  "summary": "MOD-W is a human-in-the-loop methodology for AI-assisted software development. It separates product, technical, implementation, and QA responsibilities across documented, Moderator-approved Steps.",
+  "summary": "MOD-W is a human-in-the-loop methodology for AI-assisted software development. It separates product, design/prototyping, technical, implementation, and QA responsibilities across documented, Moderator-approved Steps.",
   "problem": "AI-assisted development can produce opaque code dumps, lost context, weak validation, and blurred responsibility when no one owns the process end to end. MOD-W exists to keep a human Moderator in control of scope, review, and acceptance at every step.",
   "coreIdea": "Work moves through role separation, small documented Steps, review gates, and cross-validation before a human Moderator approves it — viable coding, not vibe coding.",
   "repositoryCta": {
@@ -16,7 +16,7 @@
     {
       "id": "role-separation",
       "title": "Role separation",
-      "summary": "Product, Tech Lead, Development Team, and QA responsibilities stay distinct throughout the workflow."
+      "summary": "Product, design/prototyping, Tech Lead, Development Team, and QA responsibilities stay distinct throughout the workflow."
     },
     {
       "id": "document-centered-steps",
@@ -44,6 +44,11 @@
       "id": "product-owner",
       "label": "Product Owner",
       "responsibility": "Owns product intent and acceptance validation."
+    },
+    {
+      "id": "designer-prototyper",
+      "label": "Designer + Prototyper",
+      "responsibility": "Creates advisory prototypes, design specs, and UX direction before implementation."
     },
     {
       "id": "tech-lead",

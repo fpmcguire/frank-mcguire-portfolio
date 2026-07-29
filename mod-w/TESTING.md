@@ -158,6 +158,8 @@ Current project conventions:
 | Case-study technologies | `work-card-{id}-technologies` |
 | Case-study MOD-W relevance | `work-card-{id}-modw-relevance` |
 | Case-study link | `work-card-{id}-link` |
+| Case-study product/SaaS link | `work-card-{id}-product-link` |
+| Case-study repository link | `work-card-{id}-repository-link` |
 | Case-study loading state | `work-cards-loading` |
 | Case-study empty state | `work-cards-empty` |
 | Case-study error state | `work-cards-error` |
@@ -175,12 +177,19 @@ Current project conventions:
 | MOD-W empty state | `modw-empty` |
 | MOD-W error state | `modw-error` |
 | About section | `about-section` |
+| About section heading | `about-section-heading` |
+| About narrative | `about-section-narrative` |
+| About meta row | `about-meta-{id}` |
 | Contact section | `contact-section` |
+| Contact section heading | `contact-section-heading` |
 | Full-time contact path | `contact-path-full-time` |
 | Freelance contact path | `contact-path-freelance` |
+| Full-time contact CTA | `contact-full-time-cta` |
+| Freelance contact CTA | `contact-freelance-cta` |
 | Email link | `contact-email-link` |
 | LinkedIn link | `contact-linkedin-link` |
 | GitHub link | `contact-github-link` |
+| Contact inquiry guidance | `contact-guidance` |
 | Footer | `footer` |
 
 **Resolved (STEP-03):** earlier Steps carried a "could fix later" gap between a documented generic `work-card` selector and the item-specific `work-card-{id}` values actually rendered — only the latter existed. STEP-03 closes this by providing both, on two different elements of the same card: `CaseStudyCardComponent`'s host element carries `data-testid="work-card-{id}"` (via an Angular `host` binding driven by the required `caseStudy` input), and the component's internal `<article>` carries the literal `data-testid="work-card"`. Query `work-card` for "one element per rendered card" (e.g. `querySelectorAll('[data-testid="work-card"]')`); query `work-card-{id}` for a specific card or to assert grid order (the grid's direct children are the card hosts).
@@ -260,6 +269,8 @@ interface CaseStudy {
   technologies: string[];
   modwRelevance?: string;
   href?: string;
+  productUrl?: string;
+  repositoryUrl?: string;
 }
 ```
 
@@ -370,16 +381,20 @@ _Updated at the close of each Step._
 | `src/app/content/modw-content.model.spec.ts` | `isModwContent` accepts valid/empty-array shapes, rejects missing/malformed fields (problem, coreIdea, CTAs, roles, projectEvidence) | Unit |
 | `src/app/content/modw-content.production.spec.ts` | Production `public/content/modw.json` is a valid `ModwContent` shape and contains no prohibited MOD-W claims | Unit |
 | `src/app/content/non-breaking-terms.pipe.spec.ts` | Visible copy normalizes `MOD-W` to a non-breaking hyphen form and handles empty values | Unit |
-| `src/app/portfolio/portfolio-page.component.spec.ts` | Nav/hero/engagement/case-studies-section/modw-section composition, `work`/`modw` anchor ids, single `h1` | Integration |
+| `src/app/content/contact-path.model.spec.ts` | `buildMailtoHref` includes the email address, percent-encodes subject/body, and differs per contact path | Unit |
+| `src/app/portfolio/portfolio-page.component.spec.ts` | Nav/hero/engagement/case-studies-section/modw-section/about-section/contact-section/footer composition, `work`/`modw`/`about`/`contact` anchor ids, single `h1` | Integration |
 | `src/app/portfolio/nav/nav.component.spec.ts` | Required nav labels and hrefs, contact CTA, mobile menu open/close, menu closes on link click | Integration |
 | `src/app/portfolio/hero-section/hero-section.component.spec.ts` | First-screen identity/positioning terms, single `h1`, CTA hrefs, availability strip content | Integration |
 | `src/app/portfolio/engagement-section/engagement-section.component.spec.ts` | Full-time/freelance/advisory tiles render, full-time and freelance share equal visual weight | Integration |
 | `src/app/portfolio/case-studies-section/case-studies-section.component.spec.ts` | JSON-driven card count with no hardcoded number, mandatory launch ids present, JSON order preserved, loading/empty/error copy | Integration |
-| `src/app/portfolio/case-study-card/case-study-card.component.spec.ts` | Host `work-card-{id}` testid, all fields render, human-readable classification/status labels, evidence bullets, technology chips, MOD-W relevance and link shown/omitted correctly, rendered MOD-W hyphen is non-breaking | Integration |
+| `src/app/portfolio/case-study-card/case-study-card.component.spec.ts` | Host `work-card-{id}` testid, all fields render, human-readable classification/status labels, evidence bullets, technology chips, MOD-W relevance, legacy/product/repository links shown or omitted correctly, rendered MOD-W hyphen is non-breaking | Integration |
 | `src/app/portfolio/modw-section/modw-section.component.spec.ts` | Heading/summary/problem/core-idea render, principles/roles/project-evidence render with no hardcoded counts, repository/consulting CTAs from JSON, loading/empty/error copy, rendered MOD-W hyphen is non-breaking | Integration |
-| `e2e/portfolio.spec.ts` | Production shell renders, all mandatory launch Case Study titles visible, card field rendering, MOD-W runtime content loads (incl. roles/evidence), MOD-W CTAs visible, first-screen clarity, anchor nav, mobile menu open/close at `/` | E2E |
+| `src/app/portfolio/about-section/about-section.component.spec.ts` | Canonical `about` id/heading, every narrative paragraph renders, MOD-W hyphen is non-breaking, every meta row renders label/value | Integration |
+| `src/app/portfolio/contact-section/contact-section.component.spec.ts` | Canonical `contact` id/heading, full-time/freelance paths share equal visual weight, mailto CTAs built from configured email/path, email link has no target/rel while LinkedIn/GitHub have `target="_blank" rel="noopener"`, guidance renders | Integration |
+| `src/app/portfolio/footer/footer.component.spec.ts` | Semantic `footer` with required testid, copyright renders, MOD-W attribution hyphen is non-breaking | Integration |
+| `e2e/portfolio.spec.ts` | Production shell renders, all mandatory launch Case Study titles visible, card field rendering, product/repository case-study link behavior, MOD-W runtime content loads (incl. roles/evidence), MOD-W CTAs visible, first-screen clarity, anchor nav through Case Studies/MOD-W/About/Contact, Contact paths and profile links, Footer attribution, mobile menu open/close at `/` | E2E |
 
-STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`. STEP-03 extracted Case Studies rendering into dedicated `case-studies-section`/`case-study-card` components and specs, trimming the now-duplicated case-study detail assertions out of `portfolio-page.component.spec.ts`. STEP-04 extracted MOD-W rendering into a dedicated `modw-section` component and spec (same trim pattern), expanded the `ModwContent` contract, and added a production-content safety spec.
+STEP-01 replaced the Angular starter placeholders (`src/app/app.spec.ts` starter assertions, `e2e/example.spec.ts`) with the tests above. STEP-02 added the nav/hero/engagement specs and extended `portfolio-page.component.spec.ts` and `e2e/portfolio.spec.ts`. STEP-03 extracted Case Studies rendering into dedicated `case-studies-section`/`case-study-card` components and specs, trimming the now-duplicated case-study detail assertions out of `portfolio-page.component.spec.ts`. STEP-04 extracted MOD-W rendering into a dedicated `modw-section` component and spec (same trim pattern), expanded the `ModwContent` contract, and added a production-content safety spec. STEP-05 replaced the `#about`/`#contact` placeholders with `about-section`/`contact-section`/`footer` components and specs, all static-content-driven (no runtime JSON, no loading/empty/error states needed).
 
 ---
 

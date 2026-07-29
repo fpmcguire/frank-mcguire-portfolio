@@ -46,6 +46,8 @@ export interface CaseStudy {
   readonly technologies: readonly string[];
   readonly modwRelevance?: string;
   readonly href?: string;
+  readonly productUrl?: string;
+  readonly repositoryUrl?: string;
 }
 
 function isCaseStudyClassification(value: unknown): value is CaseStudyClassification {
@@ -72,7 +74,9 @@ export function isCaseStudy(value: unknown): value is CaseStudy {
     isStringArray(value['evidence']) &&
     isStringArray(value['technologies']) &&
     (value['modwRelevance'] === undefined || typeof value['modwRelevance'] === 'string') &&
-    (value['href'] === undefined || typeof value['href'] === 'string')
+    (value['href'] === undefined || typeof value['href'] === 'string') &&
+    (value['productUrl'] === undefined || typeof value['productUrl'] === 'string') &&
+    (value['repositoryUrl'] === undefined || typeof value['repositoryUrl'] === 'string')
   );
 }
 

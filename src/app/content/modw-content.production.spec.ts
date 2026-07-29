@@ -30,4 +30,18 @@ describe('public/content/modw.json (production content)', () => {
       expect(haystack).not.toContain(phrase);
     }
   });
+
+  it('includes the Designer + Prototyper role in the production role model', () => {
+    expect(isModwContent(content)).toBe(true);
+
+    if (!isModwContent(content)) {
+      throw new Error('Invalid MOD-W production content');
+    }
+
+    expect(
+      content.roles.some(
+        (role) => role.id === 'designer-prototyper' && role.label === 'Designer + Prototyper',
+      ),
+    ).toBe(true);
+  });
 });

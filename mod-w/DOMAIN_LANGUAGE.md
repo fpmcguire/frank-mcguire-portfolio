@@ -47,6 +47,7 @@ When this document conflicts with prototype terminology, this document wins for 
 | viable coding, not vibe coding | Optional tagline. | May be used, but never as the only explanation of MOD-W. |
 | Moderator | Human final decision authority in MOD-W. | MOD-W explainer and internal artifacts. |
 | Product Owner | MOD-W role responsible for product intent and acceptance validation. | MOD-W explainer and artifacts. |
+| Designer + Prototyper | MOD-W role responsible for advisory prototypes, design specs, and UX direction before implementation. | MOD-W explainer and artifacts. |
 | Tech Lead | MOD-W role responsible for architecture, roadmap, Step authoring, and technical review. | Internal artifacts and optional MOD-W explainer. |
 | Development Team | MOD-W role responsible for implementing approved Steps. | Internal artifacts and optional MOD-W explainer. |
 | QA / Tester | MOD-W role responsible for quality validation. | Internal artifacts and optional MOD-W explainer. |
@@ -101,6 +102,8 @@ Canonical fields:
 - `technologies`
 - `modwRelevance`
 - `href`
+- `productUrl`
+- `repositoryUrl`
 
 Canonical classification values:
 

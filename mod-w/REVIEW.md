@@ -1,8 +1,10 @@
-## Tech Lead Review - STEP-04
+## Tech Lead Review - STEP-05
 
 ### Verdict
 
 Pass
+
+Moderator approved STEP-05 on 2026-07-30.
 
 ### Findings
 
@@ -12,49 +14,49 @@ None.
 
 #### Could fix later
 
-1. `src/app/portfolio/modw-section/modw-section.component.spec.ts:75`, `src/app/portfolio/modw-section/modw-section.component.spec.ts:86`, and `src/app/portfolio/modw-section/modw-section.component.spec.ts:97` use CSS class selectors for count assertions. The tests also assert item-specific `data-testid` selectors, so this does not block STEP-04, but future cleanup could use `modw-principle-*`, `modw-role-*`, and `modw-project-evidence-*` selectors consistently with `mod-w/TESTING.md`.
+1. `src/app/portfolio/contact-section/contact-section.component.spec.ts` verifies email href plus LinkedIn/GitHub `target` and `rel`, but it does not assert the configured LinkedIn/GitHub href values. The implementation currently uses the expected URLs, and E2E confirms the links are present with external-link attributes, so this does not block STEP-05. A future test cleanup could assert `CONTACT_CONTENT.profileLinks` hrefs directly.
 
 ### Scope check
 
-The implementation stays within STEP-04. It extracts MOD-W rendering into `ModwSectionComponent`, keeps MOD-W content runtime-driven from `/content/modw.json`, expands and validates the runtime JSON contract, adds role and project-evidence rendering, and adds production-content guardrail tests for prohibited MOD-W claims.
+The implementation stays within STEP-05. It replaces the placeholder `#about` and `#contact` divs with dedicated `AboutSectionComponent` and `ContactSectionComponent`, adds a semantic `FooterComponent`, and introduces static typed content for About, Contact, contact paths, profile links, and footer metadata.
 
-No long-form MOD-W documentation, routes, CMS/admin UI, backend, final Contact/About content, contact form, CV/resume page, or CV download link were introduced.
+No contact form, backend API, scheduling integration, route, standalone Services page, CV/resume page, CV download link, runtime JSON expansion for static sections, or long chronological CV was introduced.
 
-Existing STEP-01 runtime loading, STEP-02 nav/hero/engagement, and STEP-03 Case Studies behavior is preserved.
+Existing STEP-01 runtime loading, STEP-02 nav/hero/engagement, STEP-03 Case Studies, STEP-04 MOD-W, and the non-breaking MOD-W rendering rule are preserved.
 
 ### Acceptance check mapping
 
-- STEP-04 AC1: met - MOD-W rendering is owned by `ModwSectionComponent`.
-- STEP-04 AC2: met - The section receives runtime content through `ModwContentService`.
-- STEP-04 AC3: met - Principle, role, evidence, CTA labels, and CTA hrefs are rendered from JSON-backed content.
-- STEP-04 AC4: met - `isModwContent` validates the expanded JSON shape before typed content is exposed.
-- STEP-04 AC5: met - The section renders title, summary, problem, core idea, principles, roles, project evidence, repository CTA, and consulting CTA.
-- STEP-04 AC6: met - Principle count and order are driven by JSON.
-- STEP-04 AC7: met - Role count and order are driven by JSON.
-- STEP-04 AC8: met - Project evidence count and order are driven by JSON.
-- STEP-04 AC9: met - Repository CTA uses configured href, `target="_blank"`, and `rel="noopener"`.
-- STEP-04 AC10: met - Consulting CTA points to `#contact`.
-- STEP-04 AC11: met - Loading, empty, and error states are non-blank and source-safe.
-- STEP-04 AC12: met - Production MOD-W copy uses approved terminology including human-in-the-loop, AI-assisted development, methodology, and workflow.
-- STEP-04 AC13: met - Production-content safety spec checks prohibited MOD-W claims.
-- STEP-04 AC14: met - Existing runtime loading tests pass.
-- STEP-04 AC15: met - Existing nav, hero, and engagement tests pass.
-- STEP-04 AC16: met - Existing Case Studies tests pass.
-- STEP-04 AC17: met - No hidden out-of-scope features were added.
-- STEP-04 AC18: met - Tests cover MOD-W runtime rendering, roles/evidence, CTAs, loading/empty/error states, prohibited claims, and prior-step behavior.
-- STEP-04 AC19: met - `npm run build` passes.
-- STEP-04 AC20: met - `npm test` passes.
-- STEP-04 AC21: met - `npm run test:e2e` passes.
+- STEP-05 AC1: met - `PortfolioPageComponent` composes About, Contact, and Footer.
+- STEP-05 AC2: met - Placeholder `#about` and `#contact` divs are removed.
+- STEP-05 AC3: met - About uses canonical id `about` and `data-testid="about-section"`.
+- STEP-05 AC4: met - Contact uses canonical id `contact` and `data-testid="contact-section"`.
+- STEP-05 AC5: met - Footer uses semantic `footer` with `data-testid="footer"`.
+- STEP-05 AC6: met - About copy is compact, source-safe, and narrative rather than chronological CV.
+- STEP-05 AC7: met - About includes senior frontend, Germany, Angular/TypeScript, Vue/Nuxt/React, domains, mentoring/teaching, and MOD-W signals.
+- STEP-05 AC8: met - Contact renders equal full-time and freelance paths.
+- STEP-05 AC9: met - Contact uses `fpmcguire@gmail.com` for visible email and mailto links.
+- STEP-05 AC10: met - Contact includes LinkedIn and GitHub links.
+- STEP-05 AC11: met - External profile links use `target="_blank"` and `rel="noopener"`.
+- STEP-05 AC12: met - Contact CTAs use `mailto:` only.
+- STEP-05 AC13: met - No hidden out-of-scope features were added.
+- STEP-05 AC14: met - Nav anchors for About and Contact reach the real sections.
+- STEP-05 AC15: met - Prior-step behavior and non-breaking MOD-W rendering are preserved.
+- STEP-05 AC16: met - Tests cover About, Contact paths, contact hrefs, external attributes, Footer, and page composition.
+- STEP-05 AC17: met - E2E covers About/Contact anchors, Contact links/paths, and Footer attribution.
+- STEP-05 AC18: met - `mod-w/TESTING.md` Current Test State and selector conventions are updated.
+- STEP-05 AC19: met - `npm run build` passes.
+- STEP-05 AC20: met - `npm test` passes.
+- STEP-05 AC21: met - `npm run test:e2e` passes on rerun.
 
 ### Verification
 
 - `npm run build` - pass.
-- `npm test` - pass, 63 tests across 12 files.
-- `npm run test:e2e` - pass, 24 tests across Chromium, Firefox, and WebKit.
+- `npm test` - pass, 88 tests across 17 files.
+- `npm run test:e2e` - pass, 33 tests across Chromium, Firefox, and WebKit.
 
 ### Recommended next action
 
-Proceed to QA / Tester validation for STEP-04.
+Commit and tag STEP-05, then proceed to STEP-06.
 
 ---
 

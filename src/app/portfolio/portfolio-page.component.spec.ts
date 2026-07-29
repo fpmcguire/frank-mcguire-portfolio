@@ -61,7 +61,7 @@ function createFixture() {
 }
 
 describe('PortfolioPageComponent', () => {
-  it('renders nav, hero, engagement, case-studies, and modw sections in composition', () => {
+  it('renders nav, hero, engagement, case-studies, modw, about, contact, and footer in composition', () => {
     const el = createFixture();
 
     expect(el.querySelector('[data-testid="nav-primary"]')).toBeTruthy();
@@ -69,14 +69,26 @@ describe('PortfolioPageComponent', () => {
     expect(el.querySelector('[data-testid="engagement-section"]')).toBeTruthy();
     expect(el.querySelector('[data-testid="work-section"]')).toBeTruthy();
     expect(el.querySelector('[data-testid="modw-section"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="about-section"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="contact-section"]')).toBeTruthy();
+    expect(el.querySelector('[data-testid="footer"]')).toBeTruthy();
   });
 
-  it('exposes the canonical work and modw anchor ids for nav targets', () => {
+  it('exposes the canonical work, modw, about, and contact anchor ids for nav targets', () => {
     const el = createFixture();
 
     expect(el.querySelector('#work')).toBeTruthy();
     expect(el.querySelector('#modw')).toBeTruthy();
+    expect(el.querySelector('#about')).toBeTruthy();
+    expect(el.querySelector('#contact')).toBeTruthy();
     expect(el.querySelector('main#top')).toBeTruthy();
+  });
+
+  it('replaces the STEP-02 placeholder divs with real About/Contact content', () => {
+    const el = createFixture();
+
+    expect(el.querySelector('#about')?.tagName.toLowerCase()).toBe('section');
+    expect(el.querySelector('#contact')?.tagName.toLowerCase()).toBe('section');
   });
 
   it('renders exactly one h1 across the whole shell', () => {

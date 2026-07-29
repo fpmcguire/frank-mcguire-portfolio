@@ -211,7 +211,7 @@ It must clearly display each item's classification/status.
 
 ### Case Study Card
 
-Pure presentational component. Receives one `CaseStudy`. It must not fetch data. It may render an anchor when `href` is present and a non-link card when not.
+Pure presentational component. Receives one `CaseStudy`. It must not fetch data. It may render external anchors when `productUrl` or `repositoryUrl` is present, and a legacy single anchor when only `href` is present. External anchors must open in a new browser tab with `target="_blank"` and `rel="noopener"`.
 
 ### MOD-W Section
 
@@ -257,6 +257,8 @@ export interface CaseStudy {
   technologies: string[];
   modwRelevance?: string;
   href?: string;
+  productUrl?: string;
+  repositoryUrl?: string;
 }
 ```
 
@@ -274,7 +276,9 @@ Case-study JSON shape:
     "summary": "Source-safe summary text.",
     "evidence": ["Source-safe evidence point."],
     "technologies": ["Angular", "TypeScript", "MQTT"],
-    "modwRelevance": "Built through MOD-W steps."
+    "modwRelevance": "Built through MOD-W steps.",
+    "productUrl": "https://example.com/product",
+    "repositoryUrl": "https://github.com/example/repository"
   }
 ]
 ```

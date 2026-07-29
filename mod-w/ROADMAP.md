@@ -128,6 +128,10 @@ Do not include these in first implementation:
 
 `STEP-04.md` is complete and tagged `mod-w-step-04`.
 
+`STEP-05.md` is complete and tagged `mod-w-step-05`.
+
+Next planned Step: `STEP-06.md` - Visual Fidelity, Responsive Layout, and Accessibility Pass.
+
 ---
 
 MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow

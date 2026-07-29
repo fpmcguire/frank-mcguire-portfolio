@@ -23,7 +23,9 @@
     "role": "Frontend Engineer",
     "summary": "A frontend simulator for visualizing and coordinating automated guided vehicle (AGV) fleets in a logistics-style environment.",
     "evidence": ["Independent project demonstrating real-time dashboarding in Angular."],
-    "technologies": ["Angular", "TypeScript"]
+    "technologies": ["Angular", "TypeScript"],
+    "productUrl": "https://frank-mcguire.com/agv-fleet-management-sim",
+    "repositoryUrl": "https://github.com/fpmcguire/agv-fleet-management-sim"
   },
   {
     "id": "bio-align",
@@ -34,7 +36,9 @@
     "role": "Frontend Engineer",
     "summary": "A personal project exploring frontend architecture and interface patterns for data-driven applications.",
     "evidence": ["Independent project used to trial frontend architecture and UI patterns."],
-    "technologies": ["Angular", "TypeScript"]
+    "technologies": ["Angular", "TypeScript"],
+    "productUrl": "https://frank-mcguire.com/bio-align/",
+    "repositoryUrl": "https://github.com/fpmcguire/bio-align"
   },
   {
     "id": "angular-design-patterns",
@@ -45,7 +49,8 @@
     "role": "Author",
     "summary": "An open-source collection of Angular design patterns and reusable component approaches for production applications.",
     "evidence": ["Public repository demonstrating Angular architecture patterns."],
-    "technologies": ["Angular", "TypeScript"]
+    "technologies": ["Angular", "TypeScript"],
+    "productUrl": "https://frank-mcguire.com/angular-design-patterns"
   },
   {
     "id": "prismatic",
@@ -56,7 +61,8 @@
     "role": "Frontend Engineer",
     "summary": "A personal project exploring modern frontend architecture patterns and UI composition techniques.",
     "evidence": ["Independent project used to trial frontend architecture approaches."],
-    "technologies": ["Angular", "TypeScript"]
+    "technologies": ["Angular", "TypeScript"],
+    "productUrl": "https://frank-mcguire.com/prismatic"
   },
   {
     "id": "paki",

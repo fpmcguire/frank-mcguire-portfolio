@@ -1,0 +1,19 @@
+<section data-testid="about-section" id="about" aria-labelledby="about-section-heading">
+  <p class="eyebrow">{{ content.eyebrow }}</p>
+  <h2 id="about-section-heading" data-testid="about-section-heading">{{ content.title }}</h2>
+
+  <div data-testid="about-section-narrative" class="narrative">
+    @for (paragraph of content.narrative; track paragraph) {
+      <p>{{ paragraph | nonBreakingTerms }}</p>
+    }
+  </div>
+
+  <dl class="meta">
+    @for (item of content.meta; track item.id) {
+      <div [attr.data-testid]="'about-meta-' + item.id" class="row">
+        <dt>{{ item.label }}</dt>
+        <dd>{{ item.value }}</dd>
+      </div>
+    }
+  </dl>
+</section>

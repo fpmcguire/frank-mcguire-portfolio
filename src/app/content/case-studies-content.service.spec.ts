@@ -15,6 +15,8 @@ const VALID_CASE_STUDY: CaseStudy = {
   summary: 'Summary text.',
   evidence: ['Evidence point.'],
   technologies: ['Angular'],
+  productUrl: 'https://example.com/product',
+  repositoryUrl: 'https://github.com/example/repo',
 };
 
 describe('CaseStudiesContentService', () => {
