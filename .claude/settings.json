@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx ng *)",
+      "Bash(node .tmp-consent-visual.mjs)"
+    ]
+  }
+}
