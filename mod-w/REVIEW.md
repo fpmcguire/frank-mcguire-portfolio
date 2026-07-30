@@ -1,10 +1,12 @@
-## Tech Lead Review - STEP-07
+## Tech Lead Review - STEP-08
 
 ### Verdict
 
 Pass
 
-STEP-07 is approved for Moderator handoff. The follow-up must-fix from the first Tech Lead review is resolved.
+STEP-08 is approved for QA / Moderator handoff. The prior Tech Lead rework findings are resolved by `mod-w/STEP-08-HANDOFF.md` and the accompanying screenshot evidence.
+
+This is a launch-readiness pass with documented Moderator launch blockers, not a claim that the site is legally ready to publish. The remaining privacy/legal/GA decisions are correctly identified for Moderator action.
 
 ### Findings
 
@@ -14,42 +16,66 @@ None.
 
 #### Could fix later
 
-1. The E2E analytics tests use the production measurement id string while intercepting and aborting requests before they leave the browser context. This prevents real analytics from being sent and is acceptable for this Step, but a later hardening pass could provide a test-only analytics config so CI never asserts against the live property id.
+1. `README.md` says runtime JSON can be edited directly in deployed output. That is useful for emergency static-content updates, but deployed JSON edits should be mirrored back into `public/content/*.json` before the next release to avoid Git/deployment drift.
 
-2. Local PowerShell command output still reports an `fnm` profile symlink permission warning before normal command output. This did not block build or tests and is outside STEP-07 scope, but it may be worth cleaning up separately to reduce local tooling noise.
+2. Local PowerShell still emits the `fnm` symlink permission warning before command output. This does not affect STEP-08 results.
 
-### Resolved Finding
+### Resolved Findings
 
-The consent banner now reserves a clearly marked Privacy Policy placeholder at `src/app/analytics/analytics-consent-banner/analytics-consent-banner.component.html:9` using `analytics-consent-privacy-placeholder`. The related spec now asserts the placeholder at `src/app/analytics/analytics-consent-banner/analytics-consent-banner.component.spec.ts:43`, and `mod-w/TESTING.md` documents the selector and rationale. This satisfies STEP-07's requirement to link to, or reserve a clear placeholder for, Privacy Policy / Datenschutzerklaerung until the final URL and legal text are approved.
+1. Launch blocker handoff is now present. `mod-w/STEP-08-HANDOFF.md` explicitly marks the Privacy Policy / Datenschutzerklaerung URL, final consent-banner wording, and GA4 property/account settings as **BLOCKED** pending Moderator decision.
 
-The previously discussed static fallback Google tag remains absent from `src/index.html`. The file contains only the Angular root element, so the implementation does not ship a static GA script path that could bypass consent.
+2. Manual visual/accessibility evidence is now present. `mod-w/STEP-08-HANDOFF.md` records desktop, tablet, mobile, footer/consent, keyboard/focus, and reduced-motion checks. Screenshot evidence exists under `mod-w/screenshots/step-08-*.png`.
+
+3. Final launch handoff summary is now present. `mod-w/STEP-08-HANDOFF.md` summarizes content/legal/analytics status, static-hosting readiness, automated test results, manual review notes, and remaining Moderator blockers.
 
 ### Scope Check
 
-The implementation stays within STEP-07. It adds a dedicated `src/app/analytics/` boundary, mounts the consent banner at app root, stores consent in localStorage with versioning, loads GA dynamically only after accepted consent, exposes a footer Privacy / Cookie settings control, and gates nav, hero, Contact, MOD-W, and Case Study analytics events through `GoogleAnalyticsService`.
+The implementation stays within STEP-08. It adds InMotion shared-hosting deployment guidance in `README.md`, architecture guidance for static CSR deployment, Roadmap alignment, the STEP-08 Step artifact, and a durable STEP-08 handoff with visual evidence.
 
-No backend, CMS, contact form, CV/resume page, CV download link, blog, custom analytics dashboard, Google Tag Manager container, or multi-page route was introduced.
+No SSR runtime, Node deployment requirement, Angular server files, `@angular/ssr` app dependency, multi-page route, backend, CMS, contact form, CV/resume page, or custom analytics dashboard was introduced.
 
-Application components do not call `gtag` directly. Runtime JSON contracts for Case Studies and MOD-W are preserved.
+The app remains anchor-navigation only. `src/app/app.routes.ts` is still an empty route array, and `src/index.html` contains no static GA script tag.
+
+### Static Hosting Check
+
+- `README.md` documents InMotion as static shared hosting with no Node.js application server or Angular SSR runtime.
+- `README.md` documents uploading `dist/frank-mcguire-portfolio/browser/`.
+- `playwright.config.ts` serves `dist/frank-mcguire-portfolio/browser` through `tools/static-server.mjs`, so E2E exercises the static browser output.
+- Build output contains `browser/index.html`, `browser/content/case-studies.json`, and `browser/content/modw.json`.
+- `server.ts`, `src/main.server.ts`, `src/app/app.config.server.ts`, and `src/app/app.routes.server.ts` do not exist.
 
 ### Acceptance Check Mapping
 
-- STEP-07 AC1-4: met - The feature is implemented inside a dedicated analytics boundary, and `src/index.html` has no GA script tag.
-- STEP-07 AC5-12: met - Consent content, Accept/Reject, persistence, reprompt suppression, withdrawal, and settings reopening are implemented.
-- STEP-07 AC13-18: met - GA loads after accepted consent, sends an initial page view, and tracked CTA/link events are gated behind accepted consent.
-- STEP-07 AC19-23: met - Rejection and withdrawal prevent future app tracking, old-version/malformed consent records reprompt, and blocked storage fails gracefully.
-- STEP-07 AC24-29: met - Unit/integration coverage and E2E coverage were added; production build and test gates pass.
-- STEP-07 AC30-33: met for Tech Lead review, pending QA/Moderator legal copy confirmation in STEP-08.
+- STEP-08 AC1-8: met - Static CSR deployment shape is preserved and documented.
+- STEP-08 AC9-12: met for Tech Lead review - remaining legal/privacy/GA decisions are documented as Moderator blockers.
+- STEP-08 AC13-18: met - GA remains consent-gated, source-safe scope is preserved, and no hidden out-of-scope implementation was added.
+- STEP-08 AC19-20: met - manual visual/accessibility review notes and screenshots are present.
+- STEP-08 AC21-23: met - build, unit/integration tests, and E2E passed during STEP-08 review; source was not changed by the follow-up evidence-only fix.
+- STEP-08 AC24: met - no test-state changes requiring `mod-w/TESTING.md` update were introduced.
+- STEP-08 AC25: met - complete launch handoff/blocker summary is present.
 
 ### Verification
 
-- `npm test` - pass, 141 tests across 22 files.
-- `npm run build` - pass.
-- `npm run test:e2e` - pass, 53 passed and 1 expected WebKit keyboard skip.
+- `git diff --check` - pass.
+- `npm run lint` - pass.
+- `npm run build` - pass during STEP-08 review.
+- `npm test` - pass during STEP-08 review, 141 tests across 22 files.
+- `npm run test:e2e` - pass during STEP-08 review, 53 passed and 1 expected WebKit keyboard skip.
+- Screenshot sample review - pass for desktop hero, mobile menu, and consent focus evidence.
+- Static output file check - pass for `index.html`, `content/case-studies.json`, and `content/modw.json`.
+- SSR file absence check - pass for `server.ts`, `src/main.server.ts`, `src/app/app.config.server.ts`, and `src/app/app.routes.server.ts`.
+
+### Remaining Moderator Decisions Before Launch
+
+The following are not Development Team defects, but they must be resolved before publication:
+
+- Approve or provide the Privacy Policy / Datenschutzerklaerung URL.
+- Approve final consent-banner wording and language choice.
+- Confirm GA4 property settings: advertising features, Google Signals, data sharing, and retention.
 
 ### Recommended Next Action
 
-Moderator may approve STEP-07 and hand it to QA, then STEP-08 should confirm the Privacy Policy / Datenschutzerklaerung URL, final consent wording, and Google Analytics property privacy settings before launch.
+Proceed to QA. After QA, the Moderator should resolve the three launch blockers above before approving publication.
 
 ---
 

@@ -527,6 +527,33 @@ Do not track:
 
 ---
 
+## 7b. Static Hosting and Deployment Target
+
+The production deployment target is InMotion Hosting shared hosting. Treat this as a static-file hosting environment with no Node.js application server and no Angular SSR runtime.
+
+Angular v21 supports client-side rendering (CSR), static site generation / prerendering (SSG), and server-side rendering (SSR), but CSR is Angular's default behavior. SSR / hybrid rendering is opt-in through Angular CLI `--ssr` or `ng add @angular/ssr`. This project must remain a CSR/static SPA for v1 unless the Moderator approves a future scope change.
+
+Repository checks that should remain true for v1:
+
+- `package.json` must not add `@angular/ssr` as an application dependency.
+- No `server.ts`, `src/main.server.ts`, `src/app/app.config.server.ts`, or `src/app/app.routes.server.ts`.
+- `angular.json` must not add server/prerender-only targets for the production deployment.
+- `src/app/app.routes.ts` should remain empty unless a later Step approves page routes.
+- Production deployment should upload the contents of `dist/frank-mcguire-portfolio/browser/`.
+
+Because the app uses anchor navigation only, InMotion does not need Angular route rewrite support for `/work`, `/modw`, `/about`, or `/contact`; those are `#` anchors handled by the browser. If future page routes are approved, deployment must add shared-hosting rewrite support such as `.htaccess` fallback to `index.html`.
+
+Runtime content files under `public/content/` are copied into the production browser output and must be uploaded with the rest of the static assets. The deployed site must serve:
+
+```text
+/content/case-studies.json
+/content/modw.json
+```
+
+If InMotion serves JSON with an unexpected MIME type, the Development Team should document it and verify the browser still fetches the content correctly.
+
+---
+
 ## 8. Routing and Navigation
 
 Use anchor navigation only.

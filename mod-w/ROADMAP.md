@@ -1,6 +1,6 @@
 # Roadmap - Frank McGuire Portfolio
 
-**Status:** Approved through STEP-07 by Moderator on 2026-07-30
+**Status:** Approved through STEP-08 by Moderator on 2026-07-31
 **Tech Lead:** Codex
 **Architecture:** `mod-w/ARCHITECTURE.md`, updated for analytics scope on 2026-07-30
 
@@ -111,6 +111,7 @@ Final validation Step:
 
 - replace any placeholder copy,
 - confirm privacy / consent wording and final Google Analytics account settings,
+- verify the build is deployable to InMotion Hosting shared hosting as static browser output with no SSR/server runtime,
 - verify source-safe claims,
 - verify no analytics tracking occurs before consent,
 - run build/test/E2E gates,
@@ -155,7 +156,7 @@ Do not include these in first implementation:
 
 `STEP-07.md` is complete and tagged `mod-w-step-07`.
 
-Next planned Step: `STEP-08.md` - Launch Validation and Content Review.
+`STEP-08.md` is complete and tagged `mod-w-step-08`.
 
 ---
 

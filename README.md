@@ -55,23 +55,60 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+## Deployment
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+The production target is **InMotion Hosting shared hosting** — a static-file host with no Node.js application server and no Angular SSR runtime. This app is a client-side rendered (CSR) Angular SPA by design; it does not use `@angular/ssr` and has no server entry points.
+
+To build and deploy:
 
 ```bash
+npm run build
+```
+
+Upload the entire contents of `dist/frank-mcguire-portfolio/browser/` to the web root (or target subdirectory) on the hosting account. No Node.js process, SSR server, or build step is required on the host — the uploaded files are served as-is.
+
+The deployable output includes:
+
+```text
+dist/frank-mcguire-portfolio/browser/index.html
+dist/frank-mcguire-portfolio/browser/favicon.ico
+dist/frank-mcguire-portfolio/browser/content/case-studies.json
+dist/frank-mcguire-portfolio/browser/content/modw.json
+dist/frank-mcguire-portfolio/browser/main-*.js
+dist/frank-mcguire-portfolio/browser/styles-*.css
+```
+
+`public/content/case-studies.json` and `public/content/modw.json` are runtime content — edit them directly in the deployed output to update Case Studies or MOD-W copy without a rebuild. If you do this, mirror the same edit back into `public/content/*.json` in Git before the next release, or the next deploy will silently overwrite the live change.
+
+Because the app uses anchor navigation only (`#work`, `#modw`, `#about`, `#contact` — no Angular Router page routes), no server-side URL rewrite rules (e.g. `.htaccess` SPA fallback) are needed; every route the app uses resolves against the single `index.html`.
+
+To verify a production build locally before deploying, serve the `browser/` output with any static file server, for example:
+
+```bash
+npm run build
+node tools/static-server.mjs dist/frank-mcguire-portfolio/browser 4200
+```
+
+Then check `http://127.0.0.1:4200/`, `http://127.0.0.1:4200/#work`, and that `http://127.0.0.1:4200/content/case-studies.json` / `.../content/modw.json` return valid JSON.
+
+## Running unit tests
+
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use either of the following (equivalent) commands:
+
+```bash
+npm test
 ng test
 ```
 
 ## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
+End-to-end tests use [Playwright](https://playwright.dev/) against a production build served by `tools/static-server.mjs`:
 
 ```bash
-ng e2e
+npm run test:e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+This builds the app first, then runs the Playwright suite in `e2e/` across Chromium, Firefox, and WebKit. Use `npm run test:e2e:ui` for the interactive Playwright UI, or `npm run test:e2e:report` to view the last HTML report.
 
 ## Additional Resources
 
