@@ -1,0 +1,11 @@
+@if (eyebrow(); as eyebrowText) {
+  <p class="eyebrow">{{ eyebrowText | nonBreakingTerms }}</p>
+}
+
+<h2 [id]="headingId()" [attr.data-testid]="headingTestId() ?? null">
+  {{ heading() | nonBreakingTerms }}
+</h2>
+
+@if (lead(); as leadText) {
+  <p class="lead" [attr.data-testid]="leadTestId() ?? null">{{ leadText | nonBreakingTerms }}</p>
+}

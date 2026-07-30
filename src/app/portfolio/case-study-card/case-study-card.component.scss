@@ -56,6 +56,11 @@ h3 {
   border-radius: 4px;
 }
 
+.badge.proprietary {
+  color: var(--warn);
+  border-color: rgba(245, 177, 76, 0.4);
+}
+
 .summary {
   color: var(--muted);
   font-size: 0.875rem;

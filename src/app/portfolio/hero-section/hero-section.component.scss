@@ -1,6 +1,20 @@
 :host {
   display: block;
-  padding: var(--s10) var(--s6) var(--s8);
+  padding: var(--s8) var(--gutter) var(--s7);
+}
+
+app-chamfer-panel {
+  display: block;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 92% 46%, rgba(var(--accent-rgb), 0.14), rgba(8, 8, 10, 0) 48%),
+    radial-gradient(circle at 88% 44%, rgba(170, 190, 210, 0.1), rgba(8, 8, 10, 0) 58%);
 }
 
 .eyebrow {
@@ -22,6 +36,17 @@
   background: var(--accent);
   display: inline-block;
   box-shadow: 0 0 8px var(--accent);
+  animation: availability-pulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes availability-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 h1 {

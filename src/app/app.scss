@@ -11,3 +11,32 @@
     top: 0;
   }
 }
+
+/* Decorative, fixed atmosphere layers behind all content. Non-interactive
+   and hidden from assistive technology; safe to remove without affecting layout. */
+.page-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.page-background-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(58% 72% at 78% 48%, rgba(170, 200, 210, 0.11), rgba(8, 8, 10, 0) 60%),
+    radial-gradient(40% 52% at 82% 44%, rgba(var(--accent-rgb), 0.055), rgba(8, 8, 10, 0) 55%);
+}
+
+.page-background-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 20%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 50% 20%, #000 0%, transparent 70%);
+}

@@ -1,10 +1,12 @@
-## Tech Lead Review - STEP-05
+## Tech Lead Review - STEP-06
 
 ### Verdict
 
 Pass
 
-Moderator approved STEP-05 on 2026-07-30.
+Moderator approved STEP-06 for handoff to QA on 2026-07-30.
+
+QA passed and Moderator approved QA on 2026-07-30.
 
 ### Findings
 
@@ -14,49 +16,47 @@ None.
 
 #### Could fix later
 
-1. `src/app/portfolio/contact-section/contact-section.component.spec.ts` verifies email href plus LinkedIn/GitHub `target` and `rel`, but it does not assert the configured LinkedIn/GitHub href values. The implementation currently uses the expected URLs, and E2E confirms the links are present with external-link attributes, so this does not block STEP-05. A future test cleanup could assert `CONTACT_CONTENT.profileLinks` hrefs directly.
+1. The Development Team reported a minor active-nav edge case when jumping directly to `#contact`: because the final section cannot always reach the `-45%/-45%` IntersectionObserver band at the bottom of the document, the nav can briefly show `About` active before settling. The Contact section itself is reached and visible, so this does not block STEP-06. A later polish pass could special-case the last section or use scroll-position fallback logic for the bottom of the page.
+
+2. Manual visual/accessibility review notes for desktop, tablet, mobile, keyboard focus, reduced motion, and readability were reported in chat rather than committed to a durable artifact. This is acceptable for Tech Lead review because STEP-06 allows Development Team or QA to record them, but QA or the Moderator may still choose to archive them in `mod-w/QA.md` or a later launch-validation artifact.
+
+### Resolved Prior Finding
+
+The previous must-fix finding is resolved. `src/app/portfolio/nav/nav.component.ts` now maps `top` to a bounded `hero-top-sentinel` element instead of observing full-page `main#top`, while `main#top` remains intact for skip-link and `#top` anchor behavior. `src/app/portfolio/nav/nav.component.spec.ts` now includes regression coverage for moving away from Home and then returning Home.
 
 ### Scope check
 
-The implementation stays within STEP-05. It replaces the placeholder `#about` and `#contact` divs with dedicated `AboutSectionComponent` and `ContactSectionComponent`, adds a semantic `FooterComponent`, and introduces static typed content for About, Contact, contact paths, profile links, and footer metadata.
+The implementation stays within STEP-06. It adds decorative background layers, shared `SectionHeaderComponent`, shared `ChamferPanelComponent`, `RevealOnScrollDirective`, active nav state, responsive gutter/spacing refinements, focus/reduced-motion styling support, and targeted tests.
 
-No contact form, backend API, scheduling integration, route, standalone Services page, CV/resume page, CV download link, runtime JSON expansion for static sections, or long chronological CV was introduced.
+No contact form, backend API, CMS/admin, CV/resume page, CV download link, blog, analytics, new product section, runtime JSON expansion, or multi-page route was introduced.
 
-Existing STEP-01 runtime loading, STEP-02 nav/hero/engagement, STEP-03 Case Studies, STEP-04 MOD-W, and the non-breaking MOD-W rendering rule are preserved.
+Existing Case Studies and MOD-W runtime JSON contracts are preserved, and current `data-testid` values remain stable. New background test IDs and STEP-06 selector notes are documented in `mod-w/TESTING.md`.
+
+The hero chamfer treatment is no longer carried as a review concern; it was confirmed as an explicit design request for this implementation pass.
 
 ### Acceptance check mapping
 
-- STEP-05 AC1: met - `PortfolioPageComponent` composes About, Contact, and Footer.
-- STEP-05 AC2: met - Placeholder `#about` and `#contact` divs are removed.
-- STEP-05 AC3: met - About uses canonical id `about` and `data-testid="about-section"`.
-- STEP-05 AC4: met - Contact uses canonical id `contact` and `data-testid="contact-section"`.
-- STEP-05 AC5: met - Footer uses semantic `footer` with `data-testid="footer"`.
-- STEP-05 AC6: met - About copy is compact, source-safe, and narrative rather than chronological CV.
-- STEP-05 AC7: met - About includes senior frontend, Germany, Angular/TypeScript, Vue/Nuxt/React, domains, mentoring/teaching, and MOD-W signals.
-- STEP-05 AC8: met - Contact renders equal full-time and freelance paths.
-- STEP-05 AC9: met - Contact uses `fpmcguire@gmail.com` for visible email and mailto links.
-- STEP-05 AC10: met - Contact includes LinkedIn and GitHub links.
-- STEP-05 AC11: met - External profile links use `target="_blank"` and `rel="noopener"`.
-- STEP-05 AC12: met - Contact CTAs use `mailto:` only.
-- STEP-05 AC13: met - No hidden out-of-scope features were added.
-- STEP-05 AC14: met - Nav anchors for About and Contact reach the real sections.
-- STEP-05 AC15: met - Prior-step behavior and non-breaking MOD-W rendering are preserved.
-- STEP-05 AC16: met - Tests cover About, Contact paths, contact hrefs, external attributes, Footer, and page composition.
-- STEP-05 AC17: met - E2E covers About/Contact anchors, Contact links/paths, and Footer attribution.
-- STEP-05 AC18: met - `mod-w/TESTING.md` Current Test State and selector conventions are updated.
-- STEP-05 AC19: met - `npm run build` passes.
-- STEP-05 AC20: met - `npm test` passes.
-- STEP-05 AC21: met - `npm run test:e2e` passes on rerun.
+- STEP-06 AC1-2: met - Compact SPA shape, section order, and canonical anchors are preserved.
+- STEP-06 AC3-5: met - Decorative background layers are present, restrained, non-interactive, and `aria-hidden`.
+- STEP-06 AC6-8: met for Tech Lead review - Automated gates pass; manual viewport review was reported by the Development Team and remains available for QA/Moderator archival if desired.
+- STEP-06 AC9-11: met - E2E and code review preserve responsive content visibility, first-screen clarity, and equal path prominence.
+- STEP-06 AC12: met - `scroll-padding-top` exists, `main#top` still supports anchors, and active Home state now uses a bounded sentinel.
+- STEP-06 AC13-17: met - Mobile menu behavior is preserved, focus/reduced-motion support is extended, and reveal is progressive enhancement rather than hidden-by-default.
+- STEP-06 AC18: met - Body copy avoids `--faint`; muted/body text remains readable by token choice.
+- STEP-06 AC19-21: met - Runtime JSON behavior and source-safe copy are preserved; no hidden scope added.
+- STEP-06 AC22-25: met - New behavioral tests and `mod-w/TESTING.md` updates are present.
+- STEP-06 AC26-28: met - Build, unit/integration tests, and E2E pass.
+- STEP-06 AC29-30: met for Tech Lead review, pending QA archival if desired - manual visual/accessibility notes were reported in chat rather than committed to a file.
 
 ### Verification
 
 - `npm run build` - pass.
-- `npm test` - pass, 88 tests across 17 files.
-- `npm run test:e2e` - pass, 33 tests across Chromium, Firefox, and WebKit.
+- `npm test -- --watch=false` - pass, 100 tests across 19 files.
+- `npm run test:e2e` - pass, 38 passed and 1 expected WebKit keyboard skip across 39 Playwright tests.
 
 ### Recommended next action
 
-Commit and tag STEP-05, then proceed to STEP-06.
+Commit and tag STEP-06, then proceed to STEP-07 launch validation.
 
 ---
 

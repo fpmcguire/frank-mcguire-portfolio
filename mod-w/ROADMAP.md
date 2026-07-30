@@ -130,7 +130,9 @@ Do not include these in first implementation:
 
 `STEP-05.md` is complete and tagged `mod-w-step-05`.
 
-Next planned Step: `STEP-06.md` - Visual Fidelity, Responsive Layout, and Accessibility Pass.
+`STEP-06.md` is complete and tagged `mod-w-step-06`.
+
+Next planned Step: `STEP-07.md` - Launch Validation and Content Review.
 
 ---
 

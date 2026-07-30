@@ -1,26 +1,30 @@
-<header data-testid="hero-section">
-  <p class="eyebrow">
-    <span class="dot" aria-hidden="true"></span>
-    {{ content.eyebrow | nonBreakingTerms }}
-  </p>
-  <h1>{{ content.name | nonBreakingTerms }}</h1>
-  <p class="lead">{{ content.lead | nonBreakingTerms }}</p>
+<header data-testid="hero-section" id="hero-top-sentinel">
+  <app-chamfer-panel [size]="32">
+    <div class="hero-glow" aria-hidden="true"></div>
 
-  <div class="cta-row">
-    <a data-testid="hero-work-cta" [href]="content.primaryCta.href" class="btn btn-primary">{{
-      content.primaryCta.label | nonBreakingTerms
-    }}</a>
-    <a data-testid="hero-modw-cta" [href]="content.secondaryCta.href" class="btn btn-ghost">{{
-      content.secondaryCta.label | nonBreakingTerms
-    }}</a>
-  </div>
+    <p class="eyebrow">
+      <span class="dot" aria-hidden="true"></span>
+      {{ content.eyebrow | nonBreakingTerms }}
+    </p>
+    <h1>{{ content.name | nonBreakingTerms }}</h1>
+    <p class="lead">{{ content.lead | nonBreakingTerms }}</p>
 
-  <div data-testid="hero-availability-strip" class="availability-strip">
-    @for (item of content.availability; track item.label) {
-      <div class="item">
-        <span class="k">{{ item.label | nonBreakingTerms }}</span>
-        <span class="v" [class.open]="item.isOpen">{{ item.value | nonBreakingTerms }}</span>
-      </div>
-    }
-  </div>
+    <div class="cta-row">
+      <a data-testid="hero-work-cta" [href]="content.primaryCta.href" class="btn btn-primary">{{
+        content.primaryCta.label | nonBreakingTerms
+      }}</a>
+      <a data-testid="hero-modw-cta" [href]="content.secondaryCta.href" class="btn btn-ghost">{{
+        content.secondaryCta.label | nonBreakingTerms
+      }}</a>
+    </div>
+
+    <div data-testid="hero-availability-strip" class="availability-strip">
+      @for (item of content.availability; track item.label) {
+        <div class="item">
+          <span class="k">{{ item.label | nonBreakingTerms }}</span>
+          <span class="v" [class.open]="item.isOpen">{{ item.value | nonBreakingTerms }}</span>
+        </div>
+      }
+    </div>
+  </app-chamfer-panel>
 </header>

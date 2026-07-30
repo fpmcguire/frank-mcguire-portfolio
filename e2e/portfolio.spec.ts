@@ -163,3 +163,49 @@ test('mobile menu opens, exposes nav links, and closes after selecting one', asy
   await mobileMenu.getByRole('link', { name: 'Case Studies' }).click();
   await expect(mobileMenu).toBeHidden();
 });
+
+test('reduced motion keeps hero, case-study, MOD-W, and contact content visible', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+
+  await expect(page.getByTestId('hero-section')).toBeVisible();
+  await expect(page.getByTestId('hero-section').getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.getByTestId('work-card-mqtt-align')).toBeVisible();
+  await expect(page.getByTestId('modw-section')).toBeVisible();
+  await expect(page.getByTestId('contact-section')).toBeVisible();
+});
+
+test('keyboard navigation reaches the nav, hero CTA, and a contact CTA', async ({
+  page,
+  browserName,
+}) => {
+  // WebKit's default Tab order only visits form controls, not links, matching
+  // real Safari with "Full Keyboard Access" off — not an app accessibility defect.
+  test.skip(browserName === 'webkit', 'WebKit does not include links in the default Tab order');
+
+  await page.goto('/');
+
+  // Focus the skip link directly first: WebKit does not reliably move focus
+  // on the very first Tab press from a freshly-loaded page.
+  await page.getByTestId('skip-link').focus();
+  const seenTestIds: string[] = ['skip-link'];
+  for (let i = 0; i < 60; i += 1) {
+    await page.keyboard.press('Tab');
+    const testId = await page.evaluate(
+      () => document.activeElement?.getAttribute('data-testid') ?? null,
+    );
+    if (testId) {
+      seenTestIds.push(testId);
+    }
+    if (seenTestIds.includes('contact-full-time-cta')) {
+      break;
+    }
+  }
+
+  expect(seenTestIds).toContain('skip-link');
+  expect(seenTestIds).toContain('nav-link-work');
+  expect(seenTestIds).toContain('hero-work-cta');
+  expect(seenTestIds).toContain('contact-full-time-cta');
+});

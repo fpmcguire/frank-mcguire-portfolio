@@ -1,0 +1,47 @@
+:host {
+  display: block;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin: 0;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.875rem, 4vw, 2.875rem);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  margin: var(--s3) 0 var(--s4);
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 40rem;
+  margin: 0;
+}
+
+:host(.size-large) h2 {
+  font-size: clamp(2.375rem, 6vw, 4.5rem);
+  line-height: 1;
+  margin-top: var(--s3);
+  margin-bottom: 0;
+}
+
+:host(.size-large) .lead {
+  font-size: 1.125rem;
+  margin-top: var(--s5);
+}
+
+:host(.align-center) {
+  text-align: center;
+}
+
+:host(.align-center) .lead {
+  margin-inline: auto;
+}

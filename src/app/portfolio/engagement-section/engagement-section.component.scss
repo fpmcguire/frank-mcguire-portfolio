@@ -1,16 +1,11 @@
 :host {
   display: block;
-  padding: var(--s9) var(--s6);
+  padding: var(--s9) var(--gutter);
   border-top: 1px solid var(--border-soft);
 }
 
-h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.875rem, 4vw, 2.875rem);
-  letter-spacing: 0.01em;
-  line-height: 1.05;
-  margin: 0 0 var(--s7);
+app-section-header {
+  margin-bottom: var(--s7);
 }
 
 .tiles {

@@ -37,6 +37,21 @@
   /* Layout */
   --content-max-width: 1200px;
   --radius: 14px;
+  --chamfer: 24px;
+  --gutter: 40px;
+  --nav-height: 68px;
+}
+
+@media (max-width: 980px) {
+  :root {
+    --gutter: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 20px;
+  }
 }
 
 *,
@@ -50,6 +65,11 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -58,6 +78,7 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 h1,
@@ -89,4 +110,19 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Reveal-on-scroll progressive enhancement (RevealOnScrollDirective).
+   `.reveal` alone is always fully visible; only once JS opts an element in
+   (`.reveal-active`) does the pre-reveal hidden state apply, and only until
+   `.reveal-visible` is added. Never hidden by CSS default. */
+.reveal.reveal-active {
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.reveal-active:not(.reveal-visible) {
+  opacity: 0;
+  transform: translateY(24px);
 }

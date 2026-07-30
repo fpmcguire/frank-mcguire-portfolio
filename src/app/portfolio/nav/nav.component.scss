@@ -10,7 +10,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   gap: var(--s5);
-  padding: var(--s4) var(--s6);
+  padding: var(--s4) var(--gutter);
   background: rgba(8, 8, 10, 0.6);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-soft);
@@ -43,6 +43,12 @@ nav {
 
 .nav-links a:hover {
   color: var(--text);
+}
+
+.nav-links a.active {
+  background: #fff;
+  color: #000;
+  font-weight: 500;
 }
 
 .btn {
@@ -94,6 +100,10 @@ nav {
   font-size: 1.75rem;
   color: var(--text);
   text-decoration: none;
+}
+
+.mobile-menu a.active {
+  color: var(--accent);
 }
 
 .mobile-menu button {

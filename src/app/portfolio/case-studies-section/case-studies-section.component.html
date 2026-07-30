@@ -1,10 +1,12 @@
 <section data-testid="work-section" id="work" aria-labelledby="work-section-heading">
-  <p class="eyebrow">02 — Selected Work</p>
-  <h2 id="work-section-heading" data-testid="work-section-heading">Case Studies</h2>
-  <p data-testid="work-section-lead" class="lead">
-    Selected projects and professional experience evidencing frontend architecture, delivery,
-    testing, and product judgment — several built with {{ 'MOD-W' | nonBreakingTerms }}.
-  </p>
+  <app-section-header
+    eyebrow="02 — Selected Work"
+    heading="Case Studies"
+    headingId="work-section-heading"
+    headingTestId="work-section-heading"
+    [lead]="leadText"
+    leadTestId="work-section-lead"
+  />
 
   @switch (caseStudiesContent.state().status) {
     @case ('loading') {

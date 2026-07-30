@@ -1,7 +1,13 @@
 <section data-testid="contact-section" id="contact" aria-labelledby="contact-section-heading">
-  <p class="eyebrow">{{ content.eyebrow }}</p>
-  <h2 id="contact-section-heading" data-testid="contact-section-heading">{{ content.title }}</h2>
-  <p class="summary">{{ content.summary }}</p>
+  <app-section-header
+    [eyebrow]="content.eyebrow"
+    [heading]="content.title"
+    headingId="contact-section-heading"
+    headingTestId="contact-section-heading"
+    [lead]="content.summary"
+    align="center"
+    size="large"
+  />
 
   <div class="paths">
     @for (path of content.paths; track path.id) {

@@ -1,32 +1,8 @@
 :host {
   display: block;
-  padding: var(--s9) var(--s6);
+  padding: var(--s9) var(--gutter);
   border-top: 1px solid var(--border-soft);
   text-align: center;
-}
-
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  margin: 0;
-}
-
-h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.375rem, 6vw, 4.5rem);
-  letter-spacing: 0.01em;
-  line-height: 1;
-  margin: var(--s3) 0 0;
-}
-
-.summary {
-  color: var(--muted);
-  font-size: 1.125rem;
-  margin: var(--s5) auto 0;
-  max-width: 34rem;
 }
 
 .paths {
@@ -95,7 +71,7 @@ h2 {
 }
 
 .guidance {
-  color: var(--faint);
+  color: var(--muted);
   font-size: 0.8125rem;
   max-width: 34rem;
   margin: var(--s6) auto 0;

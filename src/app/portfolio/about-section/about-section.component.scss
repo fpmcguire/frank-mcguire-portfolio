@@ -1,24 +1,11 @@
 :host {
   display: block;
-  padding: var(--s9) var(--s6);
+  padding: var(--s9) var(--gutter);
   border-top: 1px solid var(--border-soft);
 }
 
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  margin: 0;
-}
-
-h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.875rem, 4vw, 2.875rem);
-  letter-spacing: 0.01em;
-  line-height: 1.05;
-  margin: var(--s3) 0 var(--s6);
+app-section-header {
+  margin-bottom: var(--s6);
 }
 
 .narrative {

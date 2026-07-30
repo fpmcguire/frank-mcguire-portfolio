@@ -26,4 +26,15 @@ describe('App', () => {
     expect(compiled.querySelector('[data-testid="portfolio-page"]')).toBeTruthy();
     expect(compiled.textContent).not.toContain('Congratulations! Your app is running.');
   });
+
+  it('renders the decorative background layers hidden from assistive technology', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const background = compiled.querySelector('[data-testid="page-background"]');
+    expect(background?.getAttribute('aria-hidden')).toBe('true');
+    expect(compiled.querySelector('[data-testid="page-background-glow"]')).toBeTruthy();
+    expect(compiled.querySelector('[data-testid="page-background-grid"]')).toBeTruthy();
+  });
 });

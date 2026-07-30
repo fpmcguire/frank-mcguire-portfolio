@@ -11,14 +11,15 @@
     }
     @case ('ready') {
       @if (modwContent.state().data; as content) {
-        <div class="panel">
-          <p class="eyebrow">{{ content.eyebrow | nonBreakingTerms }}</p>
-          <h2 id="modw-section-heading" data-testid="modw-section-heading">
-            {{ content.title | nonBreakingTerms }}
-          </h2>
-          <p data-testid="modw-section-summary" class="lead">
-            {{ content.summary | nonBreakingTerms }}
-          </p>
+        <app-chamfer-panel [size]="32">
+          <app-section-header
+            [eyebrow]="content.eyebrow"
+            [heading]="content.title"
+            headingId="modw-section-heading"
+            headingTestId="modw-section-heading"
+            [lead]="content.summary"
+            leadTestId="modw-section-summary"
+          />
 
           <p data-testid="modw-problem" class="problem">
             {{ content.problem | nonBreakingTerms }}
@@ -70,7 +71,7 @@
               >{{ content.consultingCta.label | nonBreakingTerms }}</a
             >
           </div>
-        </div>
+        </app-chamfer-panel>
       }
     }
   }

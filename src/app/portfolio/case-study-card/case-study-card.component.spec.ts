@@ -163,6 +163,22 @@ describe('CaseStudyCardComponent', () => {
     expect(el.querySelector('[data-testid="work-card-mqtt-align-link"]')).toBeNull();
   });
 
+  it('applies the amber proprietary treatment when classification is proprietary', () => {
+    const fixture = createFixture({ ...BASE_CASE_STUDY, classification: 'proprietary' });
+    const badge = (fixture.nativeElement as HTMLElement).querySelector(
+      '[data-testid="work-card-mqtt-align-classification"]',
+    );
+    expect(badge?.classList.contains('proprietary')).toBe(true);
+  });
+
+  it('does not apply the amber proprietary treatment for other classifications', () => {
+    const fixture = createFixture(BASE_CASE_STUDY);
+    const badge = (fixture.nativeElement as HTMLElement).querySelector(
+      '[data-testid="work-card-mqtt-align-classification"]',
+    );
+    expect(badge?.classList.contains('proprietary')).toBe(false);
+  });
+
   it('does not render a link when href is absent', () => {
     const fixture = createFixture(BASE_CASE_STUDY);
 

@@ -10,9 +10,12 @@
   <h3>{{ study.title | nonBreakingTerms }}</h3>
 
   <div class="badges">
-    <span [attr.data-testid]="'work-card-' + study.id + '-classification'" class="badge">{{
-      classificationLabel()
-    }}</span>
+    <span
+      [attr.data-testid]="'work-card-' + study.id + '-classification'"
+      class="badge"
+      [class.proprietary]="study.classification === 'proprietary'"
+      >{{ classificationLabel() }}</span
+    >
     <span [attr.data-testid]="'work-card-' + study.id + '-status'" class="badge">{{
       statusLabel()
     }}</span>
