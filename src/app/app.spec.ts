@@ -37,4 +37,13 @@ describe('App', () => {
     expect(compiled.querySelector('[data-testid="page-background-glow"]')).toBeTruthy();
     expect(compiled.querySelector('[data-testid="page-background-grid"]')).toBeTruthy();
   });
+
+  it('mounts the analytics consent banner alongside the portfolio without disturbing it', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('[data-testid="portfolio-page"]')).toBeTruthy();
+    expect(compiled.querySelector('[data-testid="analytics-consent-banner"]')).toBeTruthy();
+  });
 });

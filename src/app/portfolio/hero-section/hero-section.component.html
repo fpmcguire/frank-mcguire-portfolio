@@ -10,12 +10,20 @@
     <p class="lead">{{ content.lead | nonBreakingTerms }}</p>
 
     <div class="cta-row">
-      <a data-testid="hero-work-cta" [href]="content.primaryCta.href" class="btn btn-primary">{{
-        content.primaryCta.label | nonBreakingTerms
-      }}</a>
-      <a data-testid="hero-modw-cta" [href]="content.secondaryCta.href" class="btn btn-ghost">{{
-        content.secondaryCta.label | nonBreakingTerms
-      }}</a>
+      <a
+        data-testid="hero-work-cta"
+        [href]="content.primaryCta.href"
+        class="btn btn-primary"
+        (click)="trackWorkCta()"
+        >{{ content.primaryCta.label | nonBreakingTerms }}</a
+      >
+      <a
+        data-testid="hero-modw-cta"
+        [href]="content.secondaryCta.href"
+        class="btn btn-ghost"
+        (click)="trackModwCta()"
+        >{{ content.secondaryCta.label | nonBreakingTerms }}</a
+      >
     </div>
 
     <div data-testid="hero-availability-strip" class="availability-strip">

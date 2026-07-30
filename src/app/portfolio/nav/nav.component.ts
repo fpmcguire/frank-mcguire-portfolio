@@ -3,9 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  inject,
   signal,
 } from '@angular/core';
 
+import { GoogleAnalyticsService } from '../../analytics/google-analytics.service';
 import { NAV_LINKS, SECTION_IDS, SectionId } from '../../content/nav.model';
 import { NonBreakingTermsPipe } from '../../content/non-breaking-terms.pipe';
 
@@ -17,6 +19,8 @@ import { NonBreakingTermsPipe } from '../../content/non-breaking-terms.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavComponent implements AfterViewInit, OnDestroy {
+  private readonly googleAnalytics = inject(GoogleAnalyticsService);
+
   protected readonly navLinks = NAV_LINKS;
   protected readonly isMobileMenuOpen = signal(false);
   protected readonly activeSection = signal<SectionId>('top');
@@ -85,5 +89,16 @@ export class NavComponent implements AfterViewInit, OnDestroy {
 
   protected closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
+  }
+
+  protected trackSectionNavigation(section: SectionId): void {
+    this.googleAnalytics.trackEvent('section_navigation', { section });
+  }
+
+  protected trackContactCta(): void {
+    this.googleAnalytics.trackEvent('contact_cta_click', {
+      source: 'nav-contact-cta',
+      path: 'general',
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { GoogleAnalyticsService } from '../../analytics/google-analytics.service';
 import { HERO_CONTENT } from '../../content/static-profile.content';
 import { HeroSectionComponent } from './hero-section.component';
 
@@ -10,6 +11,17 @@ function createFixture() {
   const fixture = TestBed.createComponent(HeroSectionComponent);
   fixture.detectChanges();
   return fixture;
+}
+
+function createFixtureWithMockAnalytics() {
+  const trackEvent = vi.fn();
+  TestBed.configureTestingModule({
+    imports: [HeroSectionComponent],
+    providers: [{ provide: GoogleAnalyticsService, useValue: { trackEvent } }],
+  });
+  const fixture = TestBed.createComponent(HeroSectionComponent);
+  fixture.detectChanges();
+  return { fixture, trackEvent };
 }
 
 describe('HeroSectionComponent', () => {
@@ -64,5 +76,29 @@ describe('HeroSectionComponent', () => {
 
     expect(text).toContain('MOD\u2011W');
     expect(text).not.toContain('MOD-W');
+  });
+
+  it('tracks contact_cta_click when the primary (work) CTA is clicked', () => {
+    const { fixture, trackEvent } = createFixtureWithMockAnalytics();
+    const el = fixture.nativeElement as HTMLElement;
+
+    (el.querySelector('[data-testid="hero-work-cta"]') as HTMLAnchorElement).click();
+
+    expect(trackEvent).toHaveBeenCalledWith('contact_cta_click', {
+      source: 'hero-work-cta',
+      path: 'general',
+    });
+  });
+
+  it('tracks contact_cta_click when the secondary (MOD-W) CTA is clicked', () => {
+    const { fixture, trackEvent } = createFixtureWithMockAnalytics();
+    const el = fixture.nativeElement as HTMLElement;
+
+    (el.querySelector('[data-testid="hero-modw-cta"]') as HTMLAnchorElement).click();
+
+    expect(trackEvent).toHaveBeenCalledWith('contact_cta_click', {
+      source: 'hero-modw-cta',
+      path: 'general',
+    });
   });
 });

@@ -1,6 +1,7 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { GoogleAnalyticsService } from '../../analytics/google-analytics.service';
 import { ContentLoadState } from '../../content/content-load-state.model';
 import { ModwContent } from '../../content/modw-content.model';
 import { ModwContentService } from '../../content/modw-content.service';
@@ -49,6 +50,21 @@ const READY_STATE: ContentLoadState<ModwContent> = {
   data: MODW_CONTENT,
   error: null,
 };
+
+function createFixtureWithMockAnalytics(state: ContentLoadState<ModwContent>) {
+  const trackEvent = vi.fn();
+  TestBed.configureTestingModule({
+    imports: [ModwSectionComponent],
+    providers: [
+      { provide: ModwContentService, useValue: { state: signal(state) } },
+      { provide: GoogleAnalyticsService, useValue: { trackEvent } },
+    ],
+  });
+
+  const fixture = TestBed.createComponent(ModwSectionComponent);
+  fixture.detectChanges();
+  return { el: fixture.nativeElement as HTMLElement, trackEvent };
+}
 
 describe('ModwSectionComponent', () => {
   it('renders the section heading, summary, problem, and core idea from runtime content', () => {
@@ -152,5 +168,26 @@ describe('ModwSectionComponent', () => {
 
     expect(el.textContent).toContain('MOD\u2011W');
     expect(el.textContent).not.toContain('MOD-W');
+  });
+
+  it('tracks modw_repository_click when the repository CTA is clicked', () => {
+    const { el, trackEvent } = createFixtureWithMockAnalytics(READY_STATE);
+
+    (el.querySelector('[data-testid="modw-repository-cta"]') as HTMLAnchorElement).click();
+
+    expect(trackEvent).toHaveBeenCalledWith('modw_repository_click', {
+      source: 'modw-repository-cta',
+    });
+  });
+
+  it('tracks contact_cta_click when the consulting CTA is clicked', () => {
+    const { el, trackEvent } = createFixtureWithMockAnalytics(READY_STATE);
+
+    (el.querySelector('[data-testid="modw-consulting-cta"]') as HTMLAnchorElement).click();
+
+    expect(trackEvent).toHaveBeenCalledWith('contact_cta_click', {
+      source: 'modw-consulting-cta',
+      path: 'general',
+    });
   });
 });

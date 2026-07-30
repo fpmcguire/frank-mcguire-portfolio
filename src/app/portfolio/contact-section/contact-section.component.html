@@ -19,6 +19,7 @@
           [attr.data-testid]="'contact-' + path.id + '-cta'"
           [href]="mailtoHref(path)"
           class="btn btn-primary"
+          (click)="trackContactCta(path)"
           >{{ path.ctaLabel }}</a
         >
       </div>
@@ -32,6 +33,7 @@
         [href]="link.href"
         [attr.target]="link.external ? '_blank' : null"
         [attr.rel]="link.external ? 'noopener' : null"
+        (click)="trackProfileLink(link)"
         >{{ link.label }}</a
       >
     }

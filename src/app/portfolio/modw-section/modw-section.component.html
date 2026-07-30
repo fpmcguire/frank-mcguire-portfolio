@@ -62,12 +62,14 @@
               target="_blank"
               rel="noopener"
               class="btn btn-primary"
+              (click)="trackRepositoryCta()"
               >{{ content.repositoryCta.label | nonBreakingTerms }}</a
             >
             <a
               data-testid="modw-consulting-cta"
               [href]="content.consultingCta.href"
               class="btn btn-ghost"
+              (click)="trackConsultingCta()"
               >{{ content.consultingCta.label | nonBreakingTerms }}</a
             >
           </div>

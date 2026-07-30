@@ -2,12 +2,31 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
 
+## Setup
+
+Use Node.js `>=20.19.0 || >=22.12.0`; Node `24.x` is supported. The project declares `npm@11.8.0` as its package manager.
+
+Install dependencies with:
+
+```bash
+npm install
+```
+
+The `package.json` overrides are intentional and keep Angular CLI transitive dependencies on patched versions. When changing dependencies, commit both `package.json` and `package-lock.json`.
+
+Useful verification commands:
+
+```bash
+npm audit
+npm run build
+```
+
 ## Development server
 
 To start a local development server, run:
 
 ```bash
-ng serve
+npm start
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.

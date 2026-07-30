@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { GoogleAnalyticsService } from '../../analytics/google-analytics.service';
 import { NAV_LINKS, SECTION_IDS } from '../../content/nav.model';
 import { NavComponent } from './nav.component';
 
@@ -207,6 +208,52 @@ describe('NavComponent', () => {
       expect(el.querySelector('[data-testid="nav-link-work"]')?.classList.contains('active')).toBe(
         false,
       );
+    });
+  });
+
+  describe('analytics tracking', () => {
+    function createFixtureWithMockAnalytics() {
+      const trackEvent = vi.fn();
+      TestBed.configureTestingModule({
+        imports: [NavComponent],
+        providers: [{ provide: GoogleAnalyticsService, useValue: { trackEvent } }],
+      });
+      const fixture = TestBed.createComponent(NavComponent);
+      fixture.detectChanges();
+      return { fixture, trackEvent };
+    }
+
+    it('tracks section_navigation when a desktop nav link is clicked', () => {
+      const { fixture, trackEvent } = createFixtureWithMockAnalytics();
+      const el = fixture.nativeElement as HTMLElement;
+
+      (el.querySelector('[data-testid="nav-link-work"]') as HTMLAnchorElement).click();
+
+      expect(trackEvent).toHaveBeenCalledWith('section_navigation', { section: 'work' });
+    });
+
+    it('tracks contact_cta_click when the persistent nav CTA is clicked', () => {
+      const { fixture, trackEvent } = createFixtureWithMockAnalytics();
+      const el = fixture.nativeElement as HTMLElement;
+
+      (el.querySelector('[data-testid="nav-contact-cta"]') as HTMLAnchorElement).click();
+
+      expect(trackEvent).toHaveBeenCalledWith('contact_cta_click', {
+        source: 'nav-contact-cta',
+        path: 'general',
+      });
+    });
+
+    it('tracks section_navigation when a mobile menu link is clicked', () => {
+      const { fixture, trackEvent } = createFixtureWithMockAnalytics();
+      const el = fixture.nativeElement as HTMLElement;
+
+      (el.querySelector('[data-testid="nav-mobile-toggle"]') as HTMLButtonElement).click();
+      fixture.detectChanges();
+      const mobileMenu = el.querySelector('[data-testid="nav-mobile-menu"]') as HTMLElement;
+      (mobileMenu.querySelector('a') as HTMLAnchorElement).click();
+
+      expect(trackEvent).toHaveBeenCalledWith('section_navigation', { section: 'top' });
     });
   });
 });

@@ -1,15 +1,15 @@
 # Architecture - Frank McGuire Portfolio
 
-**Status:** Approved by Moderator on 2026-07-29  
-**Tech Lead:** Codex  
-**Target stack:** Angular v21.1.0  
+**Status:** Updated draft for Moderator-approved analytics scope on 2026-07-30
+**Tech Lead:** Codex
+**Target stack:** Angular v21, currently v21.2.x
 **Scope:** Compact single-page portfolio SPA, first implementation
 
 ---
 
 ## 1. Architecture Summary
 
-Build the portfolio as a **static Angular single-page application with runtime-editable content islands**.
+Build the portfolio as a **static Angular single-page application with runtime-editable content islands and consent-gated analytics**.
 
 The app is mostly static presentation: hero, engagement paths, case studies, MOD-W explainer, about, contact, and footer. The two content areas expected to change most often without a rebuild are loaded from JSON files at runtime:
 
@@ -19,6 +19,8 @@ The app is mostly static presentation: hero, engagement paths, case studies, MOD
 The production implementation uses Angular v21 standalone components, signals for local and async view state, and modern template control flow (`@if`, `@for`, `@empty`, `@switch` where useful). Avoid legacy structural directives unless a library integration requires them.
 
 Do not introduce NgRx, a CMS, a backend API, server-side contact handling, or multi-page routing for v1.
+
+Google Analytics is in scope only after the visitor grants analytics consent. Do not add the Google Analytics script statically to `index.html`; the app must load and initialize it only through a small analytics service after consent is accepted.
 
 ---
 
@@ -56,11 +58,14 @@ Note: `DESIGN-SPEC.md` is marked proposed pending Product Owner and Moderator ap
 
 - Implement as one compact SPA.
 - Use anchor navigation, not page routes, for Home, Work, MOD-W, About, and Contact.
-- Keep the first implementation English-only.
+- Keep the portfolio content English-only. The analytics consent popup is privacy / compliance UI and may use German, English, or concise bilingual wording once Moderator approves final copy.
 - Do not add a CV/resume page.
 - Do not add a downloadable CV/resume link.
 - Do not add a standalone Services page.
 - Do not add a contact form.
+- Add Google Analytics only through consent-gated client-side initialization.
+- Do not add analytics routes, a backend proxy, server-side tracking, or a custom analytics dashboard.
+- Do not enable Google Analytics advertising features, Google Signals, or data-sharing behavior unless Moderator explicitly approves the launch settings.
 
 ### 3.2 Angular Style
 
@@ -132,6 +137,13 @@ src/app/
     engagement-paths.content.ts
     contact.content.ts
 
+  analytics/
+    analytics.config.ts
+    analytics-consent.model.ts
+    analytics-consent.service.ts
+    google-analytics.service.ts
+    analytics-consent-banner/
+
   shared/
     button-link/
     chamfer-panel/
@@ -164,7 +176,9 @@ The app is small enough that a deep feature/module hierarchy is not needed. Keep
 
 ### App
 
-Root Angular component. It should only host the portfolio page and any global shell concerns.
+Root Angular component. It should host the portfolio page and global shell concerns.
+
+For analytics scope, App should mount the Analytics Consent Banner so consent UI is available independently of portfolio section rendering. Keep the banner outside content sections so rejecting analytics cannot affect the portfolio experience.
 
 ### Portfolio Page
 
@@ -228,6 +242,95 @@ Static typed local content. Use `mailto:` only in v1. Must support both full-tim
 ### Footer
 
 Static metadata and MOD-W/Angular attribution.
+
+Footer may include a "Privacy / Cookie settings" control if that is the clearest persistent location for reopening analytics consent settings. If implemented there, it should call `AnalyticsConsentService.openSettings()` rather than owning consent state directly.
+
+### Analytics Consent Banner
+
+Global consent component rendered by App. It owns only consent UI, not analytics transport.
+
+Responsibilities:
+
+- Show first-visit analytics consent prompt when consent state is unknown.
+- Offer equal, clear accept and reject controls.
+- Avoid pre-checked options and misleading button hierarchy.
+- Keep portfolio content usable while the prompt is visible.
+- Provide or coordinate a persistent "Privacy / Cookie settings" control for changing consent later.
+- Use Moderator-approved wording and language before publication.
+
+Recommended state comes from `AnalyticsConsentService`:
+
+```typescript
+readonly consentState = computed(() => this.analyticsConsent.state());
+readonly isSettingsOpen = computed(() => this.analyticsConsent.isSettingsOpen());
+```
+
+### Analytics Consent Service
+
+Singleton service responsible for local consent state. It must not call Google Analytics directly.
+
+Responsibilities:
+
+- Read and write a versioned consent record in browser storage.
+- Expose a signal-backed consent state: `unknown`, `accepted`, or `rejected`.
+- Persist accept/reject decisions.
+- Reopen settings on user request.
+- Support withdrawal by changing accepted consent to rejected consent.
+- Treat missing, malformed, expired, or old-version records as `unknown`.
+- Guard all browser APIs (`window`, `localStorage`, `document`) so tests and non-browser contexts do not crash.
+
+Recommended local storage key:
+
+```text
+frank-mcguire-portfolio.analytics-consent.v1
+```
+
+Recommended model:
+
+```typescript
+export type AnalyticsConsentState = 'unknown' | 'accepted' | 'rejected';
+
+export interface AnalyticsConsentRecord {
+  version: 1;
+  state: Exclude<AnalyticsConsentState, 'unknown'>;
+  decidedAt: string;
+}
+```
+
+### Google Analytics Service
+
+Singleton adapter for Google Analytics. Application code must not call `gtag` directly.
+
+Responsibilities:
+
+- Observe accepted/rejected consent state.
+- Dynamically inject the GA4 script only after consent is accepted and a measurement id is configured.
+- Initialize `dataLayer` / `gtag` only after consent is accepted.
+- Send one initial page-view after consent is accepted.
+- Track approved events through typed wrapper methods.
+- Stop future tracking after consent is rejected or withdrawn.
+- Best-effort delete first-party GA cookies when consent is withdrawn.
+- No-op safely when no measurement id is configured.
+
+Recommended public API:
+
+```typescript
+trackPageView(path: string, title: string): void;
+trackEvent(eventName: AnalyticsEventName, params?: AnalyticsEventParams): void;
+```
+
+Approved v1 event names should be narrow and portfolio-specific:
+
+```typescript
+type AnalyticsEventName =
+  | 'section_navigation'
+  | 'contact_cta_click'
+  | 'outbound_profile_click'
+  | 'case_study_link_click'
+  | 'modw_repository_click';
+```
+
+Do not make analytics calls from every component by default. Prefer tracking at stable interaction boundaries: nav links, contact CTAs, external profile/repository links, and approved case-study/MOD-W CTAs.
 
 ---
 
@@ -370,6 +473,60 @@ The view should use `@if` branches for `loading`, `error`, and `ready`.
 
 ---
 
+## 7a. Analytics and Consent Configuration
+
+Google Analytics configuration is not runtime content. Keep it separate from `public/content/*.json`.
+
+Use a small typed config or injection token:
+
+```typescript
+export interface AnalyticsConfig {
+  measurementId: string;
+  consentStorageKey: string;
+  consentVersion: 1;
+}
+```
+
+Recommended implementation:
+
+- Store the measurement id in `src/app/analytics/analytics.config.ts`.
+- Use the Moderator-supplied GA4 measurement id: `G-MD06T4XGJJ`.
+- If `measurementId` is empty, the Google Analytics service must no-op even when consent is accepted.
+- Do not put the GA script tag in `src/index.html`.
+- Do not use a third-party Angular analytics wrapper for v1; a tiny local adapter is simpler, testable, and avoids extra dependency surface.
+- Do not load Google Tag Manager unless Moderator explicitly changes the scope.
+
+Consent persistence:
+
+- Use localStorage for the consent record.
+- Use a versioned key so copy or policy changes can trigger a fresh prompt.
+- Do not store personal data in the consent record.
+- The consent prompt must remain usable if localStorage is unavailable; in that case, the visitor may be prompted again on the next visit.
+
+Withdrawal behavior:
+
+- Rejecting or withdrawing consent must prevent future page-view and event tracking.
+- If GA was already loaded, set future analytics calls to no-op.
+- Best-effort remove known GA first-party cookies for the current host, including `_ga` and `_ga_<container-suffix>` patterns.
+- Do not claim cookie deletion is legally complete in user-facing copy.
+
+Tracking boundaries:
+
+- Initial page-view after consent.
+- Anchor navigation events for major sections where feasible.
+- Contact CTA click events.
+- External profile / repository click events.
+- Case-study and MOD-W CTA click events.
+
+Do not track:
+
+- Email contents or generated mailto body text.
+- Fine-grained scroll depth in v1.
+- Keystrokes, pointer coordinates, form input, or any visitor-provided personal data.
+- Rejected-consent users.
+
+---
+
 ## 8. Routing and Navigation
 
 Use anchor navigation only.
@@ -479,6 +636,10 @@ Baseline requirements:
 - `aria-hidden="true"` for decorative background/ring layers.
 - Respect `prefers-reduced-motion`.
 - Content visible by default; animation must not hide content in no-JS or pre-hydration states.
+- Analytics consent prompt must be keyboard-operable and screen-reader understandable.
+- Consent accept/reject controls must have clear accessible names and comparable visual weight.
+- Reopening privacy / cookie settings must be possible by keyboard.
+- The consent prompt must not trap focus unless implemented as a true modal dialog with a clear close/reject path. A non-blocking banner or panel is preferred for v1.
 
 ---
 
@@ -491,6 +652,8 @@ Performance recommendations:
 - Avoid heavy runtime dependencies.
 - Keep animations CSS-only and cheap.
 - Use no client-side charting, canvas, or 3D in v1.
+- Load Google Analytics only after consent to avoid unnecessary third-party network cost for rejected-consent visitors.
+- Keep analytics implementation local and dependency-light; no analytics UI package or cookie-consent framework unless a later Step justifies it.
 - Preserve the fixed gradient/grid as CSS only; the grid is decorative and can be removed if it causes rendering cost.
 - Self-host or otherwise carefully load fonts if LCP becomes a concern.
 - Keep runtime JSON small and cache-friendly.
@@ -509,6 +672,7 @@ Minimum first implementation checks:
 - MOD-W section renders from `/content/modw.json`.
 - Runtime JSON loading, empty, and error states are covered by integration tests.
 - E2E verifies first-screen clarity, anchor navigation, case-study rendering, contact paths, and mobile menu behavior.
+- Analytics tests verify no GA script or event call before consent, GA initialization after accepted consent, no tracking after rejected/withdrawn consent, consent persistence, and the visible settings control.
 - Manual visual review covers desktop and mobile screenshots against the Editorial Left prototype.
 - Manual accessibility review covers keyboard navigation, focus visibility, readable text, and reduced motion.
 
@@ -519,6 +683,11 @@ Use `data-testid` conventions from `TESTING.md`.
 ## 13. Security and Source Safety
 
 - No backend and no form submission in v1.
+- No server-side analytics or analytics proxy in v1.
+- Do not load Google Analytics before accepted consent.
+- Do not collect visitor-provided personal data through analytics events.
+- Do not track mailto body text, email contents, or any future form input.
+- Do not enable Google Analytics advertising features, Google Signals, or extra data sharing without Moderator approval.
 - External links must use `target="_blank"` with `rel="noopener"` where they open a new tab.
 - Do not expose proprietary project details beyond approved wording.
 - Use `fpmcguire@gmail.com` as the public email unless Product/Moderator updates the source.
@@ -554,6 +723,11 @@ Use `data-testid` conventions from `TESTING.md`.
    - Product excludes downloadable resume and full chronological resume page from first implementation.
    - Production keeps resume-like evidence inside About and Case Studies only.
 
+7. **Consent-gated analytics added after initial architecture approval**
+   - Original architecture excluded analytics dashboard scope but did not include usage tracking.
+   - Product now requires Google Analytics with German / EU GDPR-oriented consent.
+   - Production adds consent-gated GA only; it still excludes a custom analytics dashboard and backend.
+
 ---
 
 ## 15. Open Questions
@@ -564,6 +738,10 @@ Use `data-testid` conventions from `TESTING.md`.
 4. Should React Design Patterns be included in the launch JSON?
 5. Are final LinkedIn, GitHub, and MOD-W repository URLs approved?
 6. Should fonts be self-hosted in v1, or is external font loading acceptable for the first Step?
+7. What is the approved Privacy Policy / Datenschutzerklaerung URL?
+8. Should the consent popup be German-only, English-only, or bilingual German / English?
+9. Are Google Analytics advertising features, Google Signals, and optional data-sharing settings disabled for launch?
+10. Should consent be re-requested after a fixed duration, or only when the consent version changes?
 
 ---
 

@@ -1,8 +1,8 @@
 # Roadmap - Frank McGuire Portfolio
 
-**Status:** Approved by Moderator on 2026-07-29  
-**Tech Lead:** Codex  
-**Architecture:** `mod-w/ARCHITECTURE.md`, approved by Moderator on 2026-07-29
+**Status:** Approved through STEP-07 by Moderator on 2026-07-30
+**Tech Lead:** Codex
+**Architecture:** `mod-w/ARCHITECTURE.md`, updated for analytics scope on 2026-07-30
 
 ---
 
@@ -14,6 +14,8 @@
 - Implement the Editorial Left design direction without copying prototype code verbatim.
 - Keep Case Studies and MOD-W content runtime-editable through JSON.
 - Replace generated Angular starter code as soon as production shell work begins.
+- Keep Google Analytics consent-gated and dependency-light.
+- Do not let analytics work change the compact SPA structure or conversion content.
 
 ---
 
@@ -88,12 +90,29 @@ Bring the implementation close to the approved Editorial Left design:
 
 Primary purpose: align implementation with design intent and accessibility expectations.
 
-### STEP-07 - Launch Validation and Content Review
+### STEP-07 - Consent-Gated Google Analytics and GDPR Popup
+
+Implement the approved analytics scope:
+
+- add analytics config with approved measurement id `G-MD06T4XGJJ`,
+- add consent state model and versioned local persistence,
+- add German / EU GDPR-oriented consent popup,
+- add visible privacy / cookie settings control,
+- dynamically load and initialize Google Analytics only after accepted consent,
+- track approved basic events where feasible,
+- prevent future tracking after reject or withdrawal,
+- add integration and E2E coverage for consent-gated behavior.
+
+Primary purpose: collect basic usage analytics without tracking visitors before consent or compromising the portfolio experience.
+
+### STEP-08 - Launch Validation and Content Review
 
 Final validation Step:
 
 - replace any placeholder copy,
+- confirm privacy / consent wording and final Google Analytics account settings,
 - verify source-safe claims,
+- verify no analytics tracking occurs before consent,
 - run build/test/E2E gates,
 - perform manual visual and accessibility review,
 - prepare for Tech Lead review, QA, Product Owner validation, and Moderator launch decision.
@@ -113,8 +132,10 @@ Do not include these in first implementation:
 - blog.
 - multi-page routes.
 - standalone Services page.
-- analytics dashboard.
-- multilingual content.
+- custom analytics dashboard.
+- non-consented analytics tracking.
+- Google Analytics advertising features, Google Signals, or optional data sharing unless Moderator explicitly approves them.
+- multilingual portfolio content beyond the analytics consent UI.
 
 ---
 
@@ -132,7 +153,9 @@ Do not include these in first implementation:
 
 `STEP-06.md` is complete and tagged `mod-w-step-06`.
 
-Next planned Step: `STEP-07.md` - Launch Validation and Content Review.
+`STEP-07.md` is complete and tagged `mod-w-step-07`.
+
+Next planned Step: `STEP-08.md` - Launch Validation and Content Review.
 
 ---
 

@@ -8,12 +8,19 @@
         [attr.data-testid]="'nav-link-' + link.id"
         [class.active]="activeSection() === link.id"
         [attr.aria-current]="activeSection() === link.id ? 'true' : null"
+        (click)="trackSectionNavigation(link.id)"
         >{{ link.label | nonBreakingTerms }}</a
       >
     }
   </div>
 
-  <a data-testid="nav-contact-cta" href="#contact" class="btn btn-primary">Get in touch</a>
+  <a
+    data-testid="nav-contact-cta"
+    href="#contact"
+    class="btn btn-primary"
+    (click)="trackContactCta()"
+    >Get in touch</a
+  >
 
   <button
     type="button"
@@ -42,7 +49,7 @@
       <a
         [href]="link.href"
         [class.active]="activeSection() === link.id"
-        (click)="closeMobileMenu()"
+        (click)="trackSectionNavigation(link.id); closeMobileMenu()"
         >{{ link.label | nonBreakingTerms }}</a
       >
     }

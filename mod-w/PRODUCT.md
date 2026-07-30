@@ -47,6 +47,7 @@ The new portfolio must convert passive interest into qualified conversations.
 - Establish MOD-W as a serious methodology pillar that differentiates Frank from other senior frontend candidates.
 - Increase trust by connecting claims to concrete projects, work history, and public repositories where available.
 - Make it easy for visitors to contact Frank through appropriate channels.
+- Collect basic usage analytics so Frank can understand portfolio traffic, section engagement, and conversion interest after launch.
 
 ### 3.2 Product goals
 
@@ -57,6 +58,7 @@ The new portfolio must convert passive interest into qualified conversations.
 - Support recruiter scanning, hiring manager evaluation, and engineering leader review.
 - Provide enough structure and content intent for Claude Design to prototype a coherent site.
 - Provide enough acceptance intent for MOD-W implementation validation.
+- Add privacy-respecting Google Analytics tracking with a German / EU GDPR consent experience.
 
 ### 3.3 Non-goals
 
@@ -65,6 +67,8 @@ The new portfolio must convert passive interest into qualified conversations.
 - Do not present MOD-W as an automation platform, agent framework, company, SaaS product, or replacement for engineering judgment.
 - Do not optimize the site primarily for blogging, courses, or community growth in this iteration.
 - Do not create a broad personal-history archive.
+- Do not track visitors with Google Analytics before consent is granted.
+- Do not build a custom analytics dashboard in this iteration.
 
 ---
 
@@ -185,6 +189,14 @@ Cavalieri Align / MQTT-Align demonstrates current independent product-building c
 3. Visitor understands why MOD-W exists and what problems it solves.
 4. Visitor reviews project evidence showing MOD-W in practice.
 5. Visitor clicks through to the GitHub repository or contacts Frank about training / consulting.
+
+### 6.5 Privacy and analytics consent workflow
+
+1. Visitor lands on the portfolio for the first time.
+2. Visitor sees a clear consent popup before Google Analytics tracking starts.
+3. Visitor can accept analytics tracking, reject analytics tracking, or manage the analytics preference without being blocked from using the site.
+4. Visitor's choice is remembered for a reasonable period.
+5. Visitor can later reopen privacy / cookie settings and change or withdraw consent.
 
 ---
 
@@ -324,6 +336,33 @@ Optional content:
 
 Contact must exist as a prominent final SPA section and as visible contact / CTA links in relevant earlier sections.
 
+### 8.6 Analytics consent popup
+
+The site must include a German / EU GDPR-oriented analytics consent popup for Google Analytics.
+
+Required behavior:
+
+- Google Analytics must not load, initialize, or send page-view / event data until the visitor has granted analytics consent.
+- The popup must offer equal, clear choices to accept or reject analytics tracking.
+- The popup must not block access to the portfolio content.
+- The consent choice must be persisted locally so the visitor is not asked on every page load.
+- A visible privacy / cookie settings control must let the visitor change or withdraw consent later.
+- Rejecting analytics must preserve the full portfolio experience.
+- The implementation must avoid dark patterns, pre-checked consent, or misleading button hierarchy.
+
+Required consent content:
+
+- Plain-language statement that Google Analytics is used to understand site usage.
+- Statement that analytics is optional.
+- Link or placeholder for the Privacy Policy / Datenschutzerklaerung.
+- Clear labels for accepting and rejecting analytics.
+
+Language note:
+
+- The portfolio remains English-only for v1.
+- The consent popup is privacy / compliance UI and may use German, English, or concise bilingual German / English wording.
+- Final consent wording and language must be approved by the Moderator before publication.
+
 ---
 
 ## 9. Content requirements
@@ -361,11 +400,17 @@ The following claims and scope decisions are approved for first implementation:
 - Services: not a standalone page or section; service / engagement-fit content belongs in the Home and Contact sections.
 - Case studies: mandatory for launch and central to the portfolio.
 - Freelance availability: do not include specific terms such as 5 days/week, 3–12+ months, or EUR invoice.
+- Google Analytics tracking is required for launch.
+- German / EU GDPR-oriented analytics consent is required for launch.
 
 The following claims still require Moderator confirmation before publishing exact wording:
 
 - Whether "Available immediately" is accurate at time of launch.
 - Which proprietary project details may be published.
+- Google Analytics measurement ID / property configuration.
+- Privacy Policy / Datenschutzerklaerung URL and final legal wording.
+- Final analytics consent popup language: German-only, English-only, or bilingual German / English.
+- Whether Google Analytics advertising features, Google Signals, or data sharing settings are disabled for launch.
 
 Until confirmed, the site should use safer wording such as:
 
@@ -453,6 +498,21 @@ The website must link to relevant external profiles and repositories, including 
 
 The website must be implemented as a compact SPA with concise sections. It must avoid long, dense, document-like pages and must not rely on multiple separate content pages for the first implementation.
 
+### FR12 — Google Analytics tracking
+
+The website must support Google Analytics usage tracking after the visitor grants analytics consent.
+
+Tracking should prioritize basic portfolio insight:
+
+- page / SPA view,
+- section navigation or section engagement where feasible,
+- outbound profile / repository clicks where feasible,
+- contact CTA clicks where feasible.
+
+### FR13 — Consent-gated analytics
+
+Google Analytics must be consent-gated. No analytics tracking may occur before consent, and consent withdrawal must stop future analytics tracking.
+
 ---
 
 ## 11. Non-functional requirements
@@ -488,6 +548,10 @@ The site must not exaggerate, fabricate, or blur distinctions between employment
 ### NFR7 — MOD-W validation compatibility
 
 The site must be suitable for MOD-W development validation. Requirements must be testable through acceptance checks, content review, and manual inspection.
+
+### NFR8 — Privacy and GDPR-aware behavior
+
+The site must treat analytics as optional. Consent behavior must be clear, reversible, and suitable for a Germany-based portfolio audience. Implementation should follow current EU / German expectations for analytics cookies and consent, but final legal copy remains Moderator-owned and may require legal review.
 
 ---
 
@@ -616,7 +680,7 @@ Trending Repos should be omitted from the first portfolio iteration unless there
 - Full chronological resume page.
 - Detailed MOD-W documentation duplication; link to GitHub instead.
 - Private architecture diagrams for proprietary projects.
-- Analytics dashboard unless later required.
+- Custom analytics dashboard; only Google Analytics tracking and consent handling are in scope.
 - Standalone Services page.
 - Multilingual English/German version; the first implementation is English-only.
 
@@ -688,6 +752,18 @@ The implemented site is a single-page application with concise sections. It does
 
 The implemented site presents a minimalist, modern visual design with clear typography, strong whitespace, restrained visual treatment, and low clutter. It does not rely on heavy animation, generic AI visuals, or decorative effects that distract from the portfolio content.
 
+### AC15 — Analytics consent before tracking
+
+Google Analytics does not load, initialize, or send page-view / event data before the visitor grants analytics consent.
+
+### AC16 — Consent choice quality
+
+The consent popup provides clear accept and reject choices, does not block portfolio access, persists the visitor's choice, and provides a visible way to change or withdraw consent later.
+
+### AC17 — Google Analytics verification
+
+After analytics consent is granted, the site can send the approved basic Google Analytics tracking signals. Rejected or withdrawn consent prevents future analytics tracking.
+
 ---
 
 ## 17. Moderator decisions incorporated
@@ -704,11 +780,20 @@ The Moderator has resolved the following first-implementation decisions:
 8. Freelance availability: do not include specific terms such as 5 days/week, 3–12+ months, or EUR invoice.
 9. Site structure: compact SPA, not a multi-page site; avoid long, dense, heavily sectioned pages.
 10. Design direction: minimalist and modern, with restrained visuals and low clutter.
+11. Google Analytics tracking is required for launch.
+12. A German / EU GDPR-oriented analytics consent popup is required for launch.
 
 Publication wording approved for v1:
 
 1. Use neutral availability wording: "Available for relevant full-time and freelance conversations."
 2. Keep proprietary project disclosures high-level and non-confidential; offer architecture walkthroughs on request.
+
+Analytics and consent wording still requiring Moderator approval:
+
+1. Google Analytics measurement ID / property configuration.
+2. Privacy Policy / Datenschutzerklaerung URL and final legal text.
+3. Consent popup language choice: German-only, English-only, or bilingual German / English.
+4. Google Analytics data-sharing, Google Signals, advertising features, and retention settings.
 
 ---
 

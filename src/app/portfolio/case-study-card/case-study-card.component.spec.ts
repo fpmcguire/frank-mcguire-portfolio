@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { GoogleAnalyticsService } from '../../analytics/google-analytics.service';
 import { CaseStudy } from '../../content/case-study.model';
 import { CaseStudyCardComponent } from './case-study-card.component';
 
@@ -25,6 +26,18 @@ function createFixture(caseStudy: CaseStudy) {
   fixture.componentRef.setInput('caseStudy', caseStudy);
   fixture.detectChanges();
   return fixture;
+}
+
+function createFixtureWithMockAnalytics(caseStudy: CaseStudy) {
+  const trackEvent = vi.fn();
+  TestBed.configureTestingModule({
+    imports: [CaseStudyCardComponent],
+    providers: [{ provide: GoogleAnalyticsService, useValue: { trackEvent } }],
+  });
+  const fixture = TestBed.createComponent(CaseStudyCardComponent);
+  fixture.componentRef.setInput('caseStudy', caseStudy);
+  fixture.detectChanges();
+  return { fixture, trackEvent };
 }
 
 describe('CaseStudyCardComponent', () => {
@@ -177,6 +190,48 @@ describe('CaseStudyCardComponent', () => {
       '[data-testid="work-card-mqtt-align-classification"]',
     );
     expect(badge?.classList.contains('proprietary')).toBe(false);
+  });
+
+  it('tracks case_study_link_click with linkType "product" and "repository"', () => {
+    const { fixture, trackEvent } = createFixtureWithMockAnalytics({
+      ...BASE_CASE_STUDY,
+      productUrl: 'https://example.com/product',
+      repositoryUrl: 'https://github.com/example/repo',
+    });
+    const el = fixture.nativeElement as HTMLElement;
+
+    (
+      el.querySelector('[data-testid="work-card-mqtt-align-product-link"]') as HTMLAnchorElement
+    ).click();
+    expect(trackEvent).toHaveBeenCalledWith('case_study_link_click', {
+      caseStudyId: 'mqtt-align',
+      linkType: 'product',
+    });
+
+    (
+      el.querySelector(
+        '[data-testid="work-card-mqtt-align-repository-link"]',
+      ) as HTMLAnchorElement
+    ).click();
+    expect(trackEvent).toHaveBeenCalledWith('case_study_link_click', {
+      caseStudyId: 'mqtt-align',
+      linkType: 'repository',
+    });
+  });
+
+  it('tracks case_study_link_click with linkType "legacy" for the fallback href link', () => {
+    const { fixture, trackEvent } = createFixtureWithMockAnalytics({
+      ...BASE_CASE_STUDY,
+      href: 'https://example.com/legacy',
+    });
+    const el = fixture.nativeElement as HTMLElement;
+
+    (el.querySelector('[data-testid="work-card-mqtt-align-link"]') as HTMLAnchorElement).click();
+
+    expect(trackEvent).toHaveBeenCalledWith('case_study_link_click', {
+      caseStudyId: 'mqtt-align',
+      linkType: 'legacy',
+    });
   });
 
   it('does not render a link when href is absent', () => {

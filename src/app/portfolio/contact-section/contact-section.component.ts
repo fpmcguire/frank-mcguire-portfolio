@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { CONTACT_CONTENT } from '../../content/contact.content';
+import { GoogleAnalyticsService } from '../../analytics/google-analytics.service';
+import { CONTACT_CONTENT, ContactProfileLink } from '../../content/contact.content';
 import { ContactPath, buildMailtoHref } from '../../content/contact-path.model';
 import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
 
@@ -12,9 +13,26 @@ import { SectionHeaderComponent } from '../../shared/section-header/section-head
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactSectionComponent {
+  private readonly googleAnalytics = inject(GoogleAnalyticsService);
+
   protected readonly content = CONTACT_CONTENT;
 
   protected mailtoHref(path: ContactPath): string {
     return buildMailtoHref(this.content.email, path);
+  }
+
+  protected trackContactCta(path: ContactPath): void {
+    this.googleAnalytics.trackEvent('contact_cta_click', {
+      source: `contact-${path.id}-cta`,
+      path: path.id,
+    });
+  }
+
+  protected trackProfileLink(link: ContactProfileLink): void {
+    if (!link.external) {
+      return;
+    }
+
+    this.googleAnalytics.trackEvent('outbound_profile_click', { destination: link.id });
   }
 }

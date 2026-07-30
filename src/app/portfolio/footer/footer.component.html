@@ -1,4 +1,12 @@
 <footer data-testid="footer">
   <span class="copyright">{{ content.copyright }}</span>
   <span class="attribution">{{ content.attribution | nonBreakingTerms }}</span>
+  <button
+    type="button"
+    data-testid="analytics-consent-settings"
+    class="settings-link"
+    (click)="openAnalyticsSettings()"
+  >
+    Privacy / Cookie settings
+  </button>
 </footer>

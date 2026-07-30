@@ -209,3 +209,111 @@ test('keyboard navigation reaches the nav, hero CTA, and a contact CTA', async (
   expect(seenTestIds).toContain('hero-work-cta');
   expect(seenTestIds).toContain('contact-full-time-cta');
 });
+
+const ANALYTICS_CONSENT_STORAGE_KEY = 'frank-mcguire-portfolio.analytics-consent.v1';
+const GA_MEASUREMENT_ID = 'G-MD06T4XGJJ';
+
+test('a fresh visitor sees the consent banner and no GA request fires before a decision', async ({
+  page,
+}) => {
+  const gaRequests: string[] = [];
+  await page.route('**://www.googletagmanager.com/**', (route) => {
+    gaRequests.push(route.request().url());
+    void route.abort();
+  });
+
+  await page.goto('/');
+
+  await expect(page.getByTestId('analytics-consent-banner')).toBeVisible();
+  await expect(page.getByTestId('analytics-consent-accept')).toBeVisible();
+  await expect(page.getByTestId('analytics-consent-reject')).toBeVisible();
+  await page.waitForTimeout(300);
+  expect(gaRequests).toHaveLength(0);
+});
+
+test('rejecting analytics hides the banner, never loads GA, and keeps the portfolio usable', async ({
+  page,
+}) => {
+  const gaRequests: string[] = [];
+  await page.route('**://www.googletagmanager.com/**', (route) => {
+    gaRequests.push(route.request().url());
+    void route.abort();
+  });
+
+  await page.goto('/');
+  await page.getByTestId('analytics-consent-reject').click();
+
+  await expect(page.getByTestId('analytics-consent-banner')).toBeHidden();
+  await expect(page.getByTestId('hero-section')).toBeVisible();
+  await page.getByTestId('nav-link-work').click();
+  await expect(page.getByTestId('work-card-grid')).toBeVisible();
+
+  await page.waitForTimeout(300);
+  expect(gaRequests).toHaveLength(0);
+});
+
+test('accepting analytics loads the GA4 script with the configured measurement id', async ({
+  page,
+}) => {
+  await page.route('**://www.googletagmanager.com/**', (route) => void route.abort());
+  await page.goto('/');
+
+  const gaRequestPromise = page.waitForRequest((request) =>
+    request.url().includes('googletagmanager.com/gtag/js'),
+  );
+  await page.getByTestId('analytics-consent-accept').click();
+
+  const gaRequest = await gaRequestPromise;
+  expect(gaRequest.url()).toContain(`id=${GA_MEASUREMENT_ID}`);
+  await expect(page.getByTestId('analytics-consent-banner')).toBeHidden();
+});
+
+test('a returning visitor with a valid accepted consent record is not re-prompted, and GA still loads', async ({
+  page,
+}) => {
+  await page.addInitScript(
+    ({ key }) => {
+      localStorage.setItem(
+        key,
+        JSON.stringify({ version: 1, state: 'accepted', decidedAt: new Date().toISOString() }),
+      );
+    },
+    { key: ANALYTICS_CONSENT_STORAGE_KEY },
+  );
+  await page.route('**://www.googletagmanager.com/**', (route) => void route.abort());
+
+  const gaRequestPromise = page.waitForRequest((request) =>
+    request.url().includes('googletagmanager.com/gtag/js'),
+  );
+  await page.goto('/');
+
+  await expect(page.getByTestId('analytics-consent-banner')).toBeHidden();
+  const gaRequest = await gaRequestPromise;
+  expect(gaRequest.url()).toContain(`id=${GA_MEASUREMENT_ID}`);
+});
+
+test('withdrawing consent via the footer settings control stops future tracked requests', async ({
+  page,
+}) => {
+  await page.route('**://www.googletagmanager.com/**', (route) => void route.abort());
+  await page.goto('/');
+
+  await page.getByTestId('analytics-consent-accept').click();
+  await expect(page.getByTestId('analytics-consent-banner')).toBeHidden();
+
+  await page.getByTestId('analytics-consent-settings').click();
+  await expect(page.getByTestId('analytics-consent-banner')).toBeVisible();
+  await page.getByTestId('analytics-consent-reject').click();
+  await expect(page.getByTestId('analytics-consent-banner')).toBeHidden();
+
+  let requestedAfterWithdrawal = false;
+  page.on('request', (request) => {
+    if (request.url().includes('googletagmanager.com')) {
+      requestedAfterWithdrawal = true;
+    }
+  });
+
+  await page.getByTestId('hero-work-cta').click();
+  await page.waitForTimeout(300);
+  expect(requestedAfterWithdrawal).toBe(false);
+});

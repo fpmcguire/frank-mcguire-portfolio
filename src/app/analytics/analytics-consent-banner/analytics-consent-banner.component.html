@@ -1,0 +1,33 @@
+@if (isVisible()) {
+  <div class="banner" data-testid="analytics-consent-banner" role="region" aria-label="Analytics consent">
+    <div class="copy">
+      <p class="title" data-testid="analytics-consent-title">Analytics</p>
+      <p class="summary" data-testid="analytics-consent-summary">
+        This site uses optional Google Analytics to understand portfolio usage. Nothing is
+        tracked until you accept, and you can change your choice any time.
+      </p>
+      <p class="privacy-placeholder" data-testid="analytics-consent-privacy-placeholder">
+        Privacy Policy — link coming soon
+      </p>
+    </div>
+
+    <div class="actions">
+      <button
+        type="button"
+        data-testid="analytics-consent-accept"
+        class="btn btn-primary"
+        (click)="accept()"
+      >
+        Accept
+      </button>
+      <button
+        type="button"
+        data-testid="analytics-consent-reject"
+        class="btn btn-ghost"
+        (click)="reject()"
+      >
+        Reject
+      </button>
+    </div>
+  </div>
+}
