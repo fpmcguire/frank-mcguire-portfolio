@@ -445,4 +445,4 @@ If `npm run test:e2e` cannot run because of local browser or OS permission issue
 
 ---
 
-MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow
+MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/mod-w

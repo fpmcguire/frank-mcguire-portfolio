@@ -79,4 +79,4 @@ Use:
 - Name artifact conflicts instead of silently resolving them.
 - When a Step is too large, propose a split.
 
-MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow
+MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/mod-w

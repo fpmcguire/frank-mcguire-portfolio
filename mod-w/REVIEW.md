@@ -79,4 +79,4 @@ Proceed to QA. After QA, the Moderator should resolve the three launch blockers 
 
 ---
 
-MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow
+MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/mod-w

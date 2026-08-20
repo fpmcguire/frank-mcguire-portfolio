@@ -13,7 +13,7 @@ const VALID_MODW_CONTENT: ModwContent = {
   coreIdea: 'Source-safe core idea.',
   repositoryCta: {
     label: 'View the MOD-W repository',
-    href: 'https://github.com/fpmcguire/moderated-ai-development-workflow',
+    href: 'https://github.com/fpmcguire/mod-w',
   },
   consultingCta: { label: 'Discuss MOD-W consulting or training', href: '#contact' },
   principles: [{ id: 'role-separation', title: 'Role separation', summary: 'Summary.' }],

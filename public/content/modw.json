@@ -6,7 +6,7 @@
   "coreIdea": "Work moves through role separation, small documented Steps, review gates, and cross-validation before a human Moderator approves it — viable coding, not vibe coding.",
   "repositoryCta": {
     "label": "View the MOD-W repository",
-    "href": "https://github.com/fpmcguire/moderated-ai-development-workflow"
+    "href": "https://github.com/fpmcguire/mod-w"
   },
   "consultingCta": {
     "label": "Discuss MOD-W consulting or training",

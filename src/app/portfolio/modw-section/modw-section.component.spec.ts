@@ -17,7 +17,7 @@ const MODW_CONTENT: ModwContent = {
   coreIdea: 'Core idea.',
   repositoryCta: {
     label: 'View the MOD-W repository',
-    href: 'https://github.com/fpmcguire/moderated-ai-development-workflow',
+    href: 'https://github.com/fpmcguire/mod-w',
   },
   consultingCta: { label: 'Discuss MOD-W consulting or training', href: '#contact' },
   principles: [

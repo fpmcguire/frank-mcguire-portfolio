@@ -55,4 +55,4 @@ If a command cannot run, document the reason and the closest verification perfor
 - Use `options` for implementation planning.
 - Use `minimal` for implementation updates and review responses.
 
-MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow
+MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/mod-w

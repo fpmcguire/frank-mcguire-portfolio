@@ -349,11 +349,7 @@ export interface CaseStudy {
     | 'open-source'
     | 'professional-experience'
     | 'proprietary';
-  status:
-    | 'public-demo'
-    | 'public-repository'
-    | 'private-proprietary'
-    | 'employment-summary';
+  status: 'public-demo' | 'public-repository' | 'private-proprietary' | 'employment-summary';
   role: string;
   summary: string;
   evidence: string[];
@@ -422,7 +418,7 @@ MOD-W JSON shape:
   "eyebrow": "03 - Methodology",
   "title": "Moderated AI Development Workflow (MOD-W)",
   "summary": "Source-safe MOD-W summary text.",
-  "repositoryHref": "https://github.com/fpmcguire/moderated-ai-development-workflow",
+  "repositoryHref": "https://github.com/fpmcguire/mod-w",
   "consultingHref": "#contact",
   "principles": [
     {
@@ -619,8 +615,7 @@ export const CASE_STUDY_CLASSIFICATIONS = [
   'proprietary',
 ] as const;
 
-export type CaseStudyClassification =
-  (typeof CASE_STUDY_CLASSIFICATIONS)[number];
+export type CaseStudyClassification = (typeof CASE_STUDY_CLASSIFICATIONS)[number];
 ```
 
 Static config pattern:
@@ -772,4 +767,4 @@ Use `data-testid` conventions from `TESTING.md`.
 
 ---
 
-MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/moderated-ai-development-workflow
+MOD-W v4.0.1 - Moderated AI Development Workflow - https://github.com/fpmcguire/mod-w

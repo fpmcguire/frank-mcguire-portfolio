@@ -83,10 +83,7 @@ test('MOD-W repository and consulting CTAs are visible with correct hrefs', asyn
 
   const repositoryCta = page.getByTestId('modw-repository-cta');
   await expect(repositoryCta).toBeVisible();
-  await expect(repositoryCta).toHaveAttribute(
-    'href',
-    'https://github.com/fpmcguire/moderated-ai-development-workflow',
-  );
+  await expect(repositoryCta).toHaveAttribute('href', 'https://github.com/fpmcguire/mod-w');
   await expect(repositoryCta).toHaveAttribute('target', '_blank');
 
   const consultingCta = page.getByTestId('modw-consulting-cta');
