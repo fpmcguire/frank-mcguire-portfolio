@@ -80,6 +80,22 @@ describe('CaseStudyCardComponent', () => {
     );
   });
 
+  it('renders labels for academic and training case studies', () => {
+    const fixture = createFixture({
+      ...BASE_CASE_STUDY,
+      classification: 'academic-training',
+      status: 'education-summary',
+    });
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(
+      el.querySelector('[data-testid="work-card-mqtt-align-classification"]')?.textContent,
+    ).toBe('Academic & Training');
+    expect(el.querySelector('[data-testid="work-card-mqtt-align-status"]')?.textContent).toBe(
+      'Education Summary',
+    );
+  });
+
   it('renders one evidence bullet per configured evidence point', () => {
     const fixture = createFixture(BASE_CASE_STUDY);
     const evidenceList = (fixture.nativeElement as HTMLElement).querySelector(

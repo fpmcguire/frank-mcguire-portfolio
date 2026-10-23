@@ -7,13 +7,18 @@ import { ContentLoadState } from '../../content/content-load-state.model';
 import { CaseStudiesSectionComponent } from './case-studies-section.component';
 
 const MANDATORY_LAUNCH_IDS = [
+  'brand-ui',
+  'idp-align',
+  'continuous-alignment-verification',
+  'bio-align',
+  'react-design-patterns',
+  'angular-design-patterns',
   'mqtt-align',
   'agv-fleet-simulator',
-  'bio-align',
-  'angular-design-patterns',
   'paki',
   'travel-it',
   'kaufland',
+  'academic-training',
 ];
 
 const CASE_STUDIES: CaseStudy[] = MANDATORY_LAUNCH_IDS.map((id) => ({

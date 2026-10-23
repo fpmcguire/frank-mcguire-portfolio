@@ -20,13 +20,18 @@ test('loads Case Studies content from runtime JSON with all mandatory launch tit
   await expect(grid).toBeVisible();
 
   const mandatoryLaunchIds = [
+    'brand-ui',
+    'idp-align',
+    'continuous-alignment-verification',
+    'bio-align',
+    'react-design-patterns',
+    'angular-design-patterns',
     'mqtt-align',
     'agv-fleet-simulator',
-    'bio-align',
-    'angular-design-patterns',
     'paki',
     'travel-it',
     'kaufland',
+    'academic-training',
   ];
   for (const id of mandatoryLaunchIds) {
     await expect(page.getByTestId(`work-card-${id}`)).toBeVisible();

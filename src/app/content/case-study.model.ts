@@ -6,6 +6,7 @@ export const CASE_STUDY_CLASSIFICATIONS = [
   'open-source',
   'professional-experience',
   'proprietary',
+  'academic-training',
 ] as const;
 
 export type CaseStudyClassification = (typeof CASE_STUDY_CLASSIFICATIONS)[number];
@@ -15,6 +16,7 @@ export const CASE_STUDY_STATUSES = [
   'public-repository',
   'private-proprietary',
   'employment-summary',
+  'education-summary',
 ] as const;
 
 export type CaseStudyStatus = (typeof CASE_STUDY_STATUSES)[number];
@@ -25,6 +27,7 @@ export const CASE_STUDY_CLASSIFICATION_LABELS: Record<CaseStudyClassification, s
   'open-source': 'Open Source',
   'professional-experience': 'Professional Experience',
   proprietary: 'Proprietary',
+  'academic-training': 'Academic & Training',
 };
 
 export const CASE_STUDY_STATUS_LABELS: Record<CaseStudyStatus, string> = {
@@ -32,6 +35,7 @@ export const CASE_STUDY_STATUS_LABELS: Record<CaseStudyStatus, string> = {
   'public-repository': 'Public Repository',
   'private-proprietary': 'Private / Proprietary',
   'employment-summary': 'Employment Summary',
+  'education-summary': 'Education Summary',
 };
 
 export interface CaseStudy {

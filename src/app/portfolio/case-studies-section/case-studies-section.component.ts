@@ -15,5 +15,5 @@ export class CaseStudiesSectionComponent {
   protected readonly caseStudiesContent = inject(CaseStudiesContentService);
 
   protected readonly leadText =
-    'Selected projects and professional experience evidencing frontend architecture, delivery, testing, and product judgment — several built with MOD-W.';
+    'Selected projects and professional experience evidencing frontend architecture, delivery, testing, mentoring, and product judgment — several built with MOD-W.';
 }

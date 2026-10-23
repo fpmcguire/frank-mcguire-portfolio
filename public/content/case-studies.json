@@ -1,5 +1,103 @@
 [
   {
+    "id": "brand-ui",
+    "title": "Brand UI",
+    "projectType": "Component library spike",
+    "classification": "personal-project",
+    "status": "public-repository",
+    "role": "Frontend Engineer",
+    "summary": "A reference spike for a multi-brand Angular UI library: four signal-based standalone components (Button, TextInput, Card, Navigation) themed per brand through design tokens.",
+    "evidence": [
+      "Gallery app consumes the library the way an outside user would.",
+      "Explicitly a reference spike, not production software."
+    ],
+    "technologies": ["Angular", "TypeScript", "Vitest", "Playwright"],
+    "modwRelevance": "Built under MOD-W v5.0.1.",
+    "productUrl": "https://frank-mcguire.com/brand-ui/",
+    "repositoryUrl": "https://github.com/fpmcguire/brand-ui"
+  },
+  {
+    "id": "idp-align",
+    "title": "IDP-Align",
+    "projectType": "Research prototype",
+    "classification": "personal-project",
+    "status": "public-repository",
+    "role": "Frontend Engineer",
+    "summary": "A research prototype applying CAV Level 1 (observed-state divergence) to document-processing workflow data.",
+    "evidence": [
+      "Uses synthetic replay data shaped from public API documentation; no customer data.",
+      "Not affiliated with any vendor."
+    ],
+    "technologies": ["Angular", "TypeScript"],
+    "modwRelevance": "Built under MOD-W v5.0.1 with planning, review, QA and Moderator gates.",
+    "productUrl": "https://frank-mcguire.com/idp-align/",
+    "repositoryUrl": "https://github.com/fpmcguire/idp-align"
+  },
+  {
+    "id": "continuous-alignment-verification",
+    "title": "Continuous Alignment Verification (CAV)",
+    "projectType": "Open methodology and maturity model",
+    "classification": "open-source",
+    "status": "public-repository",
+    "role": "Author",
+    "summary": "An open methodology and maturity model for checking continuously whether evolving systems stay behaviorally aligned, not only healthy.",
+    "evidence": [
+      "Manifesto, levels roadmap and foundations documents.",
+      "Its divergence-monitoring pattern is applied in Bio-Align and IDP-Align."
+    ],
+    "technologies": [],
+    "modwRelevance": "Not built under MOD-W.",
+    "repositoryUrl": "https://github.com/fpmcguire/continuous-alignment-verification"
+  },
+  {
+    "id": "bio-align",
+    "title": "Bio-Align",
+    "projectType": "Web application",
+    "classification": "personal-project",
+    "status": "public-repository",
+    "role": "Frontend Engineer",
+    "summary": "A digital twin simulator of a fed-batch cell-culture bioreactor with a live deviation-monitoring dashboard. The process model is my own design, fed by mock telemetry.",
+    "evidence": [
+      "Applies the CAV divergence-monitoring pattern.",
+      "Zoneless, signals-only Angular 21 with Chart.js."
+    ],
+    "technologies": ["Angular", "TypeScript", "Chart.js", "Vitest", "Playwright"],
+    "modwRelevance": "Built under MOD-W v2.1.0.",
+    "productUrl": "https://frank-mcguire.com/bio-align/",
+    "repositoryUrl": "https://github.com/fpmcguire/bio-align"
+  },
+  {
+    "id": "react-design-patterns",
+    "title": "React Design Patterns",
+    "projectType": "Instructional catalog",
+    "classification": "open-source",
+    "status": "public-repository",
+    "role": "Author",
+    "summary": "A catalog of frontend design patterns in React 19 and TypeScript, refactored from my Angular Design Patterns project to compare the two frameworks.",
+    "evidence": [
+      "Same patterns as Angular Design Patterns, implemented in React for direct comparison.",
+      "Tested with Vitest and Playwright."
+    ],
+    "technologies": ["React", "TypeScript", "Vite", "Vitest", "Playwright"],
+    "modwRelevance": "Built under early MOD-W.",
+    "productUrl": "https://frank-mcguire.com/react-design-patterns",
+    "repositoryUrl": "https://github.com/fpmcguire/react-design-patterns"
+  },
+  {
+    "id": "angular-design-patterns",
+    "title": "Angular Design Patterns",
+    "projectType": "Instructional catalog",
+    "classification": "open-source",
+    "status": "public-repository",
+    "role": "Author",
+    "summary": "An instructional catalog of design patterns built with Angular 21, started as an experiment in modern Angular features and AI-generated code.",
+    "evidence": ["Each pattern is documented and tested with Vitest and Playwright."],
+    "technologies": ["Angular", "TypeScript", "Vitest", "Playwright"],
+    "modwRelevance": "Built under early MOD-W.",
+    "productUrl": "https://frank-mcguire.com/angular-design-patterns",
+    "repositoryUrl": "https://github.com/fpmcguire/angular-design-patterns"
+  },
+  {
     "id": "mqtt-align",
     "title": "Cavalieri Align / MQTT-Align",
     "projectType": "SaaS platform",
@@ -12,7 +110,7 @@
       "Architecture walk-through available on request."
     ],
     "technologies": ["Angular", "TypeScript", "MQTT"],
-    "modwRelevance": "Built through MOD-W steps."
+    "modwRelevance": "Built under early MOD-W."
   },
   {
     "id": "agv-fleet-simulator",
@@ -21,48 +119,12 @@
     "classification": "personal-project",
     "status": "public-repository",
     "role": "Frontend Engineer",
-    "summary": "A frontend simulator for visualizing and coordinating automated guided vehicle (AGV) fleets in a logistics-style environment.",
-    "evidence": ["Independent project demonstrating real-time dashboarding in Angular."],
-    "technologies": ["Angular", "TypeScript"],
+    "summary": "A simulator of an automated guided vehicle (AGV) fleet using MQTT over WebSockets and the VDA-5050 messaging standard, with 2D and 3D fleet visualization.",
+    "evidence": ["Organized with Domain-Driven Design.", "Includes a gateway and Mosquitto broker setup."],
+    "technologies": ["Angular", "TypeScript", "MQTT", "VDA-5050", "Three.js"],
+    "modwRelevance": "Built under early MOD-W.",
     "productUrl": "https://frank-mcguire.com/agv-fleet-management-sim",
     "repositoryUrl": "https://github.com/fpmcguire/agv-fleet-management-sim"
-  },
-  {
-    "id": "bio-align",
-    "title": "Bio-Align",
-    "projectType": "Web application",
-    "classification": "personal-project",
-    "status": "public-repository",
-    "role": "Frontend Engineer",
-    "summary": "A personal project exploring frontend architecture and interface patterns for data-driven applications.",
-    "evidence": ["Independent project used to trial frontend architecture and UI patterns."],
-    "technologies": ["Angular", "TypeScript"],
-    "productUrl": "https://frank-mcguire.com/bio-align/",
-    "repositoryUrl": "https://github.com/fpmcguire/bio-align"
-  },
-  {
-    "id": "angular-design-patterns",
-    "title": "Angular Design Patterns",
-    "projectType": "Open-source reference project",
-    "classification": "open-source",
-    "status": "public-repository",
-    "role": "Author",
-    "summary": "An open-source collection of Angular design patterns and reusable component approaches for production applications.",
-    "evidence": ["Public repository demonstrating Angular architecture patterns."],
-    "technologies": ["Angular", "TypeScript"],
-    "productUrl": "https://frank-mcguire.com/angular-design-patterns"
-  },
-  {
-    "id": "prismatic",
-    "title": "Prismatic",
-    "projectType": "Web application",
-    "classification": "personal-project",
-    "status": "public-repository",
-    "role": "Frontend Engineer",
-    "summary": "A personal project exploring modern frontend architecture patterns and UI composition techniques.",
-    "evidence": ["Independent project used to trial frontend architecture approaches."],
-    "technologies": ["Angular", "TypeScript"],
-    "productUrl": "https://frank-mcguire.com/prismatic"
   },
   {
     "id": "paki",
@@ -96,5 +158,22 @@
     "summary": "Professional frontend work on a large-scale e-commerce platform, supporting production business workflows.",
     "evidence": ["Professional experience summary; architecture walk-through available on request."],
     "technologies": ["Angular", "TypeScript"]
+  },
+  {
+    "id": "academic-training",
+    "title": "Academic and Training Experience",
+    "projectType": "Higher education and learning technology",
+    "classification": "academic-training",
+    "status": "education-summary",
+    "role": "Professor / Digital Media Educator / Trainer 1983–2008",
+    "summary": "20+ years taught digital media, programming, and 3D at art and applied-sciences universities in the US and Germany, then built large-scale corporate training simulations.",
+    "evidence": [
+      "Associate Professor and Research Fellow, University of Arizona, College of Fine Arts.",
+      "Guest Professor, Digital Media and Programming, Fachhochschule Schwäbisch Hall, Germany.",
+      "Director of Digital Art and Associate Professor, Cleveland Institute of Art.",
+      "Built large-scale training simulations at AT&T Learning Services, including migrating ActionScript 2 learning materials to ActionScript 3.",
+      "Published and presented on generative 3D design: IEEE Computer Graphics and Applications (1993), SIGGRAPH panel (1991); Zenith Masters of Innovation Award, first place (1991)."
+    ],
+    "technologies": ["JavaScript", "HTML", "CSS", "UI/UX Design", "ActionScript", "3D modeling", "Digital media"]
   }
 ]
